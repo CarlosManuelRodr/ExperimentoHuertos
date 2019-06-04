@@ -13,6 +13,11 @@ public class BoardManager : MonoBehaviour
     private uint rows;
     private List<Vector2> gridPositions = new List<Vector2>();
 
+    public int CountFruits()
+    {
+        return this.transform.childCount;
+    }
+
     void InitialiseList()
     {
         gridPositions.Clear();

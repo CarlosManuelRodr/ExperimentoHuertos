@@ -2554,6 +2554,9 @@ MonoBehaviour:
   playerACursor: {fileID: 3705520997227070843}
   playerBCursor: {fileID: 576639098}
   aiCursor: {fileID: 575117108}
+  lockA: {fileID: 662362820}
+  lockB: {fileID: 779150156}
+  endExperimentButton: {fileID: 843459670}
 --- !u!114 &1972032414
 MonoBehaviour:
   m_ObjectHideFlags: 0

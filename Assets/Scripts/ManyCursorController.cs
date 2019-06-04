@@ -132,7 +132,12 @@ public class ManyCursorController : MonoBehaviour
     bool IsSelectable(Collider2D other)
     {
         if (selectable == Selectable.Both)
-            return true;
+        {
+            if (other.tag == "ItemA" || other.tag == "ItemB")
+                return true;
+            else
+                return false;
+        }
         else
         {
             if (selectable == Selectable.PlayerA && other.tag == "ItemA")
@@ -155,10 +160,10 @@ public class ManyCursorController : MonoBehaviour
             selected = other.gameObject;
         }
 
-        if (isSelecting && other.tag == "Chest")
-        {
-            other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
-        }
+        //if (isSelecting && other.tag == "Chest")
+        //{
+        //    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
+        //}
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -166,9 +171,9 @@ public class ManyCursorController : MonoBehaviour
         if (!isSelecting)
             selected = null;
 
-        if (isSelecting && other.tag == "Chest")
-        {
-            other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
-        }
+        //if (isSelecting && other.tag == "Chest")
+        //{
+        //    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
+        //}
     }
 }

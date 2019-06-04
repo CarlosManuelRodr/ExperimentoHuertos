@@ -293,7 +293,6 @@ MonoBehaviour:
     type: 3}
   chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
     type: 3}
-  chestController: {fileID: 0}
 --- !u!61 &2163502540776944051
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -556,7 +555,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.049187504}
+  m_Offset: {x: 0.0033809766, y: -0.049187504}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -567,7 +566,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.011624996}
+  m_Size: {x: 0.46566904, y: 0.011624992}
   m_EdgeRadius: 0
 --- !u!82 &2163502542159585799
 AudioSource:

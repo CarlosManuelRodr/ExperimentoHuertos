@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject gameManager;
-    public GameObject startButton, optionsButton, quitButton, startConfig;
-    public GameObject fruitSliderA, fruitSliderB, aiToggle;
+    public GameObject startScreen, initGame, options;
+    public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
+    public GameObject simulateB, enableLock, commonCounter, endGameButton;
 
-    private Slider fruitSliderAScript, fruitSliderBScript;
-    private Toggle aiToggleScript;
     private AudioSource audioSource;
     private CanvasFaderScript canvasFader;
     private GameManager gameManagerScript;
@@ -26,36 +23,68 @@ public class MainMenu : MonoBehaviour
         if (gameManager != null)
             gameManagerScript = gameManager.GetComponent<GameManager>();
         mbc = GetComponentsInChildren<MenuButtonController>();
+    }
 
-        fruitSliderAScript = fruitSliderA.GetComponent<Slider>();
-        fruitSliderBScript = fruitSliderB.GetComponent<Slider>();
-        aiToggleScript = aiToggle.GetComponent<Toggle>();
+    public void DisableArrows()
+    {
+        GameObject[] arrows = GameObject.FindGameObjectsWithTag("MenuArrow");
+        foreach (GameObject obj in arrows)
+        {
+            obj.SetActive(false);
+        }
     }
 
     public void OnStartButton()
     {
-        startButton.SetActive(false);
-        optionsButton.SetActive(false);
-        quitButton.SetActive(false);
-        startConfig.SetActive(true);
+        DisableArrows();
+        startScreen.SetActive(false);
+        options.SetActive(false);
+        initGame.SetActive(true);
+        audioSource.Play();
+    }
+
+    public void OnOptionButton()
+    {
+        DisableArrows();
+        startScreen.SetActive(false);
+        options.SetActive(true);
+        initGame.SetActive(false);
         audioSource.Play();
     }
 
     public void OnBackButton()
     {
-        startConfig.SetActive(false);
-        startButton.SetActive(true);
-        optionsButton.SetActive(true);
-        quitButton.SetActive(true);
+        DisableArrows();
+        startScreen.SetActive(true);
+        options.SetActive(false);
+        initGame.SetActive(false);
     }
 
     public void OnInitButton()
     {
+        Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
+        Toggle simulateBScript, enableLockScript, commonCounterScript, endGameButtonScript;
+        fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
+        fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
+        speedAScript = speedA.GetComponentInChildren<Slider>();
+        speedBScript = speedA.GetComponentInChildren<Slider>();
+        simulateBScript = simulateB.GetComponent<Toggle>();
+        enableLockScript = enableLock.GetComponent<Toggle>();
+        commonCounterScript = commonCounter.GetComponent<Toggle>();
+        endGameButtonScript = endGameButton.GetComponent<Toggle>();
+
+        DisableArrows();
+
         if (gameManager != null)
         {
             canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
             canvasFader.StartFading();
-            gameManagerScript.StartExperiment((uint) fruitSliderAScript.value, (uint) fruitSliderBScript.value, aiToggleScript.isOn);
+            gameManagerScript.StartExperiment(
+                (uint) fruitSliderAScript.value, (uint) fruitSliderBScript.value,
+                (uint) speedAScript.value, (uint) speedBScript.value,
+                simulateBScript.isOn, enableLockScript.isOn,
+                commonCounterScript.isOn, endGameButtonScript.isOn
+                );
             this.EnableMenu(false);
         }
         audioSource.Play();

@@ -23,17 +23,23 @@ public class EndExperimentButton : MonoBehaviour
         image = GetComponent<Image>();
     }
 
+    public void Restore()
+    {
+        if (status == ButtonStatus.Large)
+        {
+            image.color = Color.white;
+            this.transform.localScale /= 1.1f;
+            status = ButtonStatus.Small;
+        }
+    }
+
     void Update()
     {
         if (collision != null)
         {
             if (Input.GetMouseButtonDown(0) && (collision.tag == "CursorA" || collision.tag == "CursorB"))
             {
-                if (status == ButtonStatus.Large)
-                {
-                    this.transform.localScale /= 1.1f;
-                    status = ButtonStatus.Small;
-                }
+                Restore();
                 gameManagerScript.EndExperiment();
             }
         }

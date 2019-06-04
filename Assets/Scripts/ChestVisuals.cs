@@ -17,13 +17,7 @@ public class ChestVisuals : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.tag == "CursorA" || other.tag == "CursorB") && other.GetComponent<ManyCursorController>().isSelecting)
-        {
-            spriteRenderer.sprite = chestOpen;
-            audioSource.Play();
-        }
-
-        if (other.tag == "AICursor" && other.GetComponent<EnemyAi>().isSelecting)
+        if ((other.tag == "ItemA" || other.tag == "ItemB") && other.GetComponent<FruitController>().isSelected)
         {
             spriteRenderer.sprite = chestOpen;
             audioSource.Play();
@@ -32,7 +26,7 @@ public class ChestVisuals : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "CursorA" || other.tag == "CursorB" || other.tag == "AICursor")
+        if (other.tag == "ItemA" || other.tag == "ItemB")
         {
             spriteRenderer.sprite = chestClosed;
         }

@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +14,7 @@ public class GameManager : MonoBehaviour
     private Parallax parallax;
     private MainMenu mainMenuScript;
     private bool prepareStart;
+    private bool inExperiment;
 
     void Start()
     {
@@ -34,11 +32,12 @@ public class GameManager : MonoBehaviour
 
         if (debug)
         {
-            this.StartExperiment(70, 30, debugAi);
+            this.StartExperiment(70, 30, 50, 50, debugAi, true, true, true);
             experimentManager.ActivateCursors();
         }
 
         prepareStart = false;
+        inExperiment = false;
     }
 
     void Update()
@@ -55,14 +54,27 @@ public class GameManager : MonoBehaviour
         {
             experimentManager.ActivateCursors();
             prepareStart = false;
+            inExperiment = true;
+        }
+
+        if (inExperiment)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                this.EndExperiment();
         }
     }
 
-    public void StartExperiment(uint playerAFruits, uint playerBFruits, bool aiPlayer = false)
+    public void StartExperiment(
+        uint playerAFruits, uint playerBFruits, uint speedA, uint speedB, 
+        bool simulateB, bool enableLock, bool commonCounter, bool endGameButton
+        )
     {
         parallax.MoveDown();
         experiment.SetActive(true);
-        experimentManager.InitializeExperiment(playerAFruits, playerBFruits, aiPlayer);
+        experimentManager.InitializeExperiment(
+            playerAFruits, playerBFruits, speedA, speedB, 
+            simulateB, enableLock, commonCounter, endGameButton
+            );
 
         hud.SetActive(true);
         hudFader.SetFadeType(CanvasFaderScript.eFadeType.fade_in);
@@ -83,5 +95,7 @@ public class GameManager : MonoBehaviour
 
         if (mainMenu != null)
             mainMenuScript.EnableMenu(true);
+
+        inExperiment = false;
     }
 }

@@ -6,6 +6,7 @@ public class FruitController : MonoBehaviour
 {
     public GameObject highlight;
     public float returnSpeed = 1.0f;
+    public bool isSelected { get { return selected; } }
 
     private SpriteRenderer fruitRenderer, highlightRenderer;
     private Rigidbody2D rigidbody2d;
@@ -13,7 +14,7 @@ public class FruitController : MonoBehaviour
     private Vector3 startPos;
     private bool inChest;
     private bool returnToStart;
-    private bool selecting;
+    private bool selected;
 
     void Start()
     {
@@ -33,7 +34,7 @@ public class FruitController : MonoBehaviour
         startPos = transform.position;
         inChest = false;
         returnToStart = false;
-        selecting = false;
+        selected = false;
     }
 
     void Update()
@@ -53,7 +54,7 @@ public class FruitController : MonoBehaviour
         }
         else
         {
-            if (!selecting && startPos != transform.position)
+            if (!selected && startPos != transform.position)
             {
                 startPos = transform.position;
             }
@@ -80,6 +81,9 @@ public class FruitController : MonoBehaviour
         {
             highlightRenderer.color = green;
             inChest = true;
+
+            if (selected)
+                other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
         }
     }
 
@@ -98,6 +102,9 @@ public class FruitController : MonoBehaviour
                 highlightRenderer.color = red;
             else
                 highlightRenderer.color = yellow;
+
+            if (selected)
+                other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
         }
     }
 
@@ -106,7 +113,7 @@ public class FruitController : MonoBehaviour
         highlightRenderer.color = yellow;
         highlightRenderer.sortingOrder += 2;
         fruitRenderer.sortingOrder += 2;
-        selecting = true;
+        selected = true;
     }
 
     public void Deselect()
@@ -114,7 +121,7 @@ public class FruitController : MonoBehaviour
         highlightRenderer.color = red;
         highlightRenderer.sortingOrder -= 2;
         fruitRenderer.sortingOrder -= 2;
-        selecting = false;
+        selected = false;
 
         if (transform.position != startPos)
         {

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class ExperimentManager : MonoBehaviour
 {
+    public GameObject gameManager;
     public GameObject boardA, boardB;
     public GameObject chestA, chestB, chestCommon;
     public GameObject playerACursor, playerBCursor, aiCursor;
+    public GameObject lockA, lockB, endExperimentButton;
 
+    private GameManager gameManagerScript;
+    private Vector2 playerACursorPos, playerBCursorPos;
     private bool usingAi = false;
     private BoardManager boardManagerA, boardManagerB;
     private ChestController chestAScript, chestBScript, chestCommonScript;
@@ -16,9 +20,11 @@ public class ExperimentManager : MonoBehaviour
     private string path;
     private ExperimentLogger logger;
     private CursorLogger playerALogger, playerBLogger, aiLogger;
+    private bool running;
 
     void Awake()
     {
+        gameManagerScript = gameManager.GetComponent<GameManager>();
         logger = GetComponent<ExperimentLogger>();
         boardManagerA = boardA.GetComponent<BoardManager>();
         boardManagerB = boardB.GetComponent<BoardManager>();
@@ -30,14 +36,40 @@ public class ExperimentManager : MonoBehaviour
             aiCursorPosition = aiCursor.GetComponent<Transform>().position;
             aiLogger = aiCursor.GetComponent<CursorLogger>();
         }
+
+        playerACursorPos = playerACursor.transform.position;
+        playerBCursorPos = playerBCursor.transform.position;
+
+        running = false;
     }
 
-    public void InitializeExperiment(uint playerAFruits, uint playerBFruits, bool aiPlayer = false)
+    void Update()
     {
-        usingAi = aiPlayer;
+        if (running)
+        {
+            if (boardManagerA.CountFruits() == 0 && boardManagerB.CountFruits() == 0)
+                gameManagerScript.EndExperiment();
+        }
+    }
+
+    public void InitializeExperiment(
+        uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
+        bool simulateB, bool enableLock, bool commonCounter, bool endGameButton
+        )
+    {
+        playerACursor.transform.position = playerACursorPos;
+        playerBCursor.transform.position = playerBCursorPos;
+
+        lockA.SetActive(enableLock);
+        lockB.SetActive(enableLock);
+        endExperimentButton.SetActive(endGameButton);
+
+        usingAi = simulateB;
 
         boardManagerA.SetUpExperiment(10, 10, playerAFruits);
         boardManagerB.SetUpExperiment(10, 10, playerBFruits);
+
+        // Set speed
 
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
@@ -49,6 +81,8 @@ public class ExperimentManager : MonoBehaviour
 
         logger.SetDefaultPath();
         logger.SetFruitNumber(playerAFruits, playerBFruits);
+
+        running = true;
     }
 
     public void ActivateCursors()
@@ -97,5 +131,6 @@ public class ExperimentManager : MonoBehaviour
     public void StopExperiment()
     {
         logger.Save();
+        running = false;
     }
 }

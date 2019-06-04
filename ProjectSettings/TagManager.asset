@@ -12,6 +12,7 @@ TagManager:
   - CursorB
   - Item
   - EnemyItem
+  - MenuArrow
   layers:
   - Default
   - TransparentFX
