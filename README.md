@@ -4,6 +4,9 @@
 
 ![main screen](<https://raw.githubusercontent.com/CarlosManuelRodr/ExperimentoHuertos/master/img/3.png>)
 
+## Descargar
+* [Ejecutable de Windows](https://github.com/CarlosManuelRodr/ExperimentoHuertos/releases/download/v0.5-alpha/ExperimentoHuertos.zip)
+
 ## Requisitos
 
 Se recomienda utilizar una computadora con Windows 10. El juego debe ser ejecutado con al menos dos mouse conectados. En caso de que el programa no detecte el movimiento de ningún cursor, instalar el paquete [Microsoft Visual C++ Redistributable 2019](https://aka.ms/vs/16/release/VC_redist.x64.exe>).
