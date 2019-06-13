@@ -40,7 +40,7 @@ public class EndExperimentButton : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && (collision.tag == "CursorA" || collision.tag == "CursorB"))
             {
                 Restore();
-                gameManagerScript.EndExperiment();
+                gameManagerScript.EndGame();
             }
         }
     }

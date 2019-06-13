@@ -156,7 +156,12 @@ public class ManyMouseWrapper : MonoBehaviour
         _manyMice[(int)mouseEvent.device].ProcessEvent(mouseEvent);
     }
 
-    public static int MouseCount { get { return Instance._manyMice == null ? 0 : Instance._manyMice.Count; }}
+    public static int MouseCount {
+        get {
+
+            return Instance._manyMice == null ? 0 : Instance._manyMice.Count;
+        }
+    }
 
     public static string MouseDeviceName(int id)
     {

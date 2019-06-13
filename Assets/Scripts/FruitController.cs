@@ -85,6 +85,15 @@ public class FruitController : MonoBehaviour
             if (selected)
                 other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
         }
+
+        if (other.tag == "CommonChest")
+        {
+            highlightRenderer.color = green;
+            inChest = true;
+
+            if (selected)
+                other.transform.parent.GetComponentInChildren<CommonChestController>().SetToCapture(true);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)

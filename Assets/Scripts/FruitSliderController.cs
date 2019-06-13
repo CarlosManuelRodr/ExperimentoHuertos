@@ -8,6 +8,7 @@ public class FruitSliderController : MonoBehaviour
 {
     public GameObject ownNumber;
     public GameObject rivalSlider;
+    public bool allowFew = false;
 
     private TextMeshProUGUI ownText;
     private Slider ownSlider;
@@ -24,6 +25,7 @@ public class FruitSliderController : MonoBehaviour
     {
         uint newValue = (uint) ownSlider.value;
         ownText.SetText(newValue.ToString());
-        rivalSliderScript.value = 100 - newValue;
+        if (!allowFew)
+            rivalSliderScript.value = 100 - newValue;
     }
 }

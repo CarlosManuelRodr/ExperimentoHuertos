@@ -11,19 +11,27 @@ public class VolumeController : MonoBehaviour
 
     private TextMeshProUGUI ownText;
     private Slider ownSlider;
-    private AudioSource jukebox;
+    private Jukebox jukebox;
 
     void Start()
     {
         ownText = ownNumber.GetComponent<TextMeshProUGUI>();
         ownSlider = GetComponent<Slider>();
-        jukebox = gameManager.GetComponent<AudioSource>();
+        jukebox = gameManager.GetComponent<Jukebox>();
+
+        int value = PlayerPrefs.GetInt("Volume", -1);
+        if (value == -1)
+            value = 100;
+
+        ownSlider.value = value;
+        ownText.SetText(value.ToString());
     }
 
     public void OnUpdateValue()
     {
-        uint newValue = (uint)ownSlider.value;
+        int newValue = (int) ownSlider.value;
         ownText.SetText(newValue.ToString());
-        jukebox.volume = (float) newValue / 100.0f;
+        jukebox.volume = (float) newValue;
+        PlayerPrefs.SetInt("Volume", newValue);
     }
 }

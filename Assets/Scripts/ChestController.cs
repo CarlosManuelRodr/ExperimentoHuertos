@@ -28,8 +28,19 @@ public class ChestController : MonoBehaviour
             m_capture = false;
             spriteRenderer.enabled = false;
             score++;
-            this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
+            this.SetScore(score);
         }
+    }
+
+    public void SetScore(uint newScore)
+    {
+        score = newScore;
+        this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
+    }
+
+    public uint GetScore()
+    {
+        return score;
     }
 
     public void SetToCapture(bool capture)

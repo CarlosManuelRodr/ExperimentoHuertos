@@ -9,6 +9,8 @@ public class ExperimentLogger : MonoBehaviour
     private string currentExperimentPath;
     private int experimentID;
     private uint playerAFruits, playerBFruits;
+    private uint playerAScore, playerBScore, commonChestScore;
+    private int round;
 
     public void SetDefaultPath()
     {
@@ -28,16 +30,31 @@ public class ExperimentLogger : MonoBehaviour
         playerBFruits = fruitsB;
     }
 
+    public void SetScore(uint aScore, uint bScore, uint commonScore)
+    {
+        playerAScore = aScore;
+        playerBScore = bScore;
+        commonChestScore = commonScore;
+    }
+
+    public void SetRound(int nround)
+    {
+        round = nround;
+    }
+
     public void Save()
     {
-        string filePath = Path.Combine(currentExperimentPath, "configuracion.txt");
+        string filePath = Path.Combine(currentExperimentPath, "resultados.txt");
         if (!File.Exists(filePath))
         {
             // Create a file to write to.
             using (StreamWriter sw = File.CreateText(filePath))
             {
-                sw.WriteLine("Frutas Jugador A: " + playerAFruits.ToString());
-                sw.WriteLine("Frutas Jugador B: " + playerBFruits.ToString());
+                sw.WriteLine("Frutas huerto A: " + playerAFruits.ToString());
+                sw.WriteLine("Frutas huerto B: " + playerBFruits.ToString());
+                sw.WriteLine("Puntuacion jugador A: " + playerAScore.ToString());
+                sw.WriteLine("Puntuacion jugador B: " + playerBScore.ToString());
+                sw.WriteLine("Puntuacion cofre comun: " + commonChestScore.ToString());
             }
         }
     }
@@ -82,12 +99,16 @@ public class ExperimentLogger : MonoBehaviour
                     experimentID = 1;
             }
 
-            currentExperimentPath = Path.Combine(outputFolderPath, "Experimento_" + experimentID.ToString());
+            currentExperimentPath = Path.Combine(
+                outputFolderPath, 
+                "Experimento_" + experimentID.ToString() + "_Ronda_" + round.ToString()
+                );
             Directory.CreateDirectory(currentExperimentPath);
         }
         catch (Exception e)
         {
-            Console.WriteLine("Error preparing path. The process failed: {0}", e.ToString());
+            Debug.Log("Error preparing path. The process failed: ");
+            Debug.Log(e.ToString());
         }
     }
 }

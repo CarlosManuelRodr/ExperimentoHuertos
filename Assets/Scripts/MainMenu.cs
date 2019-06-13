@@ -58,6 +58,9 @@ public class MainMenu : MonoBehaviour
         startScreen.SetActive(true);
         options.SetActive(false);
         initGame.SetActive(false);
+
+        if (options.activeSelf)
+            PlayerPrefs.Save();
     }
 
     public void OnInitButton()

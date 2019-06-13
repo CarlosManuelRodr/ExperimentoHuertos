@@ -14,7 +14,8 @@ public class ExperimentManager : MonoBehaviour
     private Vector2 playerACursorPos, playerBCursorPos;
     private bool usingAi = false;
     private BoardManager boardManagerA, boardManagerB;
-    private ChestController chestAScript, chestBScript, chestCommonScript;
+    private ChestController chestAScript, chestBScript;
+    private CommonChestController chestCommonScript;
     private Vector2 aiCursorPosition;
 
     private string path;
@@ -54,12 +55,10 @@ public class ExperimentManager : MonoBehaviour
 
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
-        bool simulateB, bool enableLock, bool commonCounter, bool endGameButton
+        bool simulateB, bool enableLock, bool commonCounter, bool endGameButton,
+        string logPath, int roundNumber
         )
     {
-        playerACursor.transform.position = playerACursorPos;
-        playerBCursor.transform.position = playerBCursorPos;
-
         lockA.SetActive(enableLock);
         lockB.SetActive(enableLock);
         endExperimentButton.SetActive(endGameButton);
@@ -69,24 +68,27 @@ public class ExperimentManager : MonoBehaviour
         boardManagerA.SetUpExperiment(10, 10, playerAFruits);
         boardManagerB.SetUpExperiment(10, 10, playerBFruits);
 
-        // Set speed
-
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
-        chestCommonScript = chestCommon.GetComponentInChildren<ChestController>();
+        chestCommonScript = chestCommon.GetComponentInChildren<CommonChestController>();
+        chestCommonScript.actAsCounter = commonCounter;
 
         chestAScript.SetToCapture(false);
         chestBScript.SetToCapture(false);
         chestCommonScript.SetToCapture(false);
 
-        logger.SetDefaultPath();
+        logger.SetPath(logPath);
         logger.SetFruitNumber(playerAFruits, playerBFruits);
+        logger.SetRound(roundNumber);
 
         running = true;
     }
 
     public void ActivateCursors()
     {
+        playerACursor.transform.position = playerACursorPos;
+        playerBCursor.transform.position = playerBCursorPos;
+
         playerACursor.SetActive(true);
         if (usingAi)
         {
@@ -130,7 +132,17 @@ public class ExperimentManager : MonoBehaviour
 
     public void StopExperiment()
     {
+        logger.SetScore(
+            chestAScript.GetScore(),
+            chestBScript.GetScore(),
+            chestCommonScript.GetScore()
+            );
         logger.Save();
         running = false;
+
+        chestAScript.SetScore(0);
+        chestBScript.SetScore(0);
+        chestCommonScript.ResetScore();
+        chestCommonScript.SetScore(0);
     }
 }
