@@ -10,7 +10,16 @@ public class DirectorySelector : MonoBehaviour
     private TMP_InputField inputField;
     private string defaultPath;
 
-    void Awake()
+    public static string GetSaveDirectory()
+    {
+        string path;
+        path = PlayerPrefs.GetString("Path", "");
+        if (path == "")
+            path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "HuertosLog");
+        return path;
+    }
+
+    void Start()
     {
         inputField = inputObject.GetComponent<TMP_InputField>();
         defaultPath = PlayerPrefs.GetString("Path", "");

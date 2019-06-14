@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum Selectable
 {
@@ -21,6 +18,17 @@ public class ManyCursorController : MonoBehaviour
     public float cursorLogInterval = 0.5f;
 
     public bool isSelecting { get { return selecting; } }
+    public int speed
+    {
+        get { return (int)(100.0f * cursorSpeed / 0.1f); }
+        set {
+                if (value >= 0 && value <= 100)
+                {
+                    cursorSpeed = 0.1f * value / 100.0f;
+                    Debug.Log("Speed set at: " + cursorSpeed);
+                }
+            }
+    }
 
     private bool selecting;
 
@@ -159,21 +167,11 @@ public class ManyCursorController : MonoBehaviour
         {
             selected = other.gameObject;
         }
-
-        //if (isSelecting && other.tag == "Chest")
-        //{
-        //    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
-        //}
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (!isSelecting)
             selected = null;
-
-        //if (isSelecting && other.tag == "Chest")
-        //{
-        //    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
-        //}
     }
 }

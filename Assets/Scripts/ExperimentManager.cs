@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ExperimentManager : MonoBehaviour
 {
@@ -10,6 +8,9 @@ public class ExperimentManager : MonoBehaviour
     public GameObject playerACursor, playerBCursor, aiCursor;
     public GameObject lockA, lockB, endExperimentButton;
 
+    public uint scoreA { get { return chestAScript.GetScore(); } }
+    public uint scoreB { get { return chestBScript.GetScore(); } }
+
     private GameManager gameManagerScript;
     private Vector2 playerACursorPos, playerBCursorPos;
     private bool usingAi = false;
@@ -17,6 +18,7 @@ public class ExperimentManager : MonoBehaviour
     private ChestController chestAScript, chestBScript;
     private CommonChestController chestCommonScript;
     private Vector2 aiCursorPosition;
+    private ManyCursorController cursorAScript, cursorBScript;
 
     private string path;
     private ExperimentLogger logger;
@@ -31,6 +33,8 @@ public class ExperimentManager : MonoBehaviour
         boardManagerB = boardB.GetComponent<BoardManager>();
         playerALogger = playerACursor.GetComponent<CursorLogger>();
         playerBLogger = playerBCursor.GetComponent<CursorLogger>();
+        cursorAScript = playerACursor.GetComponent<ManyCursorController>();
+        cursorBScript = playerBCursor.GetComponent<ManyCursorController>();
 
         if (aiCursor != null)
         {
@@ -56,9 +60,13 @@ public class ExperimentManager : MonoBehaviour
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
         bool simulateB, bool enableLock, bool commonCounter, bool endGameButton,
-        string logPath, int roundNumber
+        string logPath, int experimentID, int roundNumber
         )
     {
+        Debug.Log("Started experiment");
+        cursorAScript.speed = (int) speedA;
+        cursorBScript.speed = (int) speedB;
+
         lockA.SetActive(enableLock);
         lockB.SetActive(enableLock);
         endExperimentButton.SetActive(endGameButton);
@@ -77,9 +85,10 @@ public class ExperimentManager : MonoBehaviour
         chestBScript.SetToCapture(false);
         chestCommonScript.SetToCapture(false);
 
+        logger.SetExperimentID(experimentID);
+        logger.SetRound(roundNumber);
         logger.SetPath(logPath);
         logger.SetFruitNumber(playerAFruits, playerBFruits);
-        logger.SetRound(roundNumber);
 
         running = true;
     }
@@ -132,6 +141,7 @@ public class ExperimentManager : MonoBehaviour
 
     public void StopExperiment()
     {
+        Debug.Log("Stopped experiment");
         logger.SetScore(
             chestAScript.GetScore(),
             chestBScript.GetScore(),

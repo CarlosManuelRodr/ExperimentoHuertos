@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FruitController : MonoBehaviour
 {
@@ -8,7 +6,7 @@ public class FruitController : MonoBehaviour
     public float returnSpeed = 1.0f;
     public bool isSelected { get { return selected; } }
 
-    private SpriteRenderer fruitRenderer, highlightRenderer;
+    private SpriteRenderer fruitRenderer, highlightRenderer = null;
     private Rigidbody2D rigidbody2d;
     private Color red, yellow, green;
     private Vector3 startPos;
@@ -63,57 +61,63 @@ public class FruitController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "CursorA" || other.tag == "CursorB")
+        if (highlightRenderer != null)
         {
-            ManyCursorController cursor = other.gameObject.GetComponent<ManyCursorController>();
-            if (!cursor.isSelecting)
-                highlight.SetActive(true);
-        }
+            if (other.tag == "CursorA" || other.tag == "CursorB")
+            {
+                ManyCursorController cursor = other.gameObject.GetComponent<ManyCursorController>();
+                if (!cursor.isSelecting)
+                    highlight.SetActive(true);
+            }
 
-        if (other.tag == "AICursor")
-        {
-            EnemyAi cursor = other.gameObject.GetComponent<EnemyAi>();
-            if (!cursor.isSelecting)
-                highlight.SetActive(true);
-        }
+            if (other.tag == "AICursor")
+            {
+                EnemyAi cursor = other.gameObject.GetComponent<EnemyAi>();
+                if (!cursor.isSelecting)
+                    highlight.SetActive(true);
+            }
 
-        if (other.tag == "Chest")
-        {
-            highlightRenderer.color = green;
-            inChest = true;
+            if (other.tag == "Chest")
+            {
+                highlightRenderer.color = green;
+                inChest = true;
 
-            if (selected)
-                other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
-        }
+                if (selected)
+                    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
+            }
 
-        if (other.tag == "CommonChest")
-        {
-            highlightRenderer.color = green;
-            inChest = true;
+            if (other.tag == "CommonChest")
+            {
+                highlightRenderer.color = green;
+                inChest = true;
 
-            if (selected)
-                other.transform.parent.GetComponentInChildren<CommonChestController>().SetToCapture(true);
+                if (selected)
+                    other.transform.parent.GetComponentInChildren<CommonChestController>().SetToCapture(true);
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "CursorA" || other.tag == "CursorB" || other.tag == "AICursor")
+        if (highlightRenderer != null)
         {
-            highlight.SetActive(false);
-        }
+            if (other.tag == "CursorA" || other.tag == "CursorB" || other.tag == "AICursor")
+            {
+                highlight.SetActive(false);
+            }
 
-        if (other.tag == "Chest")
-        {
-            inChest = false;
+            if (other.tag == "Chest")
+            {
+                inChest = false;
 
-            if (returnToStart)
-                highlightRenderer.color = red;
-            else
-                highlightRenderer.color = yellow;
+                if (returnToStart)
+                    highlightRenderer.color = red;
+                else
+                    highlightRenderer.color = yellow;
 
-            if (selected)
-                other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
+                if (selected)
+                    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
+            }
         }
     }
 

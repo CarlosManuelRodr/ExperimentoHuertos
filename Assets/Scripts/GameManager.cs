@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject experiment;
     public GameObject eventSystem;
     public GameObject round1Video, round2Video, round3Video;
-    public GameObject pathInput;
+    public GameObject chestClearer;
     public bool debug = false;
     public bool debugAi = false;
     public uint rounds = 3;
@@ -21,10 +20,14 @@ public class GameManager : MonoBehaviour
     private VideoPlayer round1, round2, round3;
     private Jukebox jukebox;
     private SpriteRenderer mouseWarning;
+    private ChestClear chestClearerScript;
 
     private bool prepareStart;
     private bool inExperiment;
+    private bool clearing;
+    private int currentID;
     private int currentRound;
+    private uint totalScoreA, totalScoreB;
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
     private bool param_simulateB, param_enableLock, param_commonCounter, param_endGameButton;
@@ -39,11 +42,14 @@ public class GameManager : MonoBehaviour
         round3 = round3Video.GetComponent<VideoPlayer>();
         jukebox = GetComponent<Jukebox>();
         mouseWarning = GetComponent<SpriteRenderer>();
+        chestClearerScript = chestClearer.GetComponent<ChestClear>();
 
         int musicVolume = PlayerPrefs.GetInt("Volume", -1);
         if (musicVolume == -1)
             musicVolume = 100;
-        jukebox.volume = (float) musicVolume;
+
+        if (jukebox != null)
+            jukebox.volume = (float) musicVolume;
 
         if (mainMenu != null)
         {
@@ -56,19 +62,27 @@ public class GameManager : MonoBehaviour
 
         if (debug)
         {
-            this.StartExperiment(70, 30, 50, 50, debugAi, true, true, true);
+            this.StartExperiment(1, 0, 50, 50, debugAi, true, true, true);
             experimentManager.ActivateCursors();
+            currentRound = 1;
+            round1.Play();
         }
 
         prepareStart = false;
         inExperiment = false;
+        clearing = false;
+        totalScoreA = 0;
+        totalScoreB = 0;
 
-        if (ManyMouseWrapper.MouseCount < 2)
+        if (eventSystem != null)
         {
-            eventSystem.SetActive(false);
-            mainMenu.SetActive(false);
-            mouseWarning.enabled = true;
-            jukebox.volume = 0.0f;
+            if (ManyMouseWrapper.MouseCount < 2)
+            {
+                eventSystem.SetActive(false);
+                mainMenu.SetActive(false);
+                mouseWarning.enabled = true;
+                jukebox.volume = 0.0f;
+            }
         }
     }
 
@@ -95,6 +109,16 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
                 this.EndExperiment();
         }
+
+        if (clearing)
+        {
+            if (!chestClearerScript.isRunning)
+            {
+                this.EndGame();
+                clearing = false;
+                chestClearerScript.StopClear();
+            }
+        }
     }
 
     public void StartExperiment(
@@ -103,14 +127,15 @@ public class GameManager : MonoBehaviour
         )
     {
         currentRound = 1;
-        path = pathInput.GetComponent<TMP_InputField>().text;
+        path = DirectorySelector.GetSaveDirectory();
+        currentID = ExperimentLogger.GetCurrentExperimentID(path);
 
         parallax.MoveDown();
         experiment.SetActive(true);
         experimentManager.InitializeExperiment(
             playerAFruits, playerBFruits, speedA, speedB, 
             simulateB, enableLock, commonCounter, endGameButton,
-            path, currentRound
+            path, currentID, currentRound
             );
 
         param_playerAFruits = playerAFruits;
@@ -143,33 +168,43 @@ public class GameManager : MonoBehaviour
             mainMenuScript.EnableMenu(true);
 
         inExperiment = false;
+
+        totalScoreA = 0;
+        totalScoreB = 0;
     }
 
     public void EndExperiment()
     {
-        if (currentRound == rounds)
+        if (!clearing)
         {
-            this.EndGame();
-        }
-        else
-        {
-            currentRound++;
+            totalScoreA += experimentManager.scoreA;
+            totalScoreB += experimentManager.scoreB;
 
-            experimentManager.StopExperiment();
-
-            experimentManager.InitializeExperiment(
-                param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
-                param_simulateB, param_enableLock, param_commonCounter, param_endGameButton,
-                path, currentRound
-                );
-
-            if (currentRound == 2)
+            if (currentRound == rounds)
             {
-                round2.Play();
+                clearing = true;
+                chestClearerScript.StartClear(totalScoreA, totalScoreB);
             }
-            if (currentRound == 3)
+            else
             {
-                round3.Play();
+                currentRound++;
+
+                experimentManager.StopExperiment();
+
+                experimentManager.InitializeExperiment(
+                    param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
+                    param_simulateB, param_enableLock, param_commonCounter, param_endGameButton,
+                    path, currentID, currentRound
+                    );
+
+                if (currentRound == 2)
+                {
+                    round2.Play();
+                }
+                if (currentRound == 3)
+                {
+                    round3.Play();
+                }
             }
         }
     }

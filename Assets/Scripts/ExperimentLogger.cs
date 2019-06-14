@@ -10,7 +10,7 @@ public class ExperimentLogger : MonoBehaviour
     private int experimentID;
     private uint playerAFruits, playerBFruits;
     private uint playerAScore, playerBScore, commonChestScore;
-    private int round;
+    private int round = 1;
 
     public void SetDefaultPath()
     {
@@ -42,8 +42,14 @@ public class ExperimentLogger : MonoBehaviour
         round = nround;
     }
 
+    public void SetExperimentID(int id)
+    {
+        experimentID = id;
+    }
+
     public void Save()
     {
+        Debug.Log("Saving to: " + currentExperimentPath);
         string filePath = Path.Combine(currentExperimentPath, "resultados.txt");
         if (!File.Exists(filePath))
         {
@@ -64,40 +70,52 @@ public class ExperimentLogger : MonoBehaviour
         return currentExperimentPath;
     }
 
+    public static int GetCurrentExperimentID(string path)
+    {
+        int experimentID;
+
+        if (!Directory.Exists(path))
+        {
+            experimentID = 1;
+        }
+        else
+        {
+            string[] dirs = Directory.GetDirectories(path, "Experimento_*", SearchOption.TopDirectoryOnly);
+
+            if (dirs.Length != 0)
+            {
+                int[] experimentIds = new int[dirs.Length];
+
+                for (int i = 0; i < dirs.Length; i++)
+                {
+                    int n;
+                    string intString = dirs[i].Split('_')[1];
+
+                    if (!Int32.TryParse(intString, out n))
+                    {
+                        n = -1;
+                    }
+                    experimentIds[i] = n;
+                }
+
+                experimentID = experimentIds.Max() + 1;
+            }
+            else
+                experimentID = 1;
+        }
+
+        return experimentID;
+    }
+
     void PreparePath()
     {
         try
         {
             if (!Directory.Exists(outputFolderPath))
-            {
                 Directory.CreateDirectory(outputFolderPath);
-                experimentID = 1;
-            }
-            else
-            {
-                string[] dirs = Directory.GetDirectories(outputFolderPath, "Experimento_*", SearchOption.TopDirectoryOnly);
 
-                if (dirs.Length != 0)
-                {
-                    int[] experimentIds = new int[dirs.Length];
-
-                    for (int i = 0; i < dirs.Length; i++)
-                    {
-                        int n;
-                        string intString = dirs[i].Split('_').Last();
-
-                        if (!Int32.TryParse(intString, out n))
-                        {
-                            n = -1;
-                        }
-                        experimentIds[i] = n;
-                    }
-
-                    experimentID = experimentIds.Max() + 1;
-                }
-                else
-                    experimentID = 1;
-            }
+            Debug.Log("Current experimentID: " + experimentID);
+            Debug.Log("Current round: " + round);
 
             currentExperimentPath = Path.Combine(
                 outputFolderPath, 

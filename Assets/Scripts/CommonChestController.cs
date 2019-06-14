@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CommonChestController : MonoBehaviour
 {
-    public bool actAsCounter = true;
+    public bool actAsCounter = false;
     public GameObject chestA, chestB;
 
     private ChestController chestAScript, chestBScript;

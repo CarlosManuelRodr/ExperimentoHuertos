@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 enum LockStatus
@@ -26,6 +24,19 @@ public class LockController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCursorController = enemyCursor.GetComponent<ManyCursorController>();
         text = GetComponentInChildren<Text>();
+    }
+
+    void OnDisable()
+    {
+        spriteRenderer.sprite = locked;
+        lockstatus = LockStatus.Locked;
+        text.text = "Parcela\nbloqueada";
+
+        if (status == ButtonStatus.Large)
+        {
+            this.transform.localScale /= 1.1f;
+            status = ButtonStatus.Small;
+        }
     }
 
     void Update()

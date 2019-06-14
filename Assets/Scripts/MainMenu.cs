@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
 public class MainMenu : MonoBehaviour
 {
     public GameObject gameManager;
@@ -70,7 +69,7 @@ public class MainMenu : MonoBehaviour
         fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
         fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
         speedAScript = speedA.GetComponentInChildren<Slider>();
-        speedBScript = speedA.GetComponentInChildren<Slider>();
+        speedBScript = speedB.GetComponentInChildren<Slider>();
         simulateBScript = simulateB.GetComponent<Toggle>();
         enableLockScript = enableLock.GetComponent<Toggle>();
         commonCounterScript = commonCounter.GetComponent<Toggle>();
