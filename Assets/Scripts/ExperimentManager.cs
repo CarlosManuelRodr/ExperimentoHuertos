@@ -89,6 +89,8 @@ public class ExperimentManager : MonoBehaviour
         logger.SetRound(roundNumber);
         logger.SetPath(logPath);
         logger.SetFruitNumber(playerAFruits, playerBFruits);
+        playerALogger.SetPath(logPath);
+        playerBLogger.SetPath(logPath);
 
         running = true;
     }

@@ -6,25 +6,38 @@ public class ChestVisuals : MonoBehaviour
 
     private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
+    private CanCapture canCapture;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        canCapture = this.transform.parent.GetComponentInChildren<ChestController>().canCapture;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.tag == "ItemA" || other.tag == "ItemB") && other.GetComponent<FruitController>().isSelected)
+        if (
+            (canCapture == CanCapture.BOTH && (other.tag == "ItemA" || other.tag == "ItemB")) ||
+            (canCapture == CanCapture.PLAYERA && other.tag == "ItemA") ||
+            (canCapture == CanCapture.PLAYERB && other.tag == "ItemB")
+           )
         {
-            spriteRenderer.sprite = chestOpen;
-            audioSource.Play();
+            if (other.GetComponent<FruitController>().isSelected)
+            {
+                spriteRenderer.sprite = chestOpen;
+                audioSource.Play();
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "ItemA" || other.tag == "ItemB")
+        if (
+            (canCapture == CanCapture.BOTH && (other.tag == "ItemA" || other.tag == "ItemB")) ||
+            (canCapture == CanCapture.PLAYERA && other.tag == "ItemA") ||
+            (canCapture == CanCapture.PLAYERB && other.tag == "ItemB")
+           )
         {
             spriteRenderer.sprite = chestClosed;
         }

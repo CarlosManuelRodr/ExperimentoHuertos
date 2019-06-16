@@ -1,8 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+public enum CanCapture
+{
+    PLAYERA,
+    PLAYERB,
+    BOTH
+}
+
 public class ChestController : MonoBehaviour
 {
+    public CanCapture canCapture = CanCapture.BOTH;
+    public bool dummy = false;
     public uint score = 0;
 
     private SpriteRenderer spriteRenderer;
@@ -19,26 +28,35 @@ public class ChestController : MonoBehaviour
 
     void Start()
     {
-        this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
+        if (!dummy)
+            this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (m_capture && (other.tag == "ItemA" || other.tag == "ItemB"))
+        if (m_capture)
         {
-            Destroy(other.gameObject);
-            audioSource.Play();
-            m_capture = false;
-            spriteRenderer.enabled = false;
-            score++;
-            this.SetScore(score);
+            if (
+                (canCapture == CanCapture.BOTH && (other.tag == "ItemA" || other.tag == "ItemB")) ||
+                (canCapture == CanCapture.PLAYERA && other.tag == "ItemA") ||
+                (canCapture == CanCapture.PLAYERB && other.tag == "ItemB")
+               )
+            {
+                Destroy(other.gameObject);
+                audioSource.Play();
+                m_capture = false;
+                spriteRenderer.enabled = false;
+                score++;
+                this.SetScore(score);
+            }
         }
     }
 
     public void SetScore(uint newScore)
     {
         score = newScore;
-        this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
+        if (!dummy)
+            this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
     }
 
     public uint GetScore()

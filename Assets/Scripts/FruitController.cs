@@ -5,6 +5,7 @@ public class FruitController : MonoBehaviour
     public GameObject highlight;
     public float returnSpeed = 1.0f;
     public bool isSelected { get { return selected; } }
+    public bool isHighlighted { get { return highlight.activeSelf; } }
 
     private SpriteRenderer fruitRenderer, highlightRenderer = null;
     private Rigidbody2D rigidbody2d;
@@ -79,11 +80,20 @@ public class FruitController : MonoBehaviour
 
             if (other.tag == "Chest")
             {
-                highlightRenderer.color = green;
-                inChest = true;
+                ChestController chestController = other.transform.parent.GetComponentInChildren<ChestController>();
+                if (
+                    (chestController.canCapture == CanCapture.BOTH) ||
+                    (chestController.canCapture == CanCapture.PLAYERA && this.tag == "ItemA") ||
+                    (chestController.canCapture == CanCapture.PLAYERB && this.tag == "ItemB")
+                   )
+                {
 
-                if (selected)
-                    other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(true);
+                    highlightRenderer.color = green;
+                    inChest = true;
+
+                    if (selected)
+                        chestController.SetToCapture(true);
+                }
             }
 
             if (other.tag == "CommonChest")
