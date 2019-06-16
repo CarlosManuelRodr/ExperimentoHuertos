@@ -1,0 +1,26 @@
+﻿<configuration>
+  <level1>
+    <lockLevel>false</lockLevel>
+    <name>Nivel 1</name>
+    <fruitsA>50</fruitsA>
+    <fruitsB>50</fruitsB>
+    <speedA>30</speedA>
+    <speedB>30</speedB>
+    <simulateB>false</simulateB>
+    <enableLock>false</enableLock>
+    <commonCounter>true</commonCounter>
+    <endGameButton>false</endGameButton>
+  </level1>
+  <level2>
+    <lockLevel>true</lockLevel>
+    <name>Nivel 2</name>
+    <fruitsA>70</fruitsA>
+    <fruitsB>30</fruitsB>
+    <speedA>30</speedA>
+    <speedB>30</speedB>
+    <simulateB>false</simulateB>
+    <enableLock>true</enableLock>
+    <commonCounter>false</commonCounter>
+    <endGameButton>true</endGameButton>
+  </level2>
+</configuration>
