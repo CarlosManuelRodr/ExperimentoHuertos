@@ -249,9 +249,9 @@ GameObject:
   m_Component:
   - component: {fileID: 420516031}
   - component: {fileID: 420516035}
-  - component: {fileID: 420516034}
   - component: {fileID: 420516033}
   - component: {fileID: 420516032}
+  - component: {fileID: 420516034}
   m_Layer: 0
   m_Name: ChestVisuals
   m_TagString: CommonChest
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 420516030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54f2af85849f27e44935fd52aa03a3a3, type: 3}
+  m_Script: {fileID: 11500000, guid: a20aa6c18d38331439ac9b46cc79b024, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   chestClosed: {fileID: -6834524911116659543, guid: 548fa7974603f9f4e8969957627570a0,

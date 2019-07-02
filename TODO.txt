@@ -1,0 +1,3 @@
+- La visibilidad de los parámetros del experimento debe ser opcional
+- Añadir al Log un indicador de en qué canasto ha sido depositado cada fruto
+- Cambiar "puntos" a "frutos"

@@ -9681,7 +9681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownNumber: {fileID: 673411398}
   rivalSlider: {fileID: 1415155091}
-  allowFew: 0
+  allowFew: 1
 --- !u!114 &603044680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19736,7 +19736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownNumber: {fileID: 1068305116}
   rivalSlider: {fileID: 603044677}
-  allowFew: 0
+  allowFew: 1
 --- !u!114 &1415155094
 MonoBehaviour:
   m_ObjectHideFlags: 0
