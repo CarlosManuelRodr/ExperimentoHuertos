@@ -53,8 +53,18 @@ public class ExperimentManager : MonoBehaviour
         if (running)
         {
             if (boardManagerA.CountFruits() == 0 && boardManagerB.CountFruits() == 0)
+            {
                 gameManagerScript.EndExperiment();
+            }
         }
+    }
+
+    public void SaveCursorLog()
+    {
+        playerALogger.Save();
+        playerBLogger.Save();
+        playerALogger.Clear();
+        playerBLogger.Clear();
     }
 
     public void InitializeExperiment(
@@ -89,8 +99,9 @@ public class ExperimentManager : MonoBehaviour
         logger.SetRound(roundNumber);
         logger.SetPath(logPath);
         logger.SetFruitNumber(playerAFruits, playerBFruits);
-        playerALogger.SetPath(logPath);
-        playerBLogger.SetPath(logPath);
+
+        playerALogger.SetPath(logger.GetExperimentPath());
+        playerBLogger.SetPath(logger.GetExperimentPath());
 
         running = true;
     }
@@ -117,9 +128,6 @@ public class ExperimentManager : MonoBehaviour
             aiCursor.SetActive(false);
             playerBCursor.SetActive(true);
         }
-
-        playerALogger.SetPath(logger.GetExperimentPath());
-        playerBLogger.SetPath(logger.GetExperimentPath());
 
         if (aiCursor != null)
             aiLogger.SetPath(logger.GetExperimentPath());
@@ -150,6 +158,7 @@ public class ExperimentManager : MonoBehaviour
             chestCommonScript.GetScore()
             );
         logger.Save();
+        this.SaveCursorLog();
         running = false;
 
         chestAScript.SetScore(0);

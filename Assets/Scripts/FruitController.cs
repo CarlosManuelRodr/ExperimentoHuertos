@@ -15,7 +15,7 @@ public class FruitController : MonoBehaviour
     private bool returnToStart;
     private bool selected;
 
-    void Start()
+    void Awake()
     {
         highlight.SetActive(false);
         highlightRenderer = highlight.GetComponent<SpriteRenderer>();

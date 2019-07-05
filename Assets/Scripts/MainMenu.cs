@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+
 public class MainMenu : MonoBehaviour
 {
     public GameObject gameManager;
     public GameObject startScreen, initGame, options;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
     public GameObject simulateB, enableLock, commonCounter, endGameButton;
+    public GameObject levelSelector;
 
     private AudioSource audioSource;
     private CanvasFaderScript canvasFader;
     private GameManager gameManagerScript;
     private MenuButtonController[] mbc;
-
+    private LevelSelectController levelSelectController;
 
     private bool enabling;
 
@@ -22,6 +24,7 @@ public class MainMenu : MonoBehaviour
         if (gameManager != null)
             gameManagerScript = gameManager.GetComponent<GameManager>();
         mbc = GetComponentsInChildren<MenuButtonController>();
+        levelSelectController = levelSelector.GetComponent<LevelSelectController>();
     }
 
     public void DisableArrows()
@@ -64,30 +67,69 @@ public class MainMenu : MonoBehaviour
 
     public void OnInitButton()
     {
-        Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
-        Toggle simulateBScript, enableLockScript, commonCounterScript, endGameButtonScript;
-        fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
-        fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
-        speedAScript = speedA.GetComponentInChildren<Slider>();
-        speedBScript = speedB.GetComponentInChildren<Slider>();
-        simulateBScript = simulateB.GetComponent<Toggle>();
-        enableLockScript = enableLock.GetComponent<Toggle>();
-        commonCounterScript = commonCounter.GetComponent<Toggle>();
-        endGameButtonScript = endGameButton.GetComponent<Toggle>();
-
         DisableArrows();
 
-        if (gameManager != null)
+        // Default level type defined in levels.xml
+        if (levelSelectController.GetSelectedLevelType() == LevelType.DEFAULT)
         {
-            canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
-            canvasFader.StartFading();
-            gameManagerScript.StartExperiment(
-                (uint) fruitSliderAScript.value, (uint) fruitSliderBScript.value,
-                (uint) speedAScript.value, (uint) speedBScript.value,
-                simulateBScript.isOn, enableLockScript.isOn,
-                commonCounterScript.isOn, endGameButtonScript.isOn
-                );
-            this.EnableMenu(false);
+            Debug.Log("Level type: Default");
+            LevelData level = levelSelectController.GetSelectedLevel();
+            if (gameManager != null)
+            {
+                canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
+                canvasFader.StartFading();
+                gameManagerScript.StartExperiment(
+                    level.fruitsA, level.fruitsB,
+                    level.speedA, level.speedB,
+                    level.simulateB, level.enableLock,
+                    level.commonCounter, level.endGameButton
+                    );
+                this.EnableMenu(false);
+            }
+            else
+                Debug.LogError("No game manager found");
+        }
+        else if (levelSelectController.GetSelectedLevelType() == LevelType.CUSTOM) // A custom Level is defined in the GUI
+        {
+            Debug.Log("Level type: Custom");
+            Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
+            Toggle simulateBScript, enableLockScript, commonCounterScript, endGameButtonScript;
+            fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
+            fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
+            speedAScript = speedA.GetComponentInChildren<Slider>();
+            speedBScript = speedB.GetComponentInChildren<Slider>();
+            simulateBScript = simulateB.GetComponent<Toggle>();
+            enableLockScript = enableLock.GetComponent<Toggle>();
+            commonCounterScript = commonCounter.GetComponent<Toggle>();
+            endGameButtonScript = endGameButton.GetComponent<Toggle>();
+
+            if (gameManager != null)
+            {
+                canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
+                canvasFader.StartFading();
+                gameManagerScript.StartExperiment(
+                    (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
+                    (uint)speedAScript.value, (uint)speedBScript.value,
+                    simulateBScript.isOn, enableLockScript.isOn,
+                    commonCounterScript.isOn, endGameButtonScript.isOn
+                    );
+                this.EnableMenu(false);
+            }
+            else
+                Debug.LogError("No game manager found");
+        }
+        else if (levelSelectController.GetSelectedLevelType() == LevelType.TUTORIAL)
+        {
+            Debug.Log("Level type: Tutorial");
+            if (gameManager != null)
+            {
+                canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
+                canvasFader.StartFading();
+                this.EnableMenu(false);
+                gameManagerScript.StartTutorial();
+            }
+            else
+                Debug.LogError("No game manager found");
         }
         audioSource.Play();
     }

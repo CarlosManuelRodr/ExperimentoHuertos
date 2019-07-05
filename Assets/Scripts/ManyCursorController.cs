@@ -25,7 +25,6 @@ public class ManyCursorController : MonoBehaviour
                 if (value >= 0 && value <= 100)
                 {
                     cursorSpeed = 0.1f * value / 100.0f;
-                    Debug.Log("Speed set at: " + cursorSpeed);
                 }
             }
     }
@@ -84,8 +83,6 @@ public class ManyCursorController : MonoBehaviour
         selected = null;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        cursorLogger.Save();
-        cursorLogger.Clear();
     }
 
     void Update()

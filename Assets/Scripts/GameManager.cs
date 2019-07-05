@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
 
+enum GameType
+{
+    None,
+    Level,
+    Tutorial
+}
+
 public class GameManager : MonoBehaviour
 {
     public GameObject mainMenu;
     public GameObject hud;
     public GameObject experiment;
+    public GameObject tutorial;
     public GameObject eventSystem;
     public GameObject round1Video, round2Video, round3Video;
     public GameObject chestClearer;
@@ -14,6 +22,7 @@ public class GameManager : MonoBehaviour
     public uint rounds = 3;
 
     private ExperimentManager experimentManager;
+    private TutorialManager tutorialManager;
     private CanvasFaderScript hudFader;
     private Parallax parallax;
     private MainMenu mainMenuScript;
@@ -22,6 +31,7 @@ public class GameManager : MonoBehaviour
     private SpriteRenderer mouseWarning;
     private ChestClear chestClearerScript;
 
+    private GameType gameType = GameType.None;
     private bool prepareStart;
     private bool inExperiment;
     private bool clearing;
@@ -57,8 +67,8 @@ public class GameManager : MonoBehaviour
             hud.SetActive(false);
         }
 
-        experiment.SetActive(false);
         experimentManager = experiment.GetComponent<ExperimentManager>();
+        tutorialManager = tutorial.GetComponent<TutorialManager>();
 
         if (debug)
         {
@@ -98,10 +108,22 @@ public class GameManager : MonoBehaviour
 
         if (prepareStart && !parallax.isMoving)
         {
-            experimentManager.ActivateCursors();
-            prepareStart = false;
-            inExperiment = true;
-            round1.Play();
+            if (gameType == GameType.Level)
+            {
+                experimentManager.ActivateCursors();
+                inExperiment = true;
+                round1.Play();
+                prepareStart = false;
+            }
+            else
+            {
+                if (tutorial.activeSelf)
+                {
+                    tutorialManager.ActivateCursors();
+                    tutorialManager.InitializeTutorial();
+                    prepareStart = false;
+                }
+            }
         }
 
         if (inExperiment)
@@ -151,32 +173,52 @@ public class GameManager : MonoBehaviour
         hudFader.SetFadeType(CanvasFaderScript.eFadeType.fade_in);
         hudFader.StartFading();
         prepareStart = true;
+        gameType = GameType.Level;
+    }
+
+    public void StartTutorial()
+    {
+        Debug.Log("Tutorial started");
+        tutorial.SetActive(true);
+        prepareStart = true;
+        parallax.MoveDown();
+        gameType = GameType.Tutorial;
     }
 
     public void EndGame()
     {
         experimentManager.DeactivateCursors();
         parallax.MoveUp();
-        experimentManager.StopExperiment();
-        experiment.SetActive(false);
+        if (gameType == GameType.Level)
+        {
+            experimentManager.StopExperiment();
+            experiment.SetActive(false);
 
-        hudFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
-        hudFader.StartFading();
-        hud.SetActive(false);
+            hudFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
+            hudFader.StartFading();
+            hud.SetActive(false);
+
+            inExperiment = false;
+            totalScoreA = 0;
+            totalScoreB = 0;
+        }
+        else
+        {
+            tutorial.SetActive(false);
+        }
 
         if (mainMenu != null)
             mainMenuScript.EnableMenu(true);
 
-        inExperiment = false;
-
-        totalScoreA = 0;
-        totalScoreB = 0;
+        gameType = GameType.None;
     }
 
     public void EndExperiment()
     {
         if (!clearing)
         {
+            experimentManager.SaveCursorLog();
+
             totalScoreA += experimentManager.scoreA;
             totalScoreB += experimentManager.scoreB;
 
@@ -207,5 +249,11 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void EndTutorial()
+    {
+        tutorialManager.DeactivateCursors();
+        this.EndGame();
     }
 }

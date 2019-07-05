@@ -29,7 +29,7 @@ public class ChestController : MonoBehaviour
     void Start()
     {
         if (!dummy)
-            this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
+            this.transform.parent.GetComponentInChildren<Text>().text = "Frutos: " + score;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -56,7 +56,7 @@ public class ChestController : MonoBehaviour
     {
         score = newScore;
         if (!dummy)
-            this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + score;
+            this.transform.parent.GetComponentInChildren<Text>().text = "Frutos: " + score;
     }
 
     public uint GetScore()

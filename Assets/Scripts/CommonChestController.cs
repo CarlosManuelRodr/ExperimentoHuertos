@@ -54,7 +54,7 @@ public class CommonChestController : MonoBehaviour
 
     public void SetScore(uint newScore)
     {
-        this.transform.parent.GetComponentInChildren<Text>().text = "Puntos: " + newScore;
+        this.transform.parent.GetComponentInChildren<Text>().text = "Frutos: " + newScore;
     }
 
     public void ResetScore()
