@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class CursorLogger : MonoBehaviour
 {
-    private string m_path, m_name;
+    private string m_path = "", m_name = "";
     private CsvExport log;
 
     void Awake()
     {
-        m_path = "";
         m_name = "DefaultCursor";
     }
 

@@ -34,6 +34,7 @@ public class ManyCursorController : MonoBehaviour
     private ManyMouse mouse;
     private CursorLogger cursorLogger;
     private SpriteRenderer spriteRenderer;
+    private Camera cam;
 
     private GameObject selected;
     private AudioSource audioSource;
@@ -47,6 +48,7 @@ public class ManyCursorController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         cursorLogger = GetComponent<CursorLogger>();
+        cam = Camera.main;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -100,7 +102,7 @@ public class ManyCursorController : MonoBehaviour
         if (Time.time >= nextUpdate)
         {
             nextUpdate = Time.time + cursorLogInterval;
-            cursorLogger.Log(mousePosition, isSelecting, selectable);
+            cursorLogger.Log(cam.WorldToScreenPoint(mousePosition), isSelecting, selectable);
         }
     }
 

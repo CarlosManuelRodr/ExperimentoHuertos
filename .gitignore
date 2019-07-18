@@ -3,5 +3,6 @@ Logs/
 Packages/
 Temp/
 obj/
+Bin/
 .vs/
 *.csproj

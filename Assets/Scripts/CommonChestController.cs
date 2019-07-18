@@ -5,8 +5,10 @@ public class CommonChestController : MonoBehaviour
 {
     public bool actAsCounter = false;
     public GameObject chestA, chestB;
+    public GameObject commonChestVisuals;
 
     private ChestController chestAScript, chestBScript;
+    private CommonChestVisuals commonChestVisualsScript;
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
     private bool m_capture;
@@ -16,6 +18,7 @@ public class CommonChestController : MonoBehaviour
     {
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
+        commonChestVisualsScript = commonChestVisuals.GetComponent<CommonChestVisuals>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
@@ -43,10 +46,9 @@ public class CommonChestController : MonoBehaviour
     {
         if (m_capture && (other.tag == "ItemA" || other.tag == "ItemB"))
         {
+            commonChestVisualsScript.SetCaptured(other.tag);
             Destroy(other.gameObject);
             audioSource.Play();
-            m_capture = false;
-            spriteRenderer.enabled = false;
             myScore++;
             this.SetScore(globalScore + myScore);
         }

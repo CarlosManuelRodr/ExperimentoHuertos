@@ -315,7 +315,7 @@ MonoBehaviour:
   chestB: {fileID: 171618509}
   playerACursor: {fileID: 656225481}
   playerBCursor: {fileID: 20373778}
-  debug: 1
+  debug: 0
 --- !u!1 &20373778
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,6 +2306,7 @@ MonoBehaviour:
   actAsCounter: 1
   chestA: {fileID: 1797717110}
   chestB: {fileID: 1538632345}
+  commonChestVisuals: {fileID: 2163502540608235558}
 --- !u!1 &242797699
 GameObject:
   m_ObjectHideFlags: 0
@@ -3684,6 +3685,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.99215686
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163502542159585797, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: canCapture
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
@@ -12276,7 +12282,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 4.256
+  m_padding: 0
   m_canvasRenderer: {fileID: 736638547}
   m_TextComponent: {fileID: 1298827744}
   m_materialReferenceIndex: 1
@@ -13856,7 +13862,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Puntos: 0'
+  m_Text: 'Frutos: 0'
 --- !u!222 &892836075
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14505,7 +14511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownNumber: {fileID: 1863335132}
   rivalSlider: {fileID: 1432694468}
-  allowFew: 0
+  allowFew: 1
 --- !u!114 &935700172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15341,7 +15347,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -297.6, y: -224.6}
+  m_AnchoredPosition: {x: -218, y: -145}
   m_SizeDelta: {x: 239.86, y: 59.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1024676697
@@ -16312,6 +16318,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.3647059
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502542159585797, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: canCapture
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
 --- !u!4 &1060159375 stripped
@@ -16579,7 +16590,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2037199322}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -20836,7 +20847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 308, y: -224.6}
+  m_AnchoredPosition: {x: 223, y: -145}
   m_SizeDelta: {x: 239.86, y: 59.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1298827744
@@ -21332,7 +21343,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 2037199322}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -21441,7 +21452,7 @@ MonoBehaviour:
   m_material: {fileID: 0}
   m_sharedMaterial: {fileID: 0}
   m_isDefaultMaterial: 0
-  m_padding: 4.256
+  m_padding: 0
   m_canvasRenderer: {fileID: 1342394556}
   m_TextComponent: {fileID: 1024676697}
   m_materialReferenceIndex: 1
@@ -22170,7 +22181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownNumber: {fileID: 111432181}
   rivalSlider: {fileID: 935700169}
-  allowFew: 0
+  allowFew: 1
 --- !u!114 &1432694471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30868,6 +30879,7 @@ MonoBehaviour:
     type: 3}
   chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
     type: 3}
+  chestController: {fileID: 2163502542395440011}
 --- !u!4 &2163502540608235576
 Transform:
   m_ObjectHideFlags: 0

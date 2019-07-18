@@ -129,7 +129,7 @@ public class ExperimentManager : MonoBehaviour
             playerBCursor.SetActive(true);
         }
 
-        if (aiCursor != null)
+        if (aiCursor != null && usingAi)
             aiLogger.SetPath(logger.GetExperimentPath());
     }
 

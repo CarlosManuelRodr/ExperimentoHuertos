@@ -100,9 +100,6 @@ public class FruitController : MonoBehaviour
             {
                 highlightRenderer.color = green;
                 inChest = true;
-
-                if (selected)
-                    other.transform.parent.GetComponentInChildren<CommonChestController>().SetToCapture(true);
             }
         }
     }
@@ -127,6 +124,16 @@ public class FruitController : MonoBehaviour
 
                 if (selected)
                     other.transform.parent.GetComponentInChildren<ChestController>().SetToCapture(false);
+            }
+
+            if (other.tag == "CommonChest")
+            {
+                inChest = false;
+
+                if (returnToStart)
+                    highlightRenderer.color = red;
+                else
+                    highlightRenderer.color = yellow;
             }
         }
     }

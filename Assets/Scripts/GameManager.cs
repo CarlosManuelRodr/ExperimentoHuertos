@@ -68,7 +68,9 @@ public class GameManager : MonoBehaviour
         }
 
         experimentManager = experiment.GetComponent<ExperimentManager>();
-        tutorialManager = tutorial.GetComponent<TutorialManager>();
+
+        if (tutorial != null)
+            tutorialManager = tutorial.GetComponent<TutorialManager>();
 
         if (debug)
         {
@@ -117,7 +119,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                if (tutorial.activeSelf)
+                if (tutorial != null && tutorial.activeSelf)
                 {
                     tutorialManager.ActivateCursors();
                     tutorialManager.InitializeTutorial();

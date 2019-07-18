@@ -413,6 +413,7 @@ MonoBehaviour:
   actAsCounter: 1
   chestA: {fileID: 0}
   chestB: {fileID: 0}
+  commonChestVisuals: {fileID: 1709304261187912891}
 --- !u!1 &1709304261187912891
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,6 +635,7 @@ MonoBehaviour:
     type: 3}
   chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
     type: 3}
+  chestController: {fileID: 1709304260708226838}
 --- !u!1 &1709304261542517544
 GameObject:
   m_ObjectHideFlags: 0

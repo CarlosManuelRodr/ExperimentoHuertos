@@ -244,6 +244,11 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.99215686
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502542159585797, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: canCapture
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
 --- !u!1 &229424806 stripped
@@ -1133,6 +1138,7 @@ MonoBehaviour:
   mainMenu: {fileID: 0}
   hud: {fileID: 1628649996}
   experiment: {fileID: 1972032411}
+  tutorial: {fileID: 0}
   eventSystem: {fileID: 0}
   round1Video: {fileID: 1169403441}
   round2Video: {fileID: 1011775715}
@@ -2251,6 +2257,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0.3647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163502542159585797, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: canCapture
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
