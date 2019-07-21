@@ -1,8 +1,10 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 
+/// <summary>
+/// Administrador del tutorial.
+/// </summary>
 public class TutorialManager : MonoBehaviour
 {
     public GameObject gameManager;
@@ -44,6 +46,7 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
+        // Tecla para omitir fase de tutorial.
         if (debug && Input.GetKeyDown(KeyCode.Escape))
             this.NextPhase();
 
@@ -158,7 +161,6 @@ public class TutorialManager : MonoBehaviour
         checkedB = false;
         checkA.SetActive(false);
         checkB.SetActive(false);
-        Debug.Log("Phase: " + tutorialPhase);
 
         if (tutorialPhase == 2)
         {
@@ -193,6 +195,5 @@ public class TutorialManager : MonoBehaviour
 
         tutorialPhase = 1;
         tutorial1Video.Play();
-        Debug.Log("Tutorial initialized");
     }
 }

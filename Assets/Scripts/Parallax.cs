@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Gestor de movimiento de objetos que simula un fondo con perspectiva.
+/// </summary>
 public class Parallax : MonoBehaviour
 {
     public GameObject back, middle, front;

@@ -7,6 +7,9 @@ enum ButtonStatus
     Large
 }
 
+/// <summary>
+/// Botón para que el usuario interrumpa el experimento.
+/// </summary>
 public class EndExperimentButton : MonoBehaviour
 {
     public GameObject gameManager;

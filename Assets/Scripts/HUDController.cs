@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Controlador del HUD (Head Up Display).
+/// </summary>
 public class HUDController : MonoBehaviour
 {
     public GameObject endExperimentButton;
@@ -12,6 +15,6 @@ public class HUDController : MonoBehaviour
 
     void OnDisable()
     {
-        endExperiment.Restore(); // Just in case
+        endExperiment.Restore(); // Por si acaso restaura el tamaño original del botón.
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Administra el grid donde se colocan los frutos a recolectar.
+/// </summary>
 public class BoardManager : MonoBehaviour
 {
     [Range(0, 1)]
@@ -8,7 +11,7 @@ public class BoardManager : MonoBehaviour
     public GameObject fruitPrefab;
 
     private uint fruitNumber;
-    private uint columns; // Default is 10x10
+    private uint columns; // Por defecto son 10x10
     private uint rows;
     private List<Vector2> gridPositions = new List<Vector2>();
     private string owner;
@@ -62,6 +65,7 @@ public class BoardManager : MonoBehaviour
 
     void RandomBoardSetup()
     {
+        // Coloca los frutos en posiciones aleatorias dentro del grid.
         for (int i = 0; i < fruitNumber; i++)
         {
             Vector3 randomPosition = RandomPosition();

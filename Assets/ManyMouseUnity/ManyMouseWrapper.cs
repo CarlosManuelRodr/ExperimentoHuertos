@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
-using System.Collections;
 
-//This is a very thin wrapper file
+// This is a very thin wrapper file
 public class ManyMouseWrapper : MonoBehaviour
 {
     public enum ManyMouseUpdateStyle
@@ -36,7 +35,7 @@ public class ManyMouseWrapper : MonoBehaviour
     private static extern int ManyMouse_Init();
 
     [DllImport("ManyMouse")]
-    private static extern IntPtr ManyMouse_DriverName(); //The string is in UTF-8 format. 
+    private static extern IntPtr ManyMouse_DriverName(); // The string is in UTF-8 format. 
 
     [DllImport("ManyMouse")]
     private static extern void ManyMouse_Quit();
@@ -48,7 +47,7 @@ public class ManyMouseWrapper : MonoBehaviour
     private static extern int ManyMouse_PollEvent(ref ManyMouseEvent mouseEvent);
 
 
-    //Internal
+    // Internal
 
     private int _numMice = 0;
 
@@ -87,8 +86,8 @@ public class ManyMouseWrapper : MonoBehaviour
         for (int i = 0; i < _numMice; i++)
         {
             ManyMouse mouse = new ManyMouse(i);
-            //todo: check if we already have a mouse in that id.
-            //if it's not the correct id anymore, we have to check by the mouse's name. this might read very generically!
+            // todo: check if we already have a mouse in that id.
+            // if it's not the correct id anymore, we have to check by the mouse's name. this might read very generically!
             _manyMice.Add(mouse);
             
         }
@@ -129,7 +128,7 @@ public class ManyMouseWrapper : MonoBehaviour
         }
         else
         {
-            //TODO: should sometimes check if we lost a mouse and then send out a "lost mouse" signal in that mouse object
+            // TODO: should sometimes check if we lost a mouse and then send out a "lost mouse" signal in that mouse object
 
             // Signal to clear out old deltas
             for (int i = 0; i < _numMice; i++)
@@ -173,7 +172,7 @@ public class ManyMouseWrapper : MonoBehaviour
         return Marshal.PtrToStringAnsi(mouseNamePtr);
     }
 
-    //TODO: GetMouseBy by device name? but these are not unique?
+    // TODO: GetMouseBy by device name? but these are not unique?
     public static ManyMouse GetMouseByID(int id)
     {
         return Instance._manyMice[id];

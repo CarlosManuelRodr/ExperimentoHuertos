@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Gestor de fondo que simula un movimiento perpetuo de las nubes cambiando la posición
+/// de sprite una vez que ha llegado al límite de la pantalla.
+/// </summary>
 public class RepeatingBackground : MonoBehaviour
 {
-
     private BoxCollider2D groundCollider;
     private float groundHorizontalLength;
     private float speed;

@@ -4,7 +4,6 @@ using UnityEngine.Events;
 /*
  * A Simple Canvas Fader Script (Unity 5.6)
  * 
- * 
  * Uses : Fade out or Fade In a UI Canvas. Not for transitioning a whole Scene with elements. 
  * 
  * Usage : Add a Canvas Group Component to the UI Canvas. Add this script to the canvas. Add the function for onComplete.

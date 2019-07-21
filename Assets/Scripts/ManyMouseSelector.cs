@@ -2,7 +2,9 @@
 using UnityEngine;
 using TMPro;
 
-
+/// <summary>
+/// Dropdown para seleccionar mouse a asignar a cada cursor.
+/// </summary>
 public class ManyMouseSelector : MonoBehaviour
 {
     public Player player = Player.PlayerA;

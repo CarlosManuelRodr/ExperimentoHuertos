@@ -7,6 +7,9 @@ enum LockStatus
     Unlocked
 }
 
+/// <summary>
+/// Controlador de candado de huertos.
+/// </summary>
 public class LockController : MonoBehaviour
 {
     public GameObject myCursor, enemyCursor;

@@ -4,6 +4,9 @@ using UnityEngine;
 using TMPro;
 using SFB;
 
+/// <summary>
+/// Selector de directorio en Unity usando Windows Forms.
+/// </summary>
 public class DirectorySelector : MonoBehaviour
 {
     public GameObject inputObject;

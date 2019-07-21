@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Administra las animaciones relativas al cambio de estado del cofre común (abierto/cerrado).
+/// </summary>
 public class CommonChestVisuals : MonoBehaviour
 {
     public Sprite chestClosed, chestOpen;

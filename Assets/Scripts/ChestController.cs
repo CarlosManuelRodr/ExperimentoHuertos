@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controlador para destruir el fruto recolectado y administrar puntuación.
+/// </summary>
 public class ChestController : MonoBehaviour
 {
     public bool dummy = false;

@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Controlador de opción de volumen del audio.
+/// </summary>
 public class VolumeController : MonoBehaviour
 {
     public GameObject ownNumber;

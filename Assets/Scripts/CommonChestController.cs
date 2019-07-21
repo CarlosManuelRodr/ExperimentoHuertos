@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controlador para destruir el fruto recolectado y administrar puntuación en el cofre común.
+/// </summary>
 public class CommonChestController : MonoBehaviour
 {
     public bool actAsCounter = false;

@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Menú principal del juego.
+/// </summary>
 public class MainMenu : MonoBehaviour
 {
     public GameObject gameManager;
     public GameObject startScreen, initGame, options, about;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
-    public GameObject simulateB, enableLock, commonCounter, endGameButton;
+    public GameObject enableLock, commonCounter, endGameButton;
     public GameObject levelSelector;
 
     private AudioSource audioSource;
@@ -82,10 +85,9 @@ public class MainMenu : MonoBehaviour
     {
         DisableArrows();
 
-        // Default level type defined in levels.xml
+        // Los niveles por defecto se definen en el archivo levels.xml.
         if (levelSelectController.GetSelectedLevelType() == LevelType.DEFAULT)
         {
-            Debug.Log("Level type: Default");
             LevelData level = levelSelectController.GetSelectedLevel();
             if (gameManager != null)
             {
@@ -94,24 +96,23 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     level.fruitsA, level.fruitsB,
                     level.speedA, level.speedB,
-                    level.simulateB, level.enableLock,
-                    level.commonCounter, level.endGameButton
+                    level.enableLock, level.commonCounter,
+                    level.endGameButton
                     );
                 this.EnableMenu(false);
             }
             else
                 Debug.LogError("No game manager found");
         }
-        else if (levelSelectController.GetSelectedLevelType() == LevelType.CUSTOM) // A custom Level is defined in the GUI
+        else if (levelSelectController.GetSelectedLevelType() == LevelType.CUSTOM) // Un nivel personalizado se define en la GUI.
         {
-            Debug.Log("Level type: Custom");
+            // Recibe valores de configuración de elementos de interfaz gráfica.
             Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
-            Toggle simulateBScript, enableLockScript, commonCounterScript, endGameButtonScript;
+            Toggle enableLockScript, commonCounterScript, endGameButtonScript;
             fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
             fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
             speedAScript = speedA.GetComponentInChildren<Slider>();
             speedBScript = speedB.GetComponentInChildren<Slider>();
-            simulateBScript = simulateB.GetComponent<Toggle>();
             enableLockScript = enableLock.GetComponent<Toggle>();
             commonCounterScript = commonCounter.GetComponent<Toggle>();
             endGameButtonScript = endGameButton.GetComponent<Toggle>();
@@ -123,8 +124,8 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
                     (uint)speedAScript.value, (uint)speedBScript.value,
-                    simulateBScript.isOn, enableLockScript.isOn,
-                    commonCounterScript.isOn, endGameButtonScript.isOn
+                    enableLockScript.isOn, commonCounterScript.isOn,
+                    endGameButtonScript.isOn
                     );
                 this.EnableMenu(false);
             }
@@ -152,6 +153,7 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    // Activa/desactiva menú con efecto "fade".
     public void EnableMenu(bool enable)
     {
         enabling = enable;
@@ -169,6 +171,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    // Función llamada al final del proceso de "fade".
     public void OnEndFading()
     {
         if (enabling)

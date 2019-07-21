@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Controlador de cursor único. Actualmente en desuso.
+/// </summary>
 public class CursorController : MonoBehaviour
 {
     public Sprite handOpen, handClosed;

@@ -3,6 +3,9 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Logger de la configuración del experimento.
+/// </summary>
 public class ExperimentLogger : MonoBehaviour
 {
     private string outputFolderPath;
@@ -53,7 +56,6 @@ public class ExperimentLogger : MonoBehaviour
         string filePath = Path.Combine(currentExperimentPath, "resultados.txt");
         if (!File.Exists(filePath))
         {
-            // Create a file to write to.
             using (StreamWriter sw = File.CreateText(filePath))
             {
                 sw.WriteLine("Frutas huerto A: " + playerAFruits.ToString());
@@ -70,6 +72,7 @@ public class ExperimentLogger : MonoBehaviour
         return currentExperimentPath;
     }
 
+    // Calcula la ID del experimento actual sumando una unidad a la ID del último experimento realizado.
     public static int GetCurrentExperimentID(string path)
     {
         int experimentID;
@@ -111,12 +114,11 @@ public class ExperimentLogger : MonoBehaviour
     {
         try
         {
+            // Crea directorio de salida de logs (por defecto "<userdir>/HuertosLog") en caso de que no exista.
             if (!Directory.Exists(outputFolderPath))
                 Directory.CreateDirectory(outputFolderPath);
 
-            Debug.Log("Current experimentID: " + experimentID);
-            Debug.Log("Current round: " + round);
-
+            // Crea directorio de ronda.
             currentExperimentPath = Path.Combine(
                 outputFolderPath, 
                 "Experimento_" + experimentID.ToString() + "_Ronda_" + round.ToString()
@@ -125,8 +127,8 @@ public class ExperimentLogger : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log("Error preparing path. The process failed: ");
-            Debug.Log(e.ToString());
+            Debug.LogError("Error preparing path. The process failed: ");
+            Debug.LogError(e.ToString());
         }
     }
 }

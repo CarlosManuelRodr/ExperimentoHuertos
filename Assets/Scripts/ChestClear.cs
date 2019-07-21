@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Muestra animación del cofre vaciando los frutos recolectados.
+/// </summary>
 public class ChestClear : MonoBehaviour
 {
     public GameObject chestA, chestB, chestCommon;
@@ -17,7 +20,7 @@ public class ChestClear : MonoBehaviour
     private ChestController chestAController, chestBController;
     private Text commonChestCounterText;
     private uint scoreA, scoreB;
-    private int commonChestScore;
+    private uint commonChestScore;
     private bool running;
 
     private uint instanciatedA, instanciatedB;
@@ -32,11 +35,12 @@ public class ChestClear : MonoBehaviour
         running = false;
     }
 
-    public void StartClear(uint pointsA, uint pointsB)
+    public void StartClear(uint pointsA, uint pointsB, uint pointsCommon)
     {
         instanciatedA = 0;
         instanciatedB = 0;
-        commonChestScore = 0;
+        commonChestScore = pointsCommon;
+        commonChestCounterText.text = "Frutos: " + commonChestScore.ToString();
         chestAPosition = chestA.transform.position;
         chestBPosition = chestB.transform.position;
         chestCommonPosition = chestCommon.transform.position;
@@ -74,7 +78,7 @@ public class ChestClear : MonoBehaviour
                     Destroy(child.gameObject);
                     audioSource.Play();
                     commonChestScore++;
-                    commonChestCounterText.text = "Puntos: " + commonChestScore.ToString();
+                    commonChestCounterText.text = "Frutos: " + commonChestScore.ToString();
                 }
             }
         }

@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// Controlador para botón del menú que se encarga de administrar la flecha indicadora de posición.
+/// </summary>
 public class MenuButtonController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject arrow;

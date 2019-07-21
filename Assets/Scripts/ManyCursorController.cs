@@ -13,6 +13,9 @@ public enum Player
     PlayerB
 }
 
+/// <summary>
+/// Gestor de cursores. Utiliza la biblioteca ManyMouse para gestionar el input de múltiples cursores.
+/// </summary>
 public class ManyCursorController : MonoBehaviour
 {
     public Player player = Player.PlayerA;
@@ -50,6 +53,11 @@ public class ManyCursorController : MonoBehaviour
     private float nextUpdate;
     private Selectable initialSelectable;
 
+    private void Awake()
+    {
+        initialSelectable = selectable;
+    }
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -74,8 +82,6 @@ public class ManyCursorController : MonoBehaviour
 
         cursorLogger.SetCursorID(transform.tag);
         nextUpdate = cursorLogInterval;
-
-        initialSelectable = selectable;
     }
 
     public void SelectableSwitch()
@@ -96,6 +102,7 @@ public class ManyCursorController : MonoBehaviour
     {
         selecting = false;
         selected = null;
+        selectable = initialSelectable;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

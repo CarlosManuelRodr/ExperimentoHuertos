@@ -20,15 +20,18 @@ public struct LevelData
     public Sprite image;
     public uint fruitsA, fruitsB;
     public uint speedA, speedB;
-    public bool simulateB, enableLock;
+    public bool enableLock;
     public bool commonCounter, endGameButton;
 }
 
+/// <summary>
+/// Controlador de elemento Dropdown que contiene el selector de niveles cargados desde "levels.xml".
+/// </summary>
 public class LevelSelectController : MonoBehaviour
 {
     public GameObject defaultLevelOptions, customLevelOptions;
     public GameObject fruitsA, fruitsB, speedA, speedB;
-    public GameObject simulateB, enableLock, commonCounter, endGameButton;
+    public GameObject enableLock, commonCounter, endGameButton;
     public Sprite tutorialImage;
 
     private AudioSource sound;
@@ -48,11 +51,13 @@ public class LevelSelectController : MonoBehaviour
     {
         if (dropdown.value == levels.Count + 1)
         {
+            // Activa menú de configuración de nivel.
             defaultLevelOptions.SetActive(false);
             customLevelOptions.SetActive(true);
         }
         else
         {
+            // Activa menú de descripción de nivel.
             defaultLevelOptions.SetActive(true);
             customLevelOptions.SetActive(false);
 
@@ -61,12 +66,14 @@ public class LevelSelectController : MonoBehaviour
 
             if (dropdown.value == 0)
             {
+                // Descripción del tutorial.
                 levelDescription.text = "<color=green>Instrucciones:<color=black>\n\nEn el tutorial"
                                         + " usted aprendera los controles basicos del juego.";
                 levelImage.sprite = tutorialImage;
             }
             else
             {
+                // Descripción de nivel estándar.
                 LevelData ld = levels[dropdown.value-1];
                 levelDescription.text = "<color=green>Instrucciones:<color=black>\n\n" + ld.description;
                 levelImage.sprite = ld.image;
@@ -75,6 +82,7 @@ public class LevelSelectController : MonoBehaviour
         sound.Play();
     }
 
+    // Obtiene parámetros del nivel seleccionado en el dropdown.
     public LevelData GetSelectedLevel()
     {
         if (dropdown.value == 0)
@@ -110,6 +118,7 @@ public class LevelSelectController : MonoBehaviour
         return output;
     }
 
+    // Carga la configuración de niveles desde archivo "levels.xml".
     List<LevelData> GetLevelData()
     {
         List<LevelData> output = new List<LevelData>();
@@ -134,7 +143,6 @@ public class LevelSelectController : MonoBehaviour
                     levelData.fruitsB = Convert.ToUInt32(level["fruitsB"].InnerText);
                     levelData.speedA = Convert.ToUInt32(level["speedA"].InnerText);
                     levelData.speedB = Convert.ToUInt32(level["speedB"].InnerText);
-                    levelData.simulateB = Convert.ToBoolean(level["simulateB"].InnerText);
                     levelData.enableLock = Convert.ToBoolean(level["enableLock"].InnerText);
                     levelData.commonCounter = Convert.ToBoolean(level["commonCounter"].InnerText);
                     levelData.endGameButton = Convert.ToBoolean(level["endGameButton"].InnerText);

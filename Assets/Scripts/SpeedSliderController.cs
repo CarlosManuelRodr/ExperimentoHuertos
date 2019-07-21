@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Controlador de slider de velocidad de cursor.
+/// </summary>
 public class SpeedSliderController : MonoBehaviour
 {
     public GameObject ownNumber;

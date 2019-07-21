@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.IO;
 
-
 public class IMG2Sprite : MonoBehaviour
 {
     // Source: https://forum.unity.com/threads/generating-sprites-dynamically-from-png-or-jpeg-files-in-c.343735/

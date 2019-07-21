@@ -8,6 +8,9 @@ enum GameType
     Tutorial
 }
 
+/// <summary>
+/// Gestiona la ejecución del juego. Presente durante toda la ejecución.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public GameObject mainMenu;
@@ -19,7 +22,6 @@ public class GameManager : MonoBehaviour
     public GameObject chestClearer;
     public GameObject errorMenu;
     public bool debug = false;
-    public bool debugAi = false;
     public uint rounds = 3;
 
     private ExperimentManager experimentManager;
@@ -37,14 +39,15 @@ public class GameManager : MonoBehaviour
     private bool clearing;
     private int currentID;
     private int currentRound;
-    private uint totalScoreA, totalScoreB;
+    private uint totalScoreA, totalScoreB, totalScoreCommon;
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
-    private bool param_simulateB, param_enableLock, param_commonCounter, param_endGameButton;
+    private bool param_enableLock, param_commonCounter, param_endGameButton;
     private string path;
 
     void Start()
     {
+        // Adquiere referencias a componentes.
         parallax = GetComponent<Parallax>();
         hudFader = hud.GetComponent<CanvasFaderScript>();
         round1 = round1Video.GetComponent<VideoPlayer>();
@@ -53,13 +56,14 @@ public class GameManager : MonoBehaviour
         jukebox = GetComponent<Jukebox>();
         chestClearerScript = chestClearer.GetComponent<ChestClear>();
 
+        // Carga configuración de volumen de las preferencias de usuario.
         int musicVolume = PlayerPrefs.GetInt("Volume", -1);
         if (musicVolume == -1)
             musicVolume = 100;
-
         if (jukebox != null)
             jukebox.volume = (float) musicVolume;
 
+        // Por defecto el HUD está desactivado.
         if (mainMenu != null)
         {
             mainMenuScript = mainMenu.GetComponent<MainMenu>();
@@ -71,9 +75,11 @@ public class GameManager : MonoBehaviour
         if (tutorial != null)
             tutorialManager = tutorial.GetComponent<TutorialManager>();
 
+        // Inicia automáticamente el experimento en la configuración debug.
+        // Usado en escena de depuración "Experiment".
         if (debug)
         {
-            this.StartExperiment(2, 1, 50, 50, debugAi, true, true, true);
+            this.StartExperiment(2, 1, 50, 50, true, true, true);
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
@@ -84,12 +90,13 @@ public class GameManager : MonoBehaviour
         clearing = false;
         totalScoreA = 0;
         totalScoreB = 0;
+        totalScoreCommon = 0;
 
+        // Si no hay al menos dos mouse, genera pantalla de error.
         if (eventSystem != null && errorMenu != null)
         {
             if (ManyMouseWrapper.MouseCount < 2)
             {
-                eventSystem.SetActive(false);
                 mainMenu.SetActive(false);
                 jukebox.volume = 0.0f;
                 errorMenu.SetActive(true);
@@ -99,6 +106,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // Bloquea sistema de eventos si el parallax está en movimiento.
         if (eventSystem != null)
         {
             if (eventSystem.activeSelf && parallax.isMoving)
@@ -107,6 +115,7 @@ public class GameManager : MonoBehaviour
                 eventSystem.SetActive(true);
         }
 
+        // Cuando el parallax deja de moverse, activa el nivel.
         if (prepareStart && !parallax.isMoving)
         {
             if (gameType == GameType.Level)
@@ -116,23 +125,22 @@ public class GameManager : MonoBehaviour
                 round1.Play();
                 prepareStart = false;
             }
-            else
+            else if (tutorial != null && tutorial.activeSelf)
             {
-                if (tutorial != null && tutorial.activeSelf)
-                {
-                    tutorialManager.ActivateCursors();
-                    tutorialManager.InitializeTutorial();
-                    prepareStart = false;
-                }
+                tutorialManager.ActivateCursors();
+                tutorialManager.InitializeTutorial();
+                prepareStart = false;
             }
         }
 
+        // Tecla ESC configurada para que los experimentadores interumpan el experimento.
         if (inExperiment)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
                 this.EndExperiment();
         }
 
+        // Si la limpieza del cofre ha terminado, termina juego.
         if (clearing)
         {
             if (!chestClearerScript.isRunning)
@@ -146,18 +154,23 @@ public class GameManager : MonoBehaviour
 
     public void StartExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB, 
-        bool simulateB, bool enableLock, bool commonCounter, bool endGameButton
+        bool enableLock, bool commonCounter, bool endGameButton
         )
     {
-        currentRound = 1;
-        path = DirectorySelector.GetSaveDirectory();
-        currentID = ExperimentLogger.GetCurrentExperimentID(path);
+        currentRound = 1;    // Comienza en ronda 1 de 3.
+        path = DirectorySelector.GetSaveDirectory();                // Directorio de guardado configurable en opciones.
+        currentID = ExperimentLogger.GetCurrentExperimentID(path);  // ID de experimento. Se calcula sumando uno a la última ID registrada en el log.
 
+        totalScoreA = 0;
+        totalScoreB = 0;
+        totalScoreCommon = 0;
+
+        // Inicia experimento y guarda configuración para rondas posteriores.
         parallax.MoveDown();
         experiment.SetActive(true);
         experimentManager.InitializeExperiment(
             playerAFruits, playerBFruits, speedA, speedB, 
-            simulateB, enableLock, commonCounter, endGameButton,
+            enableLock, commonCounter, endGameButton,
             path, currentID, currentRound
             );
 
@@ -165,7 +178,6 @@ public class GameManager : MonoBehaviour
         param_playerBFruits = playerBFruits;
         param_speedA = speedA;
         param_speedB = speedB;
-        param_simulateB = simulateB;
         param_enableLock = enableLock;
         param_commonCounter = commonCounter;
         param_endGameButton = endGameButton;
@@ -179,7 +191,6 @@ public class GameManager : MonoBehaviour
 
     public void StartTutorial()
     {
-        Debug.Log("Tutorial started");
         tutorial.SetActive(true);
         prepareStart = true;
         parallax.MoveDown();
@@ -218,15 +229,17 @@ public class GameManager : MonoBehaviour
     {
         if (!clearing)
         {
+            // Guarda log del experimento y reinicia otro hasta llegar a la ronda 3.
             experimentManager.SaveCursorLog();
 
             totalScoreA += experimentManager.scoreA;
             totalScoreB += experimentManager.scoreB;
+            totalScoreCommon += experimentManager.scoreCommon;
 
             if (currentRound == rounds)
             {
                 clearing = true;
-                chestClearerScript.StartClear(totalScoreA, totalScoreB);
+                chestClearerScript.StartClear(totalScoreA, totalScoreB, totalScoreCommon);
             }
             else
             {
@@ -236,7 +249,7 @@ public class GameManager : MonoBehaviour
 
                 experimentManager.InitializeExperiment(
                     param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
-                    param_simulateB, param_enableLock, param_commonCounter, param_endGameButton,
+                    param_enableLock, param_commonCounter, param_endGameButton,
                     path, currentID, currentRound
                     );
 

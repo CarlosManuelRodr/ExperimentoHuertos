@@ -2,6 +2,9 @@
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Gestiona el slider de cantidad de frutos.
+/// </summary>
 public class FruitSliderController : MonoBehaviour
 {
     public GameObject ownNumber;

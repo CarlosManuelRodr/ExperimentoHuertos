@@ -1,6 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Controlador del fruto. Gestiona la interacción con el cursor y el cofre.
+/// </summary>
 public class FruitController : MonoBehaviour
 {
     public GameObject highlight;
@@ -32,6 +34,8 @@ public class FruitController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         cam = Camera.main;
 
+        // Colores del highlight. Usa colores predefinidos en caso de que
+        // el parsing falle.
         if (!ColorUtility.TryParseHtmlString("#FF170BB6", out red))
             red = Color.red;
         if (!ColorUtility.TryParseHtmlString("#FFCA0BB6", out yellow))
@@ -49,6 +53,7 @@ public class FruitController : MonoBehaviour
 
     private void OnDisable()
     {
+        // Guarda el log cuando el fruto es destruido.
         if (fruitLogger != null)
             fruitLogger.Save();
     }
@@ -57,6 +62,7 @@ public class FruitController : MonoBehaviour
     {
         if (returnToStart)
         {
+            // Mueve fruto hasta que regrese a la posición inicial.
             float step = returnSpeed * Time.deltaTime;
             Vector2 newPosition = Vector2.MoveTowards(transform.position, startPos, step);
             rigidbody2d.MovePosition(newPosition);
@@ -69,12 +75,14 @@ public class FruitController : MonoBehaviour
         }
         else
         {
+            // Asigna posición inicial en caso de que no haya sido asignada anteriormente.
             if (!selected && startPos != transform.position)
             {
                 startPos = transform.position;
             }
         }
 
+        // Guarda posición del fruto en el log.
         if (Time.time >= nextUpdate)
         {
             nextUpdate = Time.time + fruitLogInterval;
@@ -89,6 +97,7 @@ public class FruitController : MonoBehaviour
     {
         if (highlightRenderer != null)
         {
+            // Activa el highlight en caso de que el cursor entre en contacto con el fruto.
             if (other.tag == "CursorA" || other.tag == "CursorB")
             {
                 ManyCursorController cursor = other.gameObject.GetComponent<ManyCursorController>();
@@ -98,13 +107,7 @@ public class FruitController : MonoBehaviour
                 selector = other.tag;
             }
 
-            if (other.tag == "AICursor")
-            {
-                EnemyAi cursor = other.gameObject.GetComponent<EnemyAi>();
-                if (!cursor.isSelecting)
-                    highlight.SetActive(true);
-            }
-
+            // En caso de que entre en contacto con un cofre, activa el highlight verde.
             if (other.tag == "Chest" || other.tag == "CommonChest")
             {
                 highlightRenderer.color = green;
@@ -151,6 +154,8 @@ public class FruitController : MonoBehaviour
 
         if (transform.position != startPos)
         {
+            // Si se deselecciona dentro de cofre, cae como cuerpo rígido. En caso contrario
+            // regresa a la posición inicial.
             if (inChest)
             {
                 rigidbody2d.bodyType = RigidbodyType2D.Dynamic;

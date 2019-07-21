@@ -2,6 +2,9 @@
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// Logger que guarda la posición del cursor.
+/// </summary>
 public class CursorLogger : MonoBehaviour
 {
     private string m_path = "", m_name = "";
@@ -58,7 +61,6 @@ public class CursorLogger : MonoBehaviour
     public void Save()
     {
         string outputPath = Path.Combine(m_path, "cursordata_" + m_name + ".csv");
-        Debug.Log("Cursor logger path: " + outputPath);
         log.ExportToFile(outputPath, true);
     }
 

@@ -2,6 +2,9 @@
 using System.IO;
 using UnityEngine;
 
+/// <summary>
+/// Logger de la posición de los frutos.
+/// </summary>
 public class FruitLogger : MonoBehaviour
 {
     private string m_path = "", m_name = "";
