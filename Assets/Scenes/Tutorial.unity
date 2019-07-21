@@ -178,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22423a8a8365a0d4b91a85665d4321e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   checkA: {fileID: 1528478501}
   checkB: {fileID: 227098166}
   tutorial1: {fileID: 664667363}
@@ -187,6 +188,9 @@ MonoBehaviour:
   fruitB: {fileID: 1874975796}
   chestA: {fileID: 2163502542246017027}
   chestB: {fileID: 2163502541074190488}
+  playerACursor: {fileID: 0}
+  playerBCursor: {fileID: 0}
+  debug: 0
 --- !u!1 &227098166
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,7 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5a022c1cd27864dac7643369d420da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseNumber: 0
+  player: 0
   cursorSpeed: 0.0208
   handOpen: {fileID: 21300000, guid: 2afb823cb8d957e4b92ff6ab7c5ff001, type: 3}
   handClosed: {fileID: 21300000, guid: a2947b8002e22bd4ab4d3288bbeec3b1, type: 3}
@@ -2121,6 +2125,7 @@ MonoBehaviour:
     type: 3}
   chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
     type: 3}
+  chestController: {fileID: 0}
 --- !u!4 &2163502540548116245
 Transform:
   m_ObjectHideFlags: 0
@@ -2453,9 +2458,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee4fc8fa0a668a418b4c1c8a224a0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canCapture: 0
   dummy: 1
   score: 0
+  chestVisuals: {fileID: 0}
 --- !u!1 &2163502540948550717
 GameObject:
   m_ObjectHideFlags: 0
@@ -2660,6 +2665,7 @@ MonoBehaviour:
     type: 3}
   chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
     type: 3}
+  chestController: {fileID: 0}
 --- !u!1 &2163502541526869904
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,9 +2779,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee4fc8fa0a668a418b4c1c8a224a0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canCapture: 1
   dummy: 1
   score: 0
+  chestVisuals: {fileID: 0}
 --- !u!4 &2163502542388927649
 Transform:
   m_ObjectHideFlags: 0
@@ -3288,7 +3294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5a022c1cd27864dac7643369d420da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseNumber: 1
+  player: 0
   cursorSpeed: 0.0208
   handOpen: {fileID: 21300000, guid: a62f871d850cbbd4084c34d39fcd8524, type: 3}
   handClosed: {fileID: 21300000, guid: 18a47abe24dc64c42913cfd780900a16, type: 3}

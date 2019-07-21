@@ -46,11 +46,14 @@ public class CommonChestController : MonoBehaviour
     {
         if (m_capture && (other.tag == "ItemA" || other.tag == "ItemB"))
         {
-            commonChestVisualsScript.SetCaptured(other.tag);
-            Destroy(other.gameObject);
-            audioSource.Play();
-            myScore++;
-            this.SetScore(globalScore + myScore);
+            if (other.GetComponent<FruitController>().isFalling)
+            {
+                commonChestVisualsScript.SetCaptured(other.tag);
+                Destroy(other.gameObject);
+                audioSource.Play();
+                myScore++;
+                this.SetScore(globalScore + myScore);
+            }
         }
     }
 

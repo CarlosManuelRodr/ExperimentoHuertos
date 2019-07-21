@@ -102,7 +102,7 @@ public class ChestClear : MonoBehaviour
 
             if (commonChestScore == scoreA + scoreB)
             {
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.5f);
                 running = false;
             }
 

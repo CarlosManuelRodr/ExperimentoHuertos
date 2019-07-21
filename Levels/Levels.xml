@@ -14,8 +14,8 @@
   </level1>
   <level2>
     <name>Nivel 2</name>
-    <fruitsA>70</fruitsA>
-    <fruitsB>30</fruitsB>
+    <fruitsA>1</fruitsA>
+    <fruitsB>1</fruitsB>
     <speedA>30</speedA>
     <speedB>30</speedB>
     <simulateB>false</simulateB>

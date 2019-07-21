@@ -11,6 +11,16 @@ public class BoardManager : MonoBehaviour
     private uint columns; // Default is 10x10
     private uint rows;
     private List<Vector2> gridPositions = new List<Vector2>();
+    private string owner;
+    private string m_logpath;
+
+    private void Awake()
+    {
+        if (fruitPrefab.name == "Player Fruit")
+            owner = "PlayerA";
+        else
+            owner = "PlayerB";
+    }
 
     public int CountFruits()
     {
@@ -38,11 +48,12 @@ public class BoardManager : MonoBehaviour
         return randomPosition;
     }
 
-    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits)
+    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits, string logpath)
     {
         rows = nrows;
         columns = ncolumns;
         fruitNumber = nfruits;
+        m_logpath = logpath;
 
         InitialiseList();
         DestroyChildren();
@@ -60,6 +71,8 @@ public class BoardManager : MonoBehaviour
                             scale * randomPosition + this.transform.position, 
                             Quaternion.identity
                             ) as GameObject;
+            instance.GetComponent<FruitLogger>().SetFruitID(owner, i);
+            instance.GetComponent<FruitLogger>().SetPath(m_logpath);
             instance.transform.SetParent(this.transform);
         }
     }
@@ -77,6 +90,8 @@ public class BoardManager : MonoBehaviour
                     GameObject instance =
                         Instantiate(fruitPrefab, new Vector3(scale * x, scale * y, 0f) + this.transform.position, Quaternion.identity) as GameObject;
 
+                    instance.GetComponent<FruitLogger>().SetPath(m_logpath);
+                    instance.GetComponent<FruitLogger>().SetFruitID(owner, (int)fruitsInstanciated);
                     instance.transform.SetParent(this.transform);
                     fruitsInstanciated++;
                 }

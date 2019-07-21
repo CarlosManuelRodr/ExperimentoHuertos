@@ -7,9 +7,16 @@ public enum Selectable
     Both
 }
 
+public enum Player
+{
+    PlayerA,
+    PlayerB
+}
+
 public class ManyCursorController : MonoBehaviour
 {
-    public int mouseNumber = 0;
+    public Player player = Player.PlayerA;
+
     [Range(0.0f, 0.1f)]
     public float cursorSpeed = 0.03f;
     public Sprite handOpen, handClosed;
@@ -53,6 +60,12 @@ public class ManyCursorController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         selecting = false;
+
+        int mouseNumber;
+        if (player == Player.PlayerA)
+            mouseNumber = PlayerPrefs.GetInt("MouseIdA", 0);
+        else
+            mouseNumber = PlayerPrefs.GetInt("MouseIdB", 1);
 
         mouse = ManyMouseWrapper.GetMouseByID(mouseNumber);
         mouse.EventButtonDown += CloseHand;
@@ -112,9 +125,16 @@ public class ManyCursorController : MonoBehaviour
         {
             if (selected != null)
             {
-                audioSource.PlayOneShot(grab);
-                selected.GetComponent<FruitController>().Select();
-                selecting = true;
+                if (selected.tag == "Lock")
+                {
+                    selected.GetComponent<LockController>().LockSwitch(this.tag);
+                }
+                else
+                {
+                    audioSource.PlayOneShot(grab);
+                    selected.GetComponent<FruitController>().Select();
+                    selecting = true;
+                }
             }
 
             spriteRenderer.sprite = handClosed;
@@ -125,7 +145,7 @@ public class ManyCursorController : MonoBehaviour
     {
         if (buttonId == 0)
         {
-            if (selected != null)
+            if (selected != null && selected.tag != "Lock")
             {
                 audioSource.PlayOneShot(release);
                 selected.GetComponent<FruitController>().Deselect();
@@ -138,6 +158,9 @@ public class ManyCursorController : MonoBehaviour
 
     bool IsSelectable(Collider2D other)
     {
+        if (other.tag == "Lock")
+            return true;
+
         if (selectable == Selectable.Both)
         {
             if (other.tag == "ItemA" || other.tag == "ItemB")

@@ -293,6 +293,7 @@ MonoBehaviour:
     type: 3}
   chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
     type: 3}
+  chestController: {fileID: 2163502542159585795}
 --- !u!61 &2163502540776944051
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -542,9 +543,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee4fc8fa0a668a418b4c1c8a224a0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canCapture: 2
   dummy: 0
   score: 0
+  chestVisuals: {fileID: 2163502540776944046}
 --- !u!61 &2163502542159585800
 BoxCollider2D:
   m_ObjectHideFlags: 0

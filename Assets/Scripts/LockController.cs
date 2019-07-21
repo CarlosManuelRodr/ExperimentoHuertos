@@ -13,7 +13,6 @@ public class LockController : MonoBehaviour
     public Sprite locked, unlocked;
 
     private ManyCursorController enemyCursorController;
-    private GameObject collision = null;
     private SpriteRenderer spriteRenderer;
     private ButtonStatus status = ButtonStatus.Small;
     private LockStatus lockstatus = LockStatus.Locked;
@@ -39,37 +38,27 @@ public class LockController : MonoBehaviour
         }
     }
 
-    void Update()
+    public void LockSwitch(string caller)
     {
-        if (collision != null)
+        if (lockstatus == LockStatus.Unlocked && caller == myCursor.tag)
         {
-            if (Input.GetMouseButtonDown(0) && collision.tag == myCursor.tag)
-            {
-                enemyCursorController.SelectableSwitch();
-
-                if (lockstatus == LockStatus.Locked)
-                {
-                    spriteRenderer.sprite = unlocked;
-                    lockstatus = LockStatus.Unlocked;
-                    text.text = "Parcela\ndesbloqueada";
-                }
-                else
-                {
-                    if (lockstatus == LockStatus.Unlocked)
-                    {
-                        spriteRenderer.sprite = locked;
-                        lockstatus = LockStatus.Locked;
-                        text.text = "Parcela\nbloqueada";
-                    }
-                }
-            }
+            spriteRenderer.sprite = locked;
+            lockstatus = LockStatus.Locked;
+            text.text = "Parcela\nbloqueada";
+            enemyCursorController.SelectableSwitch();
+        }
+        else if (lockstatus == LockStatus.Locked && caller == myCursor.tag)
+        {
+            spriteRenderer.sprite = unlocked;
+            lockstatus = LockStatus.Unlocked;
+            text.text = "Parcela\ndesbloqueada";
+            enemyCursorController.SelectableSwitch();
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        collision = other.gameObject;
-        if (collision.tag == myCursor.tag)
+        if (other.gameObject.tag == myCursor.tag)
         {
             if (status == ButtonStatus.Small)
             {
@@ -89,6 +78,5 @@ public class LockController : MonoBehaviour
                 status = ButtonStatus.Small;
             }
         }
-        collision = null;
     }
 }

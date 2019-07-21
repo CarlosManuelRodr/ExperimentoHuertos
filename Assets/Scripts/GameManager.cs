@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject eventSystem;
     public GameObject round1Video, round2Video, round3Video;
     public GameObject chestClearer;
+    public GameObject errorMenu;
     public bool debug = false;
     public bool debugAi = false;
     public uint rounds = 3;
@@ -28,7 +29,6 @@ public class GameManager : MonoBehaviour
     private MainMenu mainMenuScript;
     private VideoPlayer round1, round2, round3;
     private Jukebox jukebox;
-    private SpriteRenderer mouseWarning;
     private ChestClear chestClearerScript;
 
     private GameType gameType = GameType.None;
@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
         round2 = round2Video.GetComponent<VideoPlayer>();
         round3 = round3Video.GetComponent<VideoPlayer>();
         jukebox = GetComponent<Jukebox>();
-        mouseWarning = GetComponent<SpriteRenderer>();
         chestClearerScript = chestClearer.GetComponent<ChestClear>();
 
         int musicVolume = PlayerPrefs.GetInt("Volume", -1);
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         if (debug)
         {
-            this.StartExperiment(1, 0, 50, 50, debugAi, true, true, true);
+            this.StartExperiment(2, 1, 50, 50, debugAi, true, true, true);
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
@@ -86,14 +85,14 @@ public class GameManager : MonoBehaviour
         totalScoreA = 0;
         totalScoreB = 0;
 
-        if (eventSystem != null)
+        if (eventSystem != null && errorMenu != null)
         {
             if (ManyMouseWrapper.MouseCount < 2)
             {
                 eventSystem.SetActive(false);
                 mainMenu.SetActive(false);
-                mouseWarning.enabled = true;
                 jukebox.volume = 0.0f;
+                errorMenu.SetActive(true);
             }
         }
     }

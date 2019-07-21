@@ -123,6 +123,7 @@ public class TutorialManager : MonoBehaviour
             if (fruitBInstance != null)
                 Destroy(fruitBInstance);
 
+            tutorialPhase = 0;
             gameManagerScript.EndTutorial();
         }
     }
@@ -169,6 +170,9 @@ public class TutorialManager : MonoBehaviour
         {
             tutorial2Video.Stop();
             tutorial3Video.Play();
+
+            chestA.SetActive(true);
+            chestB.SetActive(true);
         }
     }
 
@@ -176,6 +180,8 @@ public class TutorialManager : MonoBehaviour
     {
         checkedA = false;
         checkedB = false;
+        chestA.SetActive(false);
+        chestB.SetActive(false);
 
         fruitAInstance = Instantiate(fruitA, fruitAPos, Quaternion.identity) as GameObject;
         fruitBInstance = Instantiate(fruitB, fruitBPos, Quaternion.identity) as GameObject;

@@ -83,8 +83,16 @@ public class ExperimentManager : MonoBehaviour
 
         usingAi = simulateB;
 
-        boardManagerA.SetUpExperiment(10, 10, playerAFruits);
-        boardManagerB.SetUpExperiment(10, 10, playerBFruits);
+        logger.SetExperimentID(experimentID);
+        logger.SetRound(roundNumber);
+        logger.SetPath(logPath);
+        logger.SetFruitNumber(playerAFruits, playerBFruits);
+
+        playerALogger.SetPath(logger.GetExperimentPath());
+        playerBLogger.SetPath(logger.GetExperimentPath());
+
+        boardManagerA.SetUpExperiment(10, 10, playerAFruits, logger.GetExperimentPath());
+        boardManagerB.SetUpExperiment(10, 10, playerBFruits, logger.GetExperimentPath());
 
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
@@ -94,14 +102,6 @@ public class ExperimentManager : MonoBehaviour
         chestAScript.SetToCapture(false);
         chestBScript.SetToCapture(false);
         chestCommonScript.SetToCapture(false);
-
-        logger.SetExperimentID(experimentID);
-        logger.SetRound(roundNumber);
-        logger.SetPath(logPath);
-        logger.SetFruitNumber(playerAFruits, playerBFruits);
-
-        playerALogger.SetPath(logger.GetExperimentPath());
-        playerBLogger.SetPath(logger.GetExperimentPath());
 
         running = true;
     }

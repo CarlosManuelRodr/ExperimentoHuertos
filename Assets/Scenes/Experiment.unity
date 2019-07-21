@@ -656,7 +656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5a022c1cd27864dac7643369d420da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseNumber: 0
+  player: 1
   cursorSpeed: 0.0208
   handOpen: {fileID: 21300000, guid: 2afb823cb8d957e4b92ff6ab7c5ff001, type: 3}
   handClosed: {fileID: 21300000, guid: a2947b8002e22bd4ab4d3288bbeec3b1, type: 3}
@@ -1144,6 +1144,7 @@ MonoBehaviour:
   round2Video: {fileID: 1011775715}
   round3Video: {fileID: 301250134}
   chestClearer: {fileID: 999764281}
+  errorMenu: {fileID: 0}
   debug: 1
   debugAi: 0
   rounds: 3
@@ -1161,7 +1162,7 @@ GameObject:
   - component: {fileID: 662362824}
   m_Layer: 0
   m_Name: LockA
-  m_TagString: Untagged
+  m_TagString: Lock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1380,7 +1381,7 @@ GameObject:
   - component: {fileID: 779150160}
   m_Layer: 0
   m_Name: LockB
-  m_TagString: Untagged
+  m_TagString: Lock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3599,7 +3600,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5a022c1cd27864dac7643369d420da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseNumber: 1
+  player: 0
   cursorSpeed: 0.0208
   handOpen: {fileID: 21300000, guid: a62f871d850cbbd4084c34d39fcd8524, type: 3}
   handClosed: {fileID: 21300000, guid: 18a47abe24dc64c42913cfd780900a16, type: 3}

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public GameObject gameManager;
-    public GameObject startScreen, initGame, options;
+    public GameObject startScreen, initGame, options, about;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
     public GameObject simulateB, enableLock, commonCounter, endGameButton;
     public GameObject levelSelector;
@@ -41,6 +41,7 @@ public class MainMenu : MonoBehaviour
         DisableArrows();
         startScreen.SetActive(false);
         options.SetActive(false);
+        about.SetActive(false);
         initGame.SetActive(true);
         audioSource.Play();
     }
@@ -51,6 +52,17 @@ public class MainMenu : MonoBehaviour
         startScreen.SetActive(false);
         options.SetActive(true);
         initGame.SetActive(false);
+        about.SetActive(false);
+        audioSource.Play();
+    }
+
+    public void OnAboutButton()
+    {
+        DisableArrows();
+        startScreen.SetActive(false);
+        options.SetActive(false);
+        initGame.SetActive(false);
+        about.SetActive(true);
         audioSource.Play();
     }
 
@@ -60,6 +72,7 @@ public class MainMenu : MonoBehaviour
         startScreen.SetActive(true);
         options.SetActive(false);
         initGame.SetActive(false);
+        about.SetActive(false);
 
         if (options.activeSelf)
             PlayerPrefs.Save();

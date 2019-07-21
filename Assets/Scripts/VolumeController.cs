@@ -15,7 +15,9 @@ public class VolumeController : MonoBehaviour
     {
         ownText = ownNumber.GetComponent<TextMeshProUGUI>();
         ownSlider = GetComponent<Slider>();
-        jukebox = gameManager.GetComponent<Jukebox>();
+
+        if (gameManager != null)
+            jukebox = gameManager.GetComponent<Jukebox>();
 
         int value = PlayerPrefs.GetInt("Volume", -1);
         if (value == -1)
@@ -29,7 +31,10 @@ public class VolumeController : MonoBehaviour
     {
         int newValue = (int) ownSlider.value;
         ownText.SetText(newValue.ToString());
-        jukebox.volume = (float) newValue;
+
+        if (jukebox != null)
+            jukebox.volume = (float) newValue;
+
         PlayerPrefs.SetInt("Volume", newValue);
     }
 }

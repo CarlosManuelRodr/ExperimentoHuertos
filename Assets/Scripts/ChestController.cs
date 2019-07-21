@@ -1,19 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public enum CanCapture
-{
-    PLAYERA,
-    PLAYERB,
-    BOTH
-}
-
 public class ChestController : MonoBehaviour
 {
-    public CanCapture canCapture = CanCapture.BOTH;
     public bool dummy = false;
     public uint score = 0;
+    public GameObject chestVisuals;
 
+    private ChestVisuals chestVisualsScript;
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
     private bool m_capture;
@@ -22,6 +16,8 @@ public class ChestController : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
+        chestVisualsScript = chestVisuals.GetComponent<ChestVisuals>();
+
         m_capture = false;
         spriteRenderer.enabled = false;
     }
@@ -34,18 +30,13 @@ public class ChestController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (m_capture)
+        if (m_capture && (other.tag == "ItemA" || other.tag == "ItemB"))
         {
-            if (
-                (canCapture == CanCapture.BOTH && (other.tag == "ItemA" || other.tag == "ItemB")) ||
-                (canCapture == CanCapture.PLAYERA && other.tag == "ItemA") ||
-                (canCapture == CanCapture.PLAYERB && other.tag == "ItemB")
-               )
+            if (other.GetComponent<FruitController>().isFalling)
             {
+                chestVisualsScript.SetCaptured(other.tag);
                 Destroy(other.gameObject);
                 audioSource.Play();
-                m_capture = false;
-                spriteRenderer.enabled = false;
                 score++;
                 this.SetScore(score);
             }
