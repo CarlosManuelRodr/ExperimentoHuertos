@@ -61,7 +61,7 @@ public class CursorLogger : MonoBehaviour
     public void Save()
     {
         string outputPath = Path.Combine(m_path, "cursordata_" + m_name + ".csv");
-        log.ExportToFile(outputPath, true);
+        log.ExportToFile(outputPath, false);
     }
 
     public void Clear()

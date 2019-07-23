@@ -229,9 +229,7 @@ public class GameManager : MonoBehaviour
     {
         if (!clearing)
         {
-            // Guarda log del experimento y reinicia otro hasta llegar a la ronda 3.
-            experimentManager.SaveCursorLog();
-
+            // Reinicia experimento hasta llegar a la ronda 3.
             totalScoreA += experimentManager.scoreA;
             totalScoreB += experimentManager.scoreB;
             totalScoreCommon += experimentManager.scoreCommon;

@@ -36,8 +36,11 @@ public class FruitLogger : MonoBehaviour
 
     public void Save()
     {
-        string outputPath = Path.Combine(m_path, "fruit_" + m_name + ".csv");
-        log.ExportToFile(outputPath, true);
+        if (log != null)
+        {
+            string outputPath = Path.Combine(m_path, "fruit_" + m_name + ".csv");
+            log.ExportToFile(outputPath, false);
+        }
     }
 
     public void Clear()

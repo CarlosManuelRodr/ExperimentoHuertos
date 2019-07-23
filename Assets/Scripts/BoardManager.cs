@@ -75,7 +75,7 @@ public class BoardManager : MonoBehaviour
                             scale * randomPosition + this.transform.position, 
                             Quaternion.identity
                             ) as GameObject;
-            instance.GetComponent<FruitLogger>().SetFruitID(owner, i);
+            instance.GetComponent<FruitLogger>().SetFruitID(owner, i+1);
             instance.GetComponent<FruitLogger>().SetPath(m_logpath);
             instance.transform.SetParent(this.transform);
         }
