@@ -108,7 +108,7 @@ public class FruitController : MonoBehaviour
             }
 
             // En caso de que entre en contacto con un cofre, activa el highlight verde.
-            if (other.tag == "Chest" || other.tag == "CommonChest")
+            if (other.tag == "Chest")
             {
                 highlightRenderer.color = green;
                 inChest = true;
@@ -125,7 +125,7 @@ public class FruitController : MonoBehaviour
                 highlight.SetActive(false);
             }
 
-            if (other.tag == "Chest" || other.tag == "CommonChest")
+            if (other.tag == "Chest")
             {
                 inChest = false;
 

@@ -1,2 +1,0 @@
-- Checar colores del cofre
-- El participante puede usar el cofre común por cercanía

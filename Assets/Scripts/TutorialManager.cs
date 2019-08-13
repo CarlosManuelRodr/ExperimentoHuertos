@@ -16,6 +16,7 @@ public class TutorialManager : MonoBehaviour
     public bool debug = false;
 
     private GameObject fruitAInstance, fruitBInstance;
+    private ManyCursorController playerACursorController, playerBCursorController;
     private GameManager gameManagerScript;
     private Vector2 playerACursorPos, playerBCursorPos;
     private Vector2 fruitAPos, fruitBPos;
@@ -33,6 +34,9 @@ public class TutorialManager : MonoBehaviour
         chestAController = chestA.GetComponentInChildren<ChestController>();
         chestBController = chestB.GetComponentInChildren<ChestController>();
         gameManagerScript = gameManager.GetComponent<GameManager>();
+
+        playerACursorController = playerACursor.GetComponent<ManyCursorController>();
+        playerBCursorController = playerBCursor.GetComponent<ManyCursorController>();
 
         playerACursorPos = playerACursor.transform.position;
         playerBCursorPos = playerBCursor.transform.position;
@@ -121,6 +125,9 @@ public class TutorialManager : MonoBehaviour
 
         if (tutorialPhase == 4)
         {
+            chestAController.SetScore(0);
+            chestBController.SetScore(0);
+
             if (fruitAInstance != null)
                 Destroy(fruitAInstance);
             if (fruitBInstance != null)
@@ -135,8 +142,12 @@ public class TutorialManager : MonoBehaviour
     {
         playerACursor.transform.position = playerACursorPos;
         playerBCursor.transform.position = playerBCursorPos;
+
         playerACursor.SetActive(true);
         playerBCursor.SetActive(true);
+
+        playerACursorController.SetPlayableArea(Rect.MinMaxRect(-7.6f, -4.3f, -1.51f, 4.3f));
+        playerBCursorController.SetPlayableArea(Rect.MinMaxRect(0.34f, -3.85f, 7.6f, 4.3f));
     }
 
     public void DeactivateCursors()

@@ -11,21 +11,15 @@ public class CommonChestController : MonoBehaviour
     public GameObject commonChestVisuals;
 
     private ChestController chestAScript, chestBScript;
-    private CommonChestVisuals commonChestVisualsScript;
     private SpriteRenderer spriteRenderer;
-    private AudioSource audioSource;
-    private bool m_capture;
     private uint myScore, globalScore;
 
     void Awake()
     {
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
-        commonChestVisualsScript = commonChestVisuals.GetComponent<CommonChestVisuals>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
-        m_capture = false;
         spriteRenderer.enabled = false;
         myScore = 0;
         globalScore = 0;
@@ -45,21 +39,6 @@ public class CommonChestController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (m_capture && (other.tag == "ItemA" || other.tag == "ItemB"))
-        {
-            if (other.GetComponent<FruitController>().isFalling)
-            {
-                commonChestVisualsScript.SetCaptured(other.tag);
-                Destroy(other.gameObject);
-                audioSource.Play();
-                myScore++;
-                this.SetScore(globalScore + myScore);
-            }
-        }
-    }
-
     public void SetScore(uint newScore)
     {
         this.transform.parent.GetComponentInChildren<Text>().text = "Frutos: " + newScore;
@@ -73,11 +52,5 @@ public class CommonChestController : MonoBehaviour
     public uint GetScore()
     {
         return myScore;
-    }
-
-    public void SetToCapture(bool capture)
-    {
-        m_capture = capture;
-        spriteRenderer.enabled = capture;
     }
 }

@@ -96,7 +96,6 @@ public class ExperimentManager : MonoBehaviour
 
         chestAScript.SetToCapture(false);
         chestBScript.SetToCapture(false);
-        chestCommonScript.SetToCapture(false);
 
         running = true;
     }

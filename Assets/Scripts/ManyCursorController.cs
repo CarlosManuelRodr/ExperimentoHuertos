@@ -56,6 +56,7 @@ public class ManyCursorController : MonoBehaviour
     private void Awake()
     {
         initialSelectable = selectable;
+        playableArea = Rect.MinMaxRect(-7.6f, -4.3f, 7.6f, 4.3f);
     }
 
     void Start()
@@ -69,6 +70,12 @@ public class ManyCursorController : MonoBehaviour
         Cursor.visible = false;
         selecting = false;
 
+        cursorLogger.SetCursorID(transform.tag);
+        nextUpdate = cursorLogInterval;
+    }
+
+    void SetUpCursor()
+    {
         int mouseNumber;
         if (player == Player.PlayerA)
             mouseNumber = PlayerPrefs.GetInt("MouseIdA", 0);
@@ -76,12 +83,15 @@ public class ManyCursorController : MonoBehaviour
             mouseNumber = PlayerPrefs.GetInt("MouseIdB", 1);
 
         mouse = ManyMouseWrapper.GetMouseByID(mouseNumber);
+        mouse.EventButtonDown = delegate { };
+        mouse.EventButtonUp = delegate { };
         mouse.EventButtonDown += CloseHand;
         mouse.EventButtonUp += OpenHand;
-        playableArea = Rect.MinMaxRect(-7.6f, -4.3f, 7.6f, 4.3f);
+    }
 
-        cursorLogger.SetCursorID(transform.tag);
-        nextUpdate = cursorLogInterval;
+    public void SetPlayableArea(Rect rect)
+    {
+        playableArea = rect;
     }
 
     public void SelectableSwitch()
@@ -94,6 +104,7 @@ public class ManyCursorController : MonoBehaviour
 
     void OnEnable()
     {
+        this.SetUpCursor();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

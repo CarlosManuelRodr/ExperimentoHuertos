@@ -16,8 +16,8 @@ public class ChestClear : MonoBehaviour
 
     public bool isRunning { get { return running; } }
 
+    private CommonChestVisuals commonChestVisuals;
     private AudioSource audioSource;
-    private ChestController chestAController, chestBController;
     private Text commonChestCounterText;
     private uint scoreA, scoreB;
     private uint commonChestScore;
@@ -28,8 +28,7 @@ public class ChestClear : MonoBehaviour
 
     void Start()
     {
-        chestAController = chestA.GetComponentInChildren<ChestController>();
-        chestBController = chestB.GetComponentInChildren<ChestController>();
+        commonChestVisuals = chestCommon.GetComponentInChildren<CommonChestVisuals>();
         audioSource = GetComponent<AudioSource>();
         commonChestCounterText = commonChestCounter.GetComponent<Text>();
         running = false;
@@ -46,12 +45,14 @@ public class ChestClear : MonoBehaviour
         chestCommonPosition = chestCommon.transform.position;
         scoreA = pointsA;
         scoreB = pointsB;
+        commonChestVisuals.OpenChest();
         StartCoroutine("InstanciateFruits");
         running = true;
     }
 
     public void StopClear()
     {
+        commonChestVisuals.CloseChest();
         StopCoroutine("InstanciateFruits");
         running = false;
     }
