@@ -67,12 +67,23 @@ public class ExperimentManager : MonoBehaviour
 
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
-        bool enableLock, bool commonCounter, bool endGameButton,
+        bool freeOrchard, bool enableLock, bool commonCounter, bool endGameButton,
         string logPath, int experimentID, int roundNumber
         )
     {
         cursorAScript.speed = (int) speedA;
         cursorBScript.speed = (int) speedB;
+
+        if (freeOrchard)
+        {
+            cursorAScript.selectable = Selectable.Both;
+            cursorBScript.selectable = Selectable.Both;
+        }
+        else
+        {
+            cursorAScript.selectable = Selectable.PlayerA;
+            cursorBScript.selectable = Selectable.PlayerB;
+        }
 
         lockA.SetActive(enableLock);
         lockB.SetActive(enableLock);

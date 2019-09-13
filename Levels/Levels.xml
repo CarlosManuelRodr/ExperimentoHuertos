@@ -5,6 +5,7 @@
     <fruitsB>50</fruitsB>
     <speedA>30</speedA>
     <speedB>30</speedB>
+    <freeOrchard>true</freeOrchard>
     <enableLock>false</enableLock>
     <commonCounter>true</commonCounter>
     <endGameButton>false</endGameButton>
@@ -17,6 +18,7 @@
     <fruitsB>1</fruitsB>
     <speedA>30</speedA>
     <speedB>30</speedB>
+    <freeOrchard>false</freeOrchard>
     <enableLock>true</enableLock>
     <commonCounter>false</commonCounter>
     <endGameButton>true</endGameButton>

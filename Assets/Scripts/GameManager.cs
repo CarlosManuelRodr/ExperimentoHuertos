@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     private uint totalScoreA, totalScoreB, totalScoreCommon;
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
-    private bool param_enableLock, param_commonCounter, param_endGameButton;
+    private bool param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton;
     private string path;
 
     void Start()
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
         // Usado en escena de depuración "Experiment".
         if (debug)
         {
-            this.StartExperiment(2, 1, 50, 50, true, true, true);
+            this.StartExperiment(2, 1, 50, 50, false, true, true, true);
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
 
     public void StartExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB, 
-        bool enableLock, bool commonCounter, bool endGameButton
+        bool freeOrchard, bool enableLock, bool commonCounter, bool endGameButton
         )
     {
         currentRound = 1;    // Comienza en ronda 1 de 3.
@@ -169,8 +169,8 @@ public class GameManager : MonoBehaviour
         parallax.MoveDown();
         experiment.SetActive(true);
         experimentManager.InitializeExperiment(
-            playerAFruits, playerBFruits, speedA, speedB, 
-            enableLock, commonCounter, endGameButton,
+            playerAFruits, playerBFruits, speedA, speedB,
+            freeOrchard, enableLock, commonCounter, endGameButton,
             path, currentID, currentRound
             );
 
@@ -178,6 +178,7 @@ public class GameManager : MonoBehaviour
         param_playerBFruits = playerBFruits;
         param_speedA = speedA;
         param_speedB = speedB;
+        param_freeOrchard = freeOrchard;
         param_enableLock = enableLock;
         param_commonCounter = commonCounter;
         param_endGameButton = endGameButton;
@@ -247,7 +248,7 @@ public class GameManager : MonoBehaviour
 
                 experimentManager.InitializeExperiment(
                     param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
-                    param_enableLock, param_commonCounter, param_endGameButton,
+                    param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton,
                     path, currentID, currentRound
                     );
 
