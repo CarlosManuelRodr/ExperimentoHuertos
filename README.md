@@ -17,19 +17,19 @@ Para usar el analizador de datos es necesario instalar [Mathematica](http://www.
 
 En el directorio
 
-<Directorio del juego>/Levels
+`<Directorio del juego>/Levels`
 
 se encuentra el archivo de configuración de los niveles que puede ser editado por los experimentadores.
 
 Los datos de salida son guardados por defecto en
 
-<Directorio de usuario>/HuertosLog
+`<Directorio de usuario>/HuertosLog`
 
 y se puede cambiar en cualquier momento desde el menú de opciones dentro del juego.
 
 También se provee una libreta de análisis de datos programada en el lenguaje Wolfram que puede ser ejecutada en Mathematica, y se encuentra en el directorio
 
-<Directorio del juego>/DataAnalytics
+`<Directorio del juego>/DataAnalytics`
 
 ## Configuración de los niveles
 
@@ -41,5 +41,5 @@ Los niveles disponibles y sus parámetros se especifican en el archivo `Levels.x
 
 ![xml](<https://raw.githubusercontent.com/CarlosManuelRodr/ExperimentoHuertos/master/img/4.png>)
 
-Este archivo debe ser editado por los experimentadores a fin de ajustar los parámetros de cada nivel. Asimismo es posible seleccionar una imagen que actúe como identificador del nivel, la cual puede ser modificada en la etiqueta <image>.
+Este archivo debe ser editado por los experimentadores a fin de ajustar los parámetros de cada nivel. Asimismo es posible seleccionar una imagen que actúe como identificador del nivel, la cual puede ser modificada en la etiqueta `<image>`.
 
