@@ -3130,7 +3130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239055273}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 278, y: 13, z: 0}
+  m_LocalPosition: {x: 278, y: 17, z: 0}
   m_LocalScale: {x: 27.543015, y: 27.543015, z: 27.543015}
   m_Children: []
   m_Father: {fileID: 251546961}
@@ -16838,7 +16838,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 923097212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -284, y: 21.7, z: 0}
+  m_LocalPosition: {x: -284, y: 28, z: 0}
   m_LocalScale: {x: 21.73738, y: 21.73738, z: 21.73738}
   m_Children: []
   m_Father: {fileID: 251546961}
@@ -19543,8 +19543,8 @@ MonoBehaviour:
   commonChestCounter: {fileID: 892836055}
   fruitA: {fileID: 109474078077156084, guid: eac15ca579e4b0e439f5e40d0738ce3e, type: 3}
   fruitB: {fileID: 302127848248516896, guid: 389a3e8db850a5d4e94f5e78b3e6bd4e, type: 3}
-  speed: 6.62
-  period: 0.05
+  speed: 5.69
+  period: 0.087
 --- !u!1 &1126427199
 GameObject:
   m_ObjectHideFlags: 0

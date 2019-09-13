@@ -144,7 +144,12 @@ public class LevelSelectController : MonoBehaviour
                     levelData.speedA = Convert.ToUInt32(level["speedA"].InnerText);
                     levelData.speedB = Convert.ToUInt32(level["speedB"].InnerText);
                     levelData.freeOrchard = Convert.ToBoolean(level["freeOrchard"].InnerText);
-                    levelData.enableLock = Convert.ToBoolean(level["enableLock"].InnerText);
+
+                    if (levelData.freeOrchard)
+                        levelData.enableLock = false;
+                    else
+                        levelData.enableLock = Convert.ToBoolean(level["enableLock"].InnerText);
+
                     levelData.commonCounter = Convert.ToBoolean(level["commonCounter"].InnerText);
                     levelData.endGameButton = Convert.ToBoolean(level["endGameButton"].InnerText);
                     output.Add(levelData);

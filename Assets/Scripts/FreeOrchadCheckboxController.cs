@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class FreeOrchadCheckboxController : MonoBehaviour
@@ -19,6 +17,7 @@ public class FreeOrchadCheckboxController : MonoBehaviour
     {
         status = !status;
         toggle.interactable = status;
-        toggle.isOn = status;
+        if (toggle.isOn && !status)
+            toggle.isOn = false;
     }
 }
