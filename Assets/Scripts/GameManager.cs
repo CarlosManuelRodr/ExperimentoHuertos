@@ -92,6 +92,10 @@ public class GameManager : MonoBehaviour
         totalScoreB = 0;
         totalScoreCommon = 0;
 
+        round1.Prepare();
+        round2.Prepare();
+        round3.Prepare();
+
         // Si no hay al menos dos mouse, genera pantalla de error.
         if (eventSystem != null && errorMenu != null)
         {
