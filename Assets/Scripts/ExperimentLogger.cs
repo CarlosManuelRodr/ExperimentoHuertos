@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +15,8 @@ public class ExperimentLogger : MonoBehaviour
     private uint playerAFruits, playerBFruits;
     private uint playerAScore, playerBScore, commonChestScore;
     private int round = 1;
+    private List<Vector2> gridPositions = new List<Vector2>();
+    private List<string> eventLog = new List<string>();
 
     public void SetDefaultPath()
     {
@@ -52,6 +55,7 @@ public class ExperimentLogger : MonoBehaviour
 
     public void Save()
     {
+        // Guarda archivo de resutados
         Debug.Log("Saving to: " + currentExperimentPath);
         string filePath = Path.Combine(currentExperimentPath, "resultados.txt");
         if (!File.Exists(filePath))
@@ -65,6 +69,8 @@ public class ExperimentLogger : MonoBehaviour
                 sw.WriteLine("Puntuacion cofre comun: " + commonChestScore.ToString());
             }
         }
+
+        // TODO: Guarda archivo de eventos
     }
 
     public string GetExperimentPath()

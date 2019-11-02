@@ -258,6 +258,7 @@ public class GameManager : MonoBehaviour
 
                 if (currentRound == 2)
                 {
+                    round1.Stop();
                     round2.Play();
                 }
                 if (currentRound == 3)
