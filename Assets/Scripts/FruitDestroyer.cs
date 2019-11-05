@@ -9,6 +9,7 @@ public class FruitDestroyer : MonoBehaviour
     {
         if (other.tag == "ItemA" || other.tag == "ItemB")
         {
+            Debug.LogWarning("FruitDestroyer: This shouldn't have happened. WTF?");
             Destroy(other.gameObject);
         }
     }

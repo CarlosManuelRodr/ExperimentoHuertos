@@ -9,10 +9,13 @@ public class ChestController : MonoBehaviour
     public bool dummy = false;
     public uint score = 0;
     public GameObject chestVisuals;
+    public GameObject experiment;
+    public Player owner = Player.PlayerA;
 
     private ChestVisuals chestVisualsScript;
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
+    private ExperimentLogger experimentLogger;
     private bool m_capture;
 
     void Awake()
@@ -29,19 +32,28 @@ public class ChestController : MonoBehaviour
     {
         if (!dummy)
             this.transform.parent.GetComponentInChildren<Text>().text = "Frutos: " + score;
+
+        if (experiment != null)
+            experimentLogger = experiment.GetComponent<ExperimentLogger>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (m_capture && (other.tag == "ItemA" || other.tag == "ItemB"))
         {
-            if (other.GetComponent<FruitController>().isFalling)
+            FruitController fruit = other.GetComponent<FruitController>();
+            if (fruit.isFalling)
             {
                 chestVisualsScript.SetCaptured(other.tag);
                 Destroy(other.gameObject);
                 audioSource.Play();
                 score++;
                 this.SetScore(score);
+
+                string player = (fruit.selector == Player.PlayerA) ? "A" : "B";
+                string fruitFrom = (other.tag == "ItemA") ? "A" : "B";
+                string chestOwner = (owner == Player.PlayerA) ? "A" : "B";
+                experimentLogger.Log(player + " deposita fruto de " + fruitFrom + " en cofre " + chestOwner);
             }
         }
     }

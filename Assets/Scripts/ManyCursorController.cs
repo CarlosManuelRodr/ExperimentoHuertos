@@ -19,6 +19,7 @@ public enum Player
 public class ManyCursorController : MonoBehaviour
 {
     public Player player = Player.PlayerA;
+    public GameObject experiment;
 
     [Range(0.0f, 0.1f)]
     public float cursorSpeed = 0.03f;
@@ -48,6 +49,7 @@ public class ManyCursorController : MonoBehaviour
 
     private GameObject selected;
     private AudioSource audioSource;
+    private ExperimentLogger experimentLogger;
     private Rect playableArea;
 
     private float nextUpdate;
@@ -64,6 +66,8 @@ public class ManyCursorController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         cursorLogger = GetComponent<CursorLogger>();
+        if (experiment != null)
+            experimentLogger = experiment.GetComponent<ExperimentLogger>();
         cam = Camera.main;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -149,9 +153,14 @@ public class ManyCursorController : MonoBehaviour
                 }
                 else
                 {
+                    FruitController fruit = selected.GetComponent<FruitController>();
                     audioSource.PlayOneShot(grab);
-                    selected.GetComponent<FruitController>().Select();
+                    fruit.Select(player);
                     selecting = true;
+
+                    string selector = (player == Player.PlayerA) ? "A" : "B";
+                    string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                    experimentLogger.Log(selector + " toma fruto de " + fruitOwner);
                 }
             }
 
@@ -167,6 +176,10 @@ public class ManyCursorController : MonoBehaviour
             {
                 audioSource.PlayOneShot(release);
                 selected.GetComponent<FruitController>().Deselect();
+
+                string selector = (player == Player.PlayerA) ? "A" : "B";
+                string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                experimentLogger.Log(selector + " suelta fruto de " + fruitOwner);
             }
 
             selecting = false;

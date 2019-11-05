@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Menú principal del juego.
@@ -9,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject gameManager;
     public GameObject startScreen, initGame, options, about;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
-    public GameObject freeOrchard, enableLock, commonCounter, endGameButton;
+    public GameObject orchadAccess, enableLock, commonCounter, endGameButton;
     public GameObject levelSelector;
 
     private AudioSource audioSource;
@@ -108,16 +109,19 @@ public class MainMenu : MonoBehaviour
         {
             // Recibe valores de configuración de elementos de interfaz gráfica.
             Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
-            Toggle freeOrchardScript, enableLockScript, commonCounterScript, endGameButtonScript;
+            Toggle enableLockScript, commonCounterScript, endGameButtonScript;
+            TMP_Dropdown orchadAccessDropdown;
+
+            orchadAccessDropdown = orchadAccess.GetComponent<TMP_Dropdown>();
             fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
             fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
             speedAScript = speedA.GetComponentInChildren<Slider>();
             speedBScript = speedB.GetComponentInChildren<Slider>();
-            freeOrchardScript = freeOrchard.GetComponentInChildren<Toggle>();
             enableLockScript = enableLock.GetComponent<Toggle>();
             commonCounterScript = commonCounter.GetComponent<Toggle>();
             endGameButtonScript = endGameButton.GetComponent<Toggle>();
 
+            bool freeOrchardValue = (orchadAccessDropdown.value == 0) ? false : true;
             if (gameManager != null)
             {
                 canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
@@ -125,7 +129,7 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
                     (uint)speedAScript.value, (uint)speedBScript.value,
-                    freeOrchardScript.isOn, enableLockScript.isOn, commonCounterScript.isOn,
+                    freeOrchardValue, enableLockScript.isOn, commonCounterScript.isOn,
                     endGameButtonScript.isOn
                     );
                 this.EnableMenu(false);

@@ -13,10 +13,15 @@ public class ExperimentLogger : MonoBehaviour
     private string currentExperimentPath;
     private int experimentID;
     private uint playerAFruits, playerBFruits;
-    private uint playerAScore, playerBScore, commonChestScore;
+    private uint playerAScore, playerBScore;
     private int round = 1;
     private List<Vector2> gridPositions = new List<Vector2>();
     private List<string> eventLog = new List<string>();
+
+    public void Log(string logTxt)
+    {
+        eventLog.Add(DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff") + ", " + logTxt);
+    }
 
     public void SetDefaultPath()
     {
@@ -36,11 +41,10 @@ public class ExperimentLogger : MonoBehaviour
         playerBFruits = fruitsB;
     }
 
-    public void SetScore(uint aScore, uint bScore, uint commonScore)
+    public void SetScore(uint aScore, uint bScore)
     {
         playerAScore = aScore;
         playerBScore = bScore;
-        commonChestScore = commonScore;
     }
 
     public void SetRound(int nround)
@@ -66,11 +70,19 @@ public class ExperimentLogger : MonoBehaviour
                 sw.WriteLine("Frutas huerto B: " + playerBFruits.ToString());
                 sw.WriteLine("Puntuacion jugador A: " + playerAScore.ToString());
                 sw.WriteLine("Puntuacion jugador B: " + playerBScore.ToString());
-                sw.WriteLine("Puntuacion cofre comun: " + commonChestScore.ToString());
             }
         }
 
-        // TODO: Guarda archivo de eventos
+        // Guarda archivo de eventos
+        filePath = Path.Combine(currentExperimentPath, "eventos.txt");
+        if (!File.Exists(filePath))
+        {
+            using (StreamWriter sw = File.CreateText(filePath))
+            {
+                foreach (string s in eventLog)
+                    sw.WriteLine(s);
+            }
+        }
     }
 
     public string GetExperimentPath()

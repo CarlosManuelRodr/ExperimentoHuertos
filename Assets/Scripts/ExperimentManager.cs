@@ -133,8 +133,7 @@ public class ExperimentManager : MonoBehaviour
     {
         logger.SetScore(
             chestAScript.GetScore(),
-            chestBScript.GetScore(),
-            chestCommonScript.GetScore()
+            chestBScript.GetScore()
             );
         logger.Save();
         this.SaveCursorLog();

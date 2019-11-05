@@ -10,12 +10,14 @@ public class FruitController : MonoBehaviour
     public bool isSelected { get { return selected; } }
     public bool isFalling { get { return falling; } }
     public bool isHighlighted { get { return highlight.activeSelf; } }
+    public Player selector { get { return whoSelected; } }
     public float fruitLogInterval = 0.2f;
 
     private SpriteRenderer fruitRenderer, highlightRenderer = null;
     private Rigidbody2D rigidbody2d;
     private FruitLogger fruitLogger;
     private Camera cam;
+    private Player whoSelected;
     private Color red, yellow, green;
     private Vector3 startPos;
     private bool inChest;
@@ -23,7 +25,6 @@ public class FruitController : MonoBehaviour
     private bool selected;
     private bool falling;
     private float nextUpdate;
-    private string selector = "";
 
     void Awake()
     {
@@ -88,6 +89,7 @@ public class FruitController : MonoBehaviour
             nextUpdate = Time.time + fruitLogInterval;
             if (startPos != transform.position && fruitLogger != null)
             {
+                string selector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
                 fruitLogger.Log(cam.WorldToScreenPoint(transform.position), selector);
             }
         }
@@ -103,8 +105,6 @@ public class FruitController : MonoBehaviour
                 ManyCursorController cursor = other.gameObject.GetComponent<ManyCursorController>();
                 if (!cursor.isSelecting)
                     highlight.SetActive(true);
-
-                selector = other.tag;
             }
 
             // En caso de que entre en contacto con un cofre, activa el highlight verde.
@@ -137,8 +137,9 @@ public class FruitController : MonoBehaviour
         }
     }
 
-    public void Select()
+    public void Select(Player who)
     {
+        whoSelected = who;
         highlightRenderer.color = yellow;
         highlightRenderer.sortingOrder += 2;
         fruitRenderer.sortingOrder += 2;

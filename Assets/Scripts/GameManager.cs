@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
         // Usado en escena de depuración "Experiment".
         if (debug)
         {
-            this.StartExperiment(2, 1, 50, 50, false, true, true, true);
+            this.StartExperiment(4, 3, 25, 25, false, true, true, true);
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
