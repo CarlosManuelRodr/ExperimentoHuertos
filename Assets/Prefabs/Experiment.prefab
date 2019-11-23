@@ -1386,154 +1386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ed25c089b61dd54fb771a3222622993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1943442339640575969
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1943442339640575970}
-  - component: {fileID: 1943442339640575972}
-  - component: {fileID: 1943442339640575971}
-  m_Layer: 0
-  m_Name: ChestClear
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1943442339640575970
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943442339640575969}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4271309, y: 2.365349, z: -1515.8417}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1943442339790056268}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1943442339640575972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943442339640575969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aef3ad562c724ab47ab459c6882b8970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chestA: {fileID: 359778464809937251}
-  chestB: {fileID: 359778465199660978}
-  chestCommon: {fileID: 359778465632063333}
-  commonChestCounter: {fileID: 1943442338707578887}
-  fruitA: {fileID: 109474078077156084, guid: eac15ca579e4b0e439f5e40d0738ce3e, type: 3}
-  fruitB: {fileID: 302127848248516896, guid: 389a3e8db850a5d4e94f5e78b3e6bd4e, type: 3}
-  speed: 5.69
-  period: 0.087
---- !u!82 &1943442339640575971
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943442339640575969}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5ac6242608b593342802f2c42954d298, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1943442339763047144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1670,7 +1522,6 @@ Transform:
   - {fileID: 1943442340021395934}
   - {fileID: 1943442339861889234}
   - {fileID: 1943442340025865067}
-  - {fileID: 1943442339640575970}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1808,6 +1659,8 @@ MonoBehaviour:
   enemyCursor: {fileID: 1943442339328790129}
   locked: {fileID: 21300000, guid: 68f7856e1a6bfe9468e364b73b6850fb, type: 3}
   unlocked: {fileID: 21300000, guid: ece24c686544b8142bd014bb62b32c0d, type: 3}
+  owner: 1
+  experiment: {fileID: 1943442339790056267}
 --- !u!61 &1943442339861889236
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2053,6 +1906,8 @@ MonoBehaviour:
   enemyCursor: {fileID: 1943442339157107064}
   locked: {fileID: 21300000, guid: 68f7856e1a6bfe9468e364b73b6850fb, type: 3}
   unlocked: {fileID: 21300000, guid: ece24c686544b8142bd014bb62b32c0d, type: 3}
+  owner: 0
+  experiment: {fileID: 1943442339790056267}
 --- !u!61 &1943442340021395904
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2391,15 +2246,15 @@ PrefabInstance:
       objectReference: {fileID: 1943442339790056267}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
---- !u!1 &359778465199660978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2163502540863139389, guid: fa2b8903ccf26534f89d5b8e702dca79,
-    type: 3}
-  m_PrefabInstance: {fileID: 1943442338215031183}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &359778465199660977 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2163502540863139390, guid: fa2b8903ccf26534f89d5b8e702dca79,
+    type: 3}
+  m_PrefabInstance: {fileID: 1943442338215031183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &359778465199660978 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2163502540863139389, guid: fa2b8903ccf26534f89d5b8e702dca79,
     type: 3}
   m_PrefabInstance: {fileID: 1943442338215031183}
   m_PrefabAsset: {fileID: 0}

@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     public GameObject tutorial;
     public GameObject eventSystem;
     public GameObject round1Video, round2Video, round3Video;
-    public GameObject chestClearer;
     public GameObject errorMenu;
+    public GameObject timer;
     public bool debug = false;
     public uint rounds = 3;
 
@@ -31,15 +31,13 @@ public class GameManager : MonoBehaviour
     private MainMenu mainMenuScript;
     private VideoPlayer round1, round2, round3;
     private Jukebox jukebox;
-    private ChestClear chestClearerScript;
+    private TimerController timerController;
 
     private GameType gameType = GameType.None;
     private bool prepareStart;
     private bool inExperiment;
-    private bool clearing;
     private int currentID;
     private int currentRound;
-    private uint totalScoreA, totalScoreB, totalScoreCommon;
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
     private bool param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton;
@@ -53,8 +51,8 @@ public class GameManager : MonoBehaviour
         round1 = round1Video.GetComponent<VideoPlayer>();
         round2 = round2Video.GetComponent<VideoPlayer>();
         round3 = round3Video.GetComponent<VideoPlayer>();
+        timerController = timer.GetComponent<TimerController>();
         jukebox = GetComponent<Jukebox>();
-        chestClearerScript = chestClearer.GetComponent<ChestClear>();
 
         // Carga configuración de volumen de las preferencias de usuario.
         int musicVolume = PlayerPrefs.GetInt("Volume", -1);
@@ -87,10 +85,6 @@ public class GameManager : MonoBehaviour
 
         prepareStart = false;
         inExperiment = false;
-        clearing = false;
-        totalScoreA = 0;
-        totalScoreB = 0;
-        totalScoreCommon = 0;
 
         round1.Prepare();
         round2.Prepare();
@@ -128,6 +122,7 @@ public class GameManager : MonoBehaviour
                 inExperiment = true;
                 round1.Play();
                 prepareStart = false;
+                timerController.StartTimer();
             }
             else if (tutorial != null && tutorial.activeSelf)
             {
@@ -143,17 +138,6 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
                 this.EndExperiment();
         }
-
-        // Si la limpieza del cofre ha terminado, termina juego.
-        if (clearing)
-        {
-            if (!chestClearerScript.isRunning)
-            {
-                this.EndGame();
-                clearing = false;
-                chestClearerScript.StopClear();
-            }
-        }
     }
 
     public void StartExperiment(
@@ -164,10 +148,6 @@ public class GameManager : MonoBehaviour
         currentRound = 1;    // Comienza en ronda 1 de 3.
         path = DirectorySelector.GetSaveDirectory();                // Directorio de guardado configurable en opciones.
         currentID = ExperimentLogger.GetCurrentExperimentID(path);  // ID de experimento. Se calcula sumando uno a la última ID registrada en el log.
-
-        totalScoreA = 0;
-        totalScoreB = 0;
-        totalScoreCommon = 0;
 
         // Inicia experimento y guarda configuración para rondas posteriores.
         parallax.MoveDown();
@@ -216,8 +196,6 @@ public class GameManager : MonoBehaviour
             hud.SetActive(false);
 
             inExperiment = false;
-            totalScoreA = 0;
-            totalScoreB = 0;
         }
         else
         {
@@ -232,40 +210,32 @@ public class GameManager : MonoBehaviour
 
     public void EndExperiment()
     {
-        if (!clearing)
+        if (currentRound == rounds)
+        {
+            this.EndGame();
+        }
+        else
         {
             // Reinicia experimento hasta llegar a la ronda 3.
-            totalScoreA += experimentManager.scoreA;
-            totalScoreB += experimentManager.scoreB;
-            totalScoreCommon += experimentManager.scoreCommon;
+            currentRound++;
 
-            if (currentRound == rounds)
+            experimentManager.StopExperiment();
+            experimentManager.InitializeExperiment(
+                param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
+                param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton,
+                path, currentID, currentRound
+                );
+
+            if (currentRound == 2)
             {
-                clearing = true;
-                chestClearerScript.StartClear(totalScoreA, totalScoreB, totalScoreCommon);
+                round1.Stop();
+                round2.Play();
             }
-            else
+            if (currentRound == 3)
             {
-                currentRound++;
-
-                experimentManager.StopExperiment();
-
-                experimentManager.InitializeExperiment(
-                    param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
-                    param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton,
-                    path, currentID, currentRound
-                    );
-
-                if (currentRound == 2)
-                {
-                    round1.Stop();
-                    round2.Play();
-                }
-                if (currentRound == 3)
-                {
-                    round3.Play();
-                }
+                round3.Play();
             }
+            timerController.StartTimer();
         }
     }
 

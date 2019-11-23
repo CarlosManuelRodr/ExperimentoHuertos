@@ -14,7 +14,10 @@ public class LockController : MonoBehaviour
 {
     public GameObject myCursor, enemyCursor;
     public Sprite locked, unlocked;
+    public Player owner = Player.PlayerA;
+    public GameObject experiment;
 
+    private ExperimentLogger experimentLogger;
     private ManyCursorController enemyCursorController;
     private SpriteRenderer spriteRenderer;
     private ButtonStatus status = ButtonStatus.Small;
@@ -26,6 +29,12 @@ public class LockController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyCursorController = enemyCursor.GetComponent<ManyCursorController>();
         text = GetComponentInChildren<Text>();
+    }
+
+    void Start()
+    {
+        if (experiment != null)
+            experimentLogger = experiment.GetComponent<ExperimentLogger>();
     }
 
     void OnDisable()
@@ -43,12 +52,16 @@ public class LockController : MonoBehaviour
 
     public void LockSwitch(string caller)
     {
+        string player = (caller == "CursorA") ? "A" : "B";
+        string orchidOwner = (owner == Player.PlayerA) ? "A" : "B";
+
         if (lockstatus == LockStatus.Unlocked && caller == myCursor.tag)
         {
             spriteRenderer.sprite = locked;
             lockstatus = LockStatus.Locked;
             text.text = "Parcela\nbloqueada";
             enemyCursorController.SelectableSwitch();
+            experimentLogger.Log(player + " bloquea huerto " + orchidOwner);
         }
         else if (lockstatus == LockStatus.Locked && caller == myCursor.tag)
         {
@@ -56,6 +69,7 @@ public class LockController : MonoBehaviour
             lockstatus = LockStatus.Unlocked;
             text.text = "Parcela\ndesbloqueada";
             enemyCursorController.SelectableSwitch();
+            experimentLogger.Log(player + " desbloquea huerto " + orchidOwner);
         }
     }
 

@@ -53,7 +53,7 @@ public class ChestController : MonoBehaviour
                 string player = (fruit.selector == Player.PlayerA) ? "A" : "B";
                 string fruitFrom = (other.tag == "ItemA") ? "A" : "B";
                 string chestOwner = (owner == Player.PlayerA) ? "A" : "B";
-                experimentLogger.Log(player + " deposita fruto de " + fruitFrom + " en cofre " + chestOwner);
+                experimentLogger.Log(player + " deposita fruto de " + fruitFrom + " en cesto " + chestOwner);
             }
         }
     }

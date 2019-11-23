@@ -15,7 +15,6 @@ public class ExperimentLogger : MonoBehaviour
     private uint playerAFruits, playerBFruits;
     private uint playerAScore, playerBScore;
     private int round = 1;
-    private List<Vector2> gridPositions = new List<Vector2>();
     private List<string> eventLog = new List<string>();
 
     public void Log(string logTxt)
