@@ -16,6 +16,7 @@ public class ChestController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
     private ExperimentLogger experimentLogger;
+    private ExperimentManager experimentManager;
     private bool m_capture;
 
     void Awake()
@@ -34,7 +35,10 @@ public class ChestController : MonoBehaviour
             this.transform.parent.GetComponentInChildren<Text>().text = "Frutos: " + score;
 
         if (experiment != null)
+        {
+            experimentManager = experiment.GetComponent<ExperimentManager>();
             experimentLogger = experiment.GetComponent<ExperimentLogger>();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -49,6 +53,11 @@ public class ChestController : MonoBehaviour
                 audioSource.Play();
                 score++;
                 this.SetScore(score);
+
+                if (fruit.selector == Player.PlayerA)
+                    experimentManager.harvestedA++;
+                else
+                    experimentManager.harvestedB++;
 
                 string player = (fruit.selector == Player.PlayerA) ? "A" : "B";
                 string fruitFrom = (other.tag == "ItemA") ? "A" : "B";

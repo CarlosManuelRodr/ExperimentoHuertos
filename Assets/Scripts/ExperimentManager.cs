@@ -7,20 +7,32 @@ public class ExperimentManager : MonoBehaviour
 {
     public GameObject gameManager;
     public GameObject boardA, boardB;
-    public GameObject chestA, chestB, chestCommon;
+    public GameObject chestA, chestB;
     public GameObject playerACursor, playerBCursor;
     public GameObject lockA, lockB, endExperimentButton;
+    public GameObject commonCounter;
+    public GameObject commonCounterHUD;
 
     public uint scoreA { get { return chestAScript.GetScore(); } }
     public uint scoreB { get { return chestBScript.GetScore(); } }
-    public uint scoreCommon { get { return chestCommonScript.GetScore(); } }
+    public uint harvestedA
+    {
+        get { return fruits_harvested_by_a; }
+        set { fruits_harvested_by_a = value; }
+    }
+    public uint harvestedB
+    {
+        get { return fruits_harvested_by_b; }
+        set { fruits_harvested_by_b = value; }
+    }
+
+    private uint fruits_harvested_by_a;
+    private uint fruits_harvested_by_b;
 
     private GameManager gameManagerScript;
     private Vector2 playerACursorPos, playerBCursorPos;
     private BoardManager boardManagerA, boardManagerB;
     private ChestController chestAScript, chestBScript;
-    private CommonChestController chestCommonScript;
-    private Vector2 aiCursorPosition;
     private ManyCursorController cursorAScript, cursorBScript;
 
     private string path;
@@ -67,7 +79,7 @@ public class ExperimentManager : MonoBehaviour
 
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
-        bool freeOrchard, bool enableLock, bool commonCounter, bool endGameButton,
+        bool freeOrchard, bool enableLock, bool useCommonCounter, bool endGameButton,
         string logPath, int experimentID, int roundNumber
         )
     {
@@ -102,11 +114,15 @@ public class ExperimentManager : MonoBehaviour
 
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
-        chestCommonScript = chestCommon.GetComponentInChildren<CommonChestController>();
-        chestCommonScript.actAsCounter = commonCounter;
 
         chestAScript.SetToCapture(false);
         chestBScript.SetToCapture(false);
+
+        commonCounter.SetActive(useCommonCounter);
+        commonCounterHUD.SetActive(useCommonCounter);
+
+        fruits_harvested_by_a = 0;
+        fruits_harvested_by_b = 0;
 
         running = true;
     }
@@ -141,7 +157,5 @@ public class ExperimentManager : MonoBehaviour
 
         chestAScript.SetScore(0);
         chestBScript.SetScore(0);
-        chestCommonScript.ResetScore();
-        chestCommonScript.SetScore(0);
     }
 }

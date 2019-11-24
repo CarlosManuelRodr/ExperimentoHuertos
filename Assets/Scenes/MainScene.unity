@@ -6249,6 +6249,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534444917}
   m_CullTransparentMesh: 0
+--- !u!1 &536237548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5398922792160096621, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5398922792810368824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &537009752
 GameObject:
   m_ObjectHideFlags: 0
@@ -22133,7 +22139,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Acceso a cofre
+  m_text: Acceso a cesto
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8966411ef14670d42a3de2c401c50772, type: 2}
   m_sharedMaterial: {fileID: 7772147594031063236, guid: 8966411ef14670d42a3de2c401c50772,
@@ -33156,6 +33162,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Experiment
       objectReference: {fileID: 0}
+    - target: {fileID: 1943442339790056267, guid: c57def7fa85868c40acef21654135443,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1943442339790056268, guid: c57def7fa85868c40acef21654135443,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33221,6 +33232,11 @@ PrefabInstance:
       propertyPath: endExperimentButton
       value: 
       objectReference: {fileID: 1716677509}
+    - target: {fileID: 1943442339790056269, guid: c57def7fa85868c40acef21654135443,
+        type: 3}
+      propertyPath: commonCounterHUD
+      value: 
+      objectReference: {fileID: 536237548}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c57def7fa85868c40acef21654135443, type: 3}
 --- !u!1001 &2053489179218152220
@@ -33493,6 +33509,11 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 653236397}
+    - target: {fileID: 5398922791436827111, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5398922791237758986, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
         type: 3}
       propertyPath: m_TargetCamera
@@ -33508,6 +33529,16 @@ PrefabInstance:
       propertyPath: m_TargetCamera
       value: 
       objectReference: {fileID: 2037199322}
+    - target: {fileID: 5615243583980809614, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+        type: 3}
+      propertyPath: experiment
+      value: 
+      objectReference: {fileID: 1972032411}
+    - target: {fileID: 8687104342231928142, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+        type: 3}
+      propertyPath: experiment
+      value: 
+      objectReference: {fileID: 1972032411}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: feac1ff1d75abb540a523ef7ff3ebb0b, type: 3}
 --- !u!1 &5398922792810368825 stripped
