@@ -1,19 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using TMPro;
 
 public class LockCheckboxController : MonoBehaviour
 {
-    public GameObject orchidAccessSelector, chestAccessSelector;
-    private TMP_Dropdown dropdownOrchid, dropdownChest;
+    public GameObject orchidAccessSelector;
+    private TMP_Dropdown dropdownOrchid;
     private bool status;
 
     void Start()
     {
         dropdownOrchid = orchidAccessSelector.GetComponent<TMP_Dropdown>();
-        dropdownChest = chestAccessSelector.GetComponent<TMP_Dropdown>();
         status = true;
     }
 
@@ -21,6 +17,5 @@ public class LockCheckboxController : MonoBehaviour
     {
         status = !status;
         dropdownOrchid.interactable = status;
-        dropdownChest.interactable = status;
     }
 }
