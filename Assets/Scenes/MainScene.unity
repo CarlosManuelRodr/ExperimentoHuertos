@@ -33559,6 +33559,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tutorial
       objectReference: {fileID: 0}
+    - target: {fileID: 6755349558771720586, guid: 59696a046fdf1db40bd3c7b62a3c6478,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6755349558771720587, guid: 59696a046fdf1db40bd3c7b62a3c6478,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -33619,6 +33624,11 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 653236397}
+    - target: {fileID: 6755349558771720584, guid: 59696a046fdf1db40bd3c7b62a3c6478,
+        type: 3}
+      propertyPath: debug
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6755349558773664328, guid: 59696a046fdf1db40bd3c7b62a3c6478,
         type: 3}
       propertyPath: m_TargetCamera

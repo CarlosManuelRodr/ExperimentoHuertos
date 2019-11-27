@@ -6,7 +6,9 @@ Fáciles:
 ✔ Cambiar "ronda" por "sesiones".
 • Cambiar los cofres por cestos en las imágenes del juego y en el código de salida.
 ✔ Eliminar animación final de los frutos cayendo en el cesto común, 
-• Eliminar la animación de "correcto" en el tutorial.
+✔ Eliminar la animación de "correcto" en el tutorial.
+• La función de logger debe ser opcional.
+• Agregar opción de partida de prueba.
 
 Medio:
 ✔ Agregar contador de frutos cosechados (tomados del huerto).

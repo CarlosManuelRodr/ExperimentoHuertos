@@ -158,9 +158,12 @@ public class ManyCursorController : MonoBehaviour
                     fruit.Select(player);
                     selecting = true;
 
-                    string selector = (player == Player.PlayerA) ? "A" : "B";
-                    string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
-                    experimentLogger.Log(selector + " toma fruto de " + fruitOwner);
+                    if (experiment != null)
+                    {
+                        string selector = (player == Player.PlayerA) ? "A" : "B";
+                        string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                        experimentLogger.Log(selector + " toma fruto de " + fruitOwner);
+                    }
                 }
             }
 
@@ -177,9 +180,12 @@ public class ManyCursorController : MonoBehaviour
                 audioSource.PlayOneShot(release);
                 selected.GetComponent<FruitController>().Deselect();
 
-                string selector = (player == Player.PlayerA) ? "A" : "B";
-                string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
-                experimentLogger.Log(selector + " suelta fruto de " + fruitOwner);
+                if (experiment != null)
+                {
+                    string selector = (player == Player.PlayerA) ? "A" : "B";
+                    string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                    experimentLogger.Log(selector + " suelta fruto de " + fruitOwner);
+                }
             }
 
             selecting = false;

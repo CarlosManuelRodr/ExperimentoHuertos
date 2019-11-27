@@ -54,15 +54,18 @@ public class ChestController : MonoBehaviour
                 score++;
                 this.SetScore(score);
 
-                if (fruit.selector == Player.PlayerA)
-                    experimentManager.harvestedA++;
-                else
-                    experimentManager.harvestedB++;
+                if (experiment != null)
+                {
+                    if (fruit.selector == Player.PlayerA)
+                        experimentManager.harvestedA++;
+                    else
+                        experimentManager.harvestedB++;
 
-                string player = (fruit.selector == Player.PlayerA) ? "A" : "B";
-                string fruitFrom = (other.tag == "ItemA") ? "A" : "B";
-                string chestOwner = (owner == Player.PlayerA) ? "A" : "B";
-                experimentLogger.Log(player + " deposita fruto de " + fruitFrom + " en cesto " + chestOwner);
+                    string player = (fruit.selector == Player.PlayerA) ? "A" : "B";
+                    string fruitFrom = (other.tag == "ItemA") ? "A" : "B";
+                    string chestOwner = (owner == Player.PlayerA) ? "A" : "B";
+                    experimentLogger.Log(player + " deposita fruto de " + fruitFrom + " en cesto " + chestOwner);
+                }
             }
         }
     }

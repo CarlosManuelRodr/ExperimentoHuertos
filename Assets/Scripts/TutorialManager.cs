@@ -8,7 +8,6 @@ using UnityEngine.Video;
 public class TutorialManager : MonoBehaviour
 {
     public GameObject gameManager;
-    public GameObject checkA, checkB;
     public GameObject tutorial1, tutorial2, tutorial3;
     public GameObject fruitA, fruitB;
     public GameObject chestA, chestB;
@@ -24,7 +23,6 @@ public class TutorialManager : MonoBehaviour
     private VideoPlayer tutorial1Video, tutorial2Video, tutorial3Video;
     private FruitController fruitAController, fruitBController;
     private ChestController chestAController, chestBController;
-    private bool checkedA, checkedB;
 
     void Awake()
     {
@@ -33,7 +31,9 @@ public class TutorialManager : MonoBehaviour
         tutorial3Video = tutorial3.GetComponent<VideoPlayer>();
         chestAController = chestA.GetComponentInChildren<ChestController>();
         chestBController = chestB.GetComponentInChildren<ChestController>();
-        gameManagerScript = gameManager.GetComponent<GameManager>();
+
+        if(gameManager != null)
+            gameManagerScript = gameManager.GetComponent<GameManager>();
 
         playerACursorController = playerACursor.GetComponent<ManyCursorController>();
         playerBCursorController = playerBCursor.GetComponent<ManyCursorController>();
@@ -48,93 +48,37 @@ public class TutorialManager : MonoBehaviour
         fruitBInstance = null;
     }
 
+    private void Start()
+    {
+        if (debug)
+        {
+            ActivateCursors();
+            InitializeTutorial();
+        }
+    }
+
     void Update()
     {
-        // Tecla para omitir fase de tutorial.
-        if (debug && Input.GetKeyDown(KeyCode.Escape))
-            this.NextPhase();
-
-        if (tutorialPhase == 1)
+        // Tecla para pasar la fase de tutorial.
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!checkedA && fruitAController.isHighlighted)
+            if (tutorialPhase == 4)
             {
-                checkA.SetActive(true);
-                checkA.GetComponent<AudioSource>().Play();
-                checkedA = true;
+                chestAController.SetScore(0);
+                chestBController.SetScore(0);
 
-                if (checkedA && checkedB)
-                    StartCoroutine("DelayNextPhase");
+                if (fruitAInstance != null)
+                    Destroy(fruitAInstance);
+                if (fruitBInstance != null)
+                    Destroy(fruitBInstance);
+
+                tutorialPhase = 0;
+
+                if (gameManager != null)
+                    gameManagerScript.EndTutorial();
             }
-
-            if (!checkedB && fruitBController.isHighlighted)
-            {
-                checkB.SetActive(true);
-                checkB.GetComponent<AudioSource>().Play();
-                checkedB = true;
-
-                if (checkedA && checkedB)
-                    StartCoroutine("DelayNextPhase");
-            }
-        }
-
-        if (tutorialPhase == 2)
-        {
-            if (!checkedA && fruitAController.isSelected)
-            {
-                checkA.SetActive(true);
-                checkA.GetComponent<AudioSource>().Play();
-                checkedA = true;
-
-                if (checkedA && checkedB)
-                    StartCoroutine("DelayNextPhase");
-            }
-
-            if (!checkedB && fruitBController.isSelected)
-            {
-                checkB.SetActive(true);
-                checkB.GetComponent<AudioSource>().Play();
-                checkedB = true;
-
-                if (checkedA && checkedB)
-                    StartCoroutine("DelayNextPhase");
-            }
-        }
-
-        if (tutorialPhase == 3)
-        {
-            if (!checkedA && chestAController.score != 0)
-            {
-                checkA.SetActive(true);
-                checkA.GetComponent<AudioSource>().Play();
-                checkedA = true;
-
-                if (checkedA && checkedB)
-                    StartCoroutine("DelayNextPhase");
-            }
-
-            if (!checkedB && chestBController.score != 0)
-            {
-                checkB.SetActive(true);
-                checkB.GetComponent<AudioSource>().Play();
-                checkedB = true;
-
-                if (checkedA && checkedB)
-                    StartCoroutine("DelayNextPhase");
-            }
-        }
-
-        if (tutorialPhase == 4)
-        {
-            chestAController.SetScore(0);
-            chestBController.SetScore(0);
-
-            if (fruitAInstance != null)
-                Destroy(fruitAInstance);
-            if (fruitBInstance != null)
-                Destroy(fruitBInstance);
-
-            tutorialPhase = 0;
-            gameManagerScript.EndTutorial();
+            else
+                this.NextPhase();
         }
     }
 
@@ -168,10 +112,6 @@ public class TutorialManager : MonoBehaviour
     private void NextPhase()
     {
         tutorialPhase++;
-        checkedA = false;
-        checkedB = false;
-        checkA.SetActive(false);
-        checkB.SetActive(false);
 
         if (tutorialPhase == 2)
         {
@@ -191,8 +131,6 @@ public class TutorialManager : MonoBehaviour
 
     public void InitializeTutorial()
     {
-        checkedA = false;
-        checkedB = false;
         chestA.SetActive(false);
         chestB.SetActive(false);
 
