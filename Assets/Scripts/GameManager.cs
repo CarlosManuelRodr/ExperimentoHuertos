@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 enum GameType
@@ -115,12 +116,8 @@ public class GameManager : MonoBehaviour
         {
             if (gameType == GameType.Level)
             {
-                experimentManager.ActivateCursors();
-                inExperiment = true;
-                if (max_rounds != 1)
-                    round1.Play();
                 prepareStart = false;
-                timerController.StartTimer();
+                instructionsPanel.SetActive(true);
             }
             else if (tutorial != null && tutorial.activeSelf)
             {
@@ -136,6 +133,28 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
                 this.EndExperiment();
         }
+    }
+
+    public void AcceptInstructions()
+    {
+        instructionsPanel.SetActive(false);
+        if (currentRound == 1)
+        {
+            inExperiment = true;
+            if (max_rounds != 1)
+                round1.Play();
+        }
+        if (currentRound == 2)
+        {
+            round1.Stop();
+            round2.Play();
+        }
+        if (currentRound == 3)
+        {
+            round3.Play();
+        }
+        timerController.StartTimer();
+        experimentManager.ActivateCursors();
     }
 
     public void StartExperiment(
@@ -223,22 +242,13 @@ public class GameManager : MonoBehaviour
             currentRound++;
 
             experimentManager.StopExperiment();
+            experimentManager.DeactivateCursors();
             experimentManager.InitializeExperiment(
                 param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
                 param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton,
                 path, currentID, currentRound
                 );
-
-            if (currentRound == 2)
-            {
-                round1.Stop();
-                round2.Play();
-            }
-            if (currentRound == 3)
-            {
-                round3.Play();
-            }
-            timerController.StartTimer();
+            instructionsPanel.SetActive(true);
         }
     }
 

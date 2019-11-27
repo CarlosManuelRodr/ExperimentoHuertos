@@ -9,6 +9,7 @@ Fáciles:
 ✔ Eliminar la animación de "correcto" en el tutorial.
 ✔ La función de logger debe ser opcional.
 ✔ Agregar opción de partida de prueba.
+• HUD sólo hace fade-in la primera vez.
 
 Medio:
 ✔ Agregar contador de frutos cosechados (tomados del huerto).

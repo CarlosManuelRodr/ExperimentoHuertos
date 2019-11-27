@@ -6477,8 +6477,8 @@ MonoBehaviour:
   round3Video: {fileID: 1715765040}
   errorMenu: {fileID: 1754541393}
   timer: {fileID: 5398922792810368825}
+  instructionsPanel: {fileID: 1090807616}
   debug: 0
-  rounds: 3
 --- !u!114 &653236402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6765,6 +6765,12 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!1 &1090807616 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5897137230077829464, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5398922792810368824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1104663884
 GameObject:
   m_ObjectHideFlags: 0
@@ -13694,6 +13700,16 @@ PrefabInstance:
       propertyPath: experiment
       value: 
       objectReference: {fileID: 1972032411}
+    - target: {fileID: 465727450673318244, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 653236401}
+    - target: {fileID: 465727450673318244, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AcceptInstructions
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: feac1ff1d75abb540a523ef7ff3ebb0b, type: 3}
 --- !u!1 &5398922792810368825 stripped

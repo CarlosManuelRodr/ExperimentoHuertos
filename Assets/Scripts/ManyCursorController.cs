@@ -59,13 +59,13 @@ public class ManyCursorController : MonoBehaviour
     {
         initialSelectable = selectable;
         playableArea = Rect.MinMaxRect(-7.6f, -4.3f, 7.6f, 4.3f);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+        cursorLogger = GetComponent<CursorLogger>();
     }
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
-        cursorLogger = GetComponent<CursorLogger>();
         if (experiment != null)
             experimentLogger = experiment.GetComponent<ExperimentLogger>();
         cam = Camera.main;
