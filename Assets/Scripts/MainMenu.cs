@@ -150,6 +150,22 @@ public class MainMenu : MonoBehaviour
             else
                 Debug.LogError("No game manager found");
         }
+        else if (levelSelectController.GetSelectedLevelType() == LevelType.TEST_GAME)
+        {
+            if (gameManager != null)
+            {
+                canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
+                canvasFader.StartFading();
+                gameManagerScript.StartExperiment(
+                    20, 20,
+                    30, 30,
+                    true, false, true, true, 1
+                    );
+                this.EnableMenu(false);
+            }
+            else
+                Debug.LogError("No game manager found");
+        }
         audioSource.Play();
     }
 

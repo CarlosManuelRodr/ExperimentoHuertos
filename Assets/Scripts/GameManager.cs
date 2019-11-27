@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     public GameObject errorMenu;
     public GameObject timer;
     public bool debug = false;
-    public uint rounds = 3;
 
     private ExperimentManager experimentManager;
     private TutorialManager tutorialManager;
@@ -38,6 +37,7 @@ public class GameManager : MonoBehaviour
     private bool inExperiment;
     private int currentID;
     private int currentRound;
+    private uint max_rounds;
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
     private bool param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton;
@@ -86,10 +86,6 @@ public class GameManager : MonoBehaviour
         prepareStart = false;
         inExperiment = false;
 
-        round1.Prepare();
-        round2.Prepare();
-        round3.Prepare();
-
         // Si no hay al menos dos mouse, genera pantalla de error.
         if (eventSystem != null && errorMenu != null)
         {
@@ -120,7 +116,8 @@ public class GameManager : MonoBehaviour
             {
                 experimentManager.ActivateCursors();
                 inExperiment = true;
-                round1.Play();
+                if (max_rounds != 1)
+                    round1.Play();
                 prepareStart = false;
                 timerController.StartTimer();
             }
@@ -142,10 +139,12 @@ public class GameManager : MonoBehaviour
 
     public void StartExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB, 
-        bool freeOrchard, bool enableLock, bool commonCounter, bool endGameButton
+        bool freeOrchard, bool enableLock, bool commonCounter, bool endGameButton,
+        uint rounds = 3
         )
     {
         currentRound = 1;    // Comienza en ronda 1 de 3.
+        max_rounds = rounds;
         path = DirectorySelector.GetSaveDirectory();                // Directorio de guardado configurable en opciones.
         currentID = ExperimentLogger.GetCurrentExperimentID(path);  // ID de experimento. Se calcula sumando uno a la última ID registrada en el log.
 
@@ -168,6 +167,9 @@ public class GameManager : MonoBehaviour
         param_endGameButton = endGameButton;
 
         hud.SetActive(true);
+        round1.Prepare();
+        round2.Prepare();
+        round3.Prepare();
         hudFader.SetFadeType(CanvasFaderScript.eFadeType.fade_in);
         hudFader.StartFading();
         prepareStart = true;
@@ -210,7 +212,7 @@ public class GameManager : MonoBehaviour
 
     public void EndExperiment()
     {
-        if (currentRound == rounds)
+        if (currentRound == max_rounds)
         {
             this.EndGame();
         }

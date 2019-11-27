@@ -9,6 +9,7 @@ using TMPro;
 public enum LevelType
 {
     TUTORIAL,
+    TEST_GAME,
     DEFAULT,
     CUSTOM
 }
@@ -49,7 +50,7 @@ public class LevelSelectController : MonoBehaviour
 
     public void OnLevelSelected()
     {
-        if (dropdown.value == levels.Count + 1)
+        if (dropdown.value == levels.Count + 2)
         {
             // Activa menú de configuración de nivel.
             defaultLevelOptions.SetActive(false);
@@ -71,10 +72,17 @@ public class LevelSelectController : MonoBehaviour
                                         + " usted aprendera los controles basicos del juego.";
                 levelImage.sprite = tutorialImage;
             }
+            else if (dropdown.value == 1)
+            {
+                // Descripción del tutorial.
+                levelDescription.text = "<color=green>Instrucciones:<color=black>\n\nEn el nivel de prueba"
+                                        + " usted podra probar el juego.";
+                levelImage.sprite = tutorialImage;
+            }
             else
             {
                 // Descripción de nivel estándar.
-                LevelData ld = levels[dropdown.value-1];
+                LevelData ld = levels[dropdown.value-2];
                 levelDescription.text = "<color=green>Instrucciones:<color=black>\n\n" + ld.description;
                 levelImage.sprite = ld.image;
             }
@@ -87,12 +95,14 @@ public class LevelSelectController : MonoBehaviour
     {
         if (dropdown.value == 0)
             return new LevelData();
+        else if (dropdown.value == 1)
+            return new LevelData();
         else
         {
-            if (dropdown.value == levels.Count + 1)
+            if (dropdown.value == levels.Count + 2)
                 return new LevelData();
             else
-                return levels[dropdown.value - 1];
+                return levels[dropdown.value - 2];
         }
     }
 
@@ -100,9 +110,11 @@ public class LevelSelectController : MonoBehaviour
     {
         if (dropdown.value == 0)
             return LevelType.TUTORIAL;
+        else if (dropdown.value == 1)
+            return LevelType.TEST_GAME;
         else
         {
-            if (dropdown.value == levels.Count + 1)
+            if (dropdown.value == levels.Count + 2)
                 return LevelType.CUSTOM;
             else
                 return LevelType.DEFAULT;

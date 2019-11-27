@@ -39,6 +39,7 @@ public class ExperimentManager : MonoBehaviour
     private ExperimentLogger logger;
     private CursorLogger playerALogger, playerBLogger;
     private bool running;
+    private bool m_save_log;
 
     void Awake()
     {
@@ -80,7 +81,7 @@ public class ExperimentManager : MonoBehaviour
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
         bool freeOrchard, bool enableLock, bool useCommonCounter, bool endGameButton,
-        string logPath, int experimentID, int roundNumber
+        string logPath, int experimentID, int roundNumber, bool save_log = true
         )
     {
         cursorAScript.speed = (int) speedA;
@@ -101,16 +102,25 @@ public class ExperimentManager : MonoBehaviour
         lockB.SetActive(enableLock);
         endExperimentButton.SetActive(endGameButton);
 
-        logger.SetExperimentID(experimentID);
-        logger.SetRound(roundNumber);
-        logger.SetPath(logPath);
-        logger.SetFruitNumber(playerAFruits, playerBFruits);
+        m_save_log = save_log;
+        if (save_log)
+        {
+            logger.SetExperimentID(experimentID);
+            logger.SetRound(roundNumber);
+            logger.SetPath(logPath);
+            logger.SetFruitNumber(playerAFruits, playerBFruits);
 
-        playerALogger.SetPath(logger.GetExperimentPath());
-        playerBLogger.SetPath(logger.GetExperimentPath());
+            playerALogger.SetPath(logger.GetExperimentPath());
+            playerBLogger.SetPath(logger.GetExperimentPath());
 
-        boardManagerA.SetUpExperiment(10, 10, playerAFruits, logger.GetExperimentPath());
-        boardManagerB.SetUpExperiment(10, 10, playerBFruits, logger.GetExperimentPath());
+            boardManagerA.SetUpExperiment(10, 10, playerAFruits, logger.GetExperimentPath());
+            boardManagerB.SetUpExperiment(10, 10, playerBFruits, logger.GetExperimentPath());
+        }
+        else
+        {
+            boardManagerA.SetUpExperiment(10, 10, playerAFruits);
+            boardManagerB.SetUpExperiment(10, 10, playerBFruits);
+        }
 
         chestAScript = chestA.GetComponentInChildren<ChestController>();
         chestBScript = chestB.GetComponentInChildren<ChestController>();
@@ -147,14 +157,17 @@ public class ExperimentManager : MonoBehaviour
 
     public void StopExperiment()
     {
-        logger.SetScore(
-            chestAScript.GetScore(),
-            chestBScript.GetScore()
-            );
-        logger.Save();
-        this.SaveCursorLog();
-        running = false;
+        if (m_save_log)
+        {
+            logger.SetScore(
+                chestAScript.GetScore(),
+                chestBScript.GetScore()
+                );
+            logger.Save();
+            this.SaveCursorLog();
+        }
 
+        running = false;
         chestAScript.SetScore(0);
         chestBScript.SetScore(0);
     }

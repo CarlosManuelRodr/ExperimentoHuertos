@@ -16,6 +16,7 @@ public class BoardManager : MonoBehaviour
     private List<Vector2> gridPositions = new List<Vector2>();
     private string owner;
     private string m_logpath;
+    private bool save_log = true;
 
     private void Awake()
     {
@@ -51,12 +52,25 @@ public class BoardManager : MonoBehaviour
         return randomPosition;
     }
 
+    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits)
+    {
+        rows = nrows;
+        columns = ncolumns;
+        fruitNumber = nfruits;
+        save_log = false;
+
+        InitialiseList();
+        DestroyChildren();
+        RandomBoardSetup();
+    }
+
     public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits, string logpath)
     {
         rows = nrows;
         columns = ncolumns;
         fruitNumber = nfruits;
         m_logpath = logpath;
+        save_log = true;
 
         InitialiseList();
         DestroyChildren();
@@ -75,8 +89,11 @@ public class BoardManager : MonoBehaviour
                             scale * randomPosition + this.transform.position, 
                             Quaternion.identity
                             ) as GameObject;
-            instance.GetComponent<FruitLogger>().SetFruitID(owner, i+1);
-            instance.GetComponent<FruitLogger>().SetPath(m_logpath);
+            if (save_log)
+            {
+                instance.GetComponent<FruitLogger>().SetFruitID(owner, i + 1);
+                instance.GetComponent<FruitLogger>().SetPath(m_logpath);
+            }
             instance.transform.SetParent(this.transform);
         }
     }
@@ -94,8 +111,11 @@ public class BoardManager : MonoBehaviour
                     GameObject instance =
                         Instantiate(fruitPrefab, new Vector3(scale * x, scale * y, 0f) + this.transform.position, Quaternion.identity) as GameObject;
 
-                    instance.GetComponent<FruitLogger>().SetPath(m_logpath);
-                    instance.GetComponent<FruitLogger>().SetFruitID(owner, (int)fruitsInstanciated);
+                    if (save_log)
+                    {
+                        instance.GetComponent<FruitLogger>().SetPath(m_logpath);
+                        instance.GetComponent<FruitLogger>().SetFruitID(owner, (int)fruitsInstanciated);
+                    }
                     instance.transform.SetParent(this.transform);
                     fruitsInstanciated++;
                 }
