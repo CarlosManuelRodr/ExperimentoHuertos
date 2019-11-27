@@ -9,16 +9,17 @@ Fáciles:
 ✔ Eliminar la animación de "correcto" en el tutorial.
 ✔ La función de logger debe ser opcional.
 ✔ Agregar opción de partida de prueba.
-• HUD sólo hace fade-in la primera vez.
+✔ HUD sólo hace fade-in la primera vez.
 
 Medio:
 ✔ Agregar contador de frutos cosechados (tomados del huerto).
 ✔ Agregar un cronómetro en la pantalla, que lleve registro por cada sesión.
 ✔ Registrar quién, cuándo y dónde se bloquea una parcela.
+• Terminar configuraciones de acceso.
 
 Difíciles:
 ✔ En el demo o tutorial hay que agregar la posibilidad de que los participantes puedan tomar el fruto del compañero y colocarlo en el cesto propio y/o del compañero.
-• Agregar instrucciones entre sesión y sesión (round) y no solamente al inicio de cada fase. En instrucciones a mitad de cada sesión ambos participantes deben presionar a botón de Ok.
+✔ Agregar instrucciones entre sesión y sesión (round) y no solamente al inicio de cada fase. En instrucciones a mitad de cada sesión ambos participantes deben presionar a botón de Ok.
 • Para el tercer experimento necesitamos que en los huertos se dé mayor dificultad a la hora de tomar un fruto, por lo que también se necesita que se agregue una 
 herramienta para tomarlo y facilitar la tarea. La herramienta vendría a ser similar al botón de bloqueo, es decir, con un botón operativo se activaría la herramienta
  (un machete) y así uno de los participantes tendría oportunidad de usarla y tomar los frutos.

@@ -98,7 +98,8 @@ public class MainMenu : MonoBehaviour
                     level.fruitsA, level.fruitsB,
                     level.speedA, level.speedB,
                     level.freeOrchard, level.enableLock, level.commonCounter,
-                    level.endGameButton
+                    level.endGameButton, 3, level.showInstructions, 
+                    level.instruction1, level.instruction2, level.instruction3
                     );
                 this.EnableMenu(false);
             }
@@ -130,7 +131,7 @@ public class MainMenu : MonoBehaviour
                     (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
                     (uint)speedAScript.value, (uint)speedBScript.value,
                     freeOrchardValue, enableLockScript.isOn, commonCounterScript.isOn,
-                    endGameButtonScript.isOn
+                    endGameButtonScript.isOn, 3, false
                     );
                 this.EnableMenu(false);
             }
@@ -159,7 +160,7 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     20, 20,
                     30, 30,
-                    true, false, true, true, 1
+                    true, false, true, true, 1, false
                     );
                 this.EnableMenu(false);
             }

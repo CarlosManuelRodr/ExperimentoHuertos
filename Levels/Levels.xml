@@ -8,9 +8,13 @@
     <freeOrchard>true</freeOrchard>
     <enableLock>false</enableLock>
     <commonCounter>true</commonCounter>
-    <endGameButton>false</endGameButton>
+    <endGameButton>true</endGameButton>
     <description>El objetivo es llevar los frutos a sus respectivos canastos.</description>
     <image>level1.png</image>
+    <showInstructions>true</showInstructions>
+    <instruction1>Esta es la instruccion 1</instruction1>
+    <instruction2>Mira, ahora tambien explico en la sesion 2</instruction2>
+    <instruction3>Jajajaja k loco, ya vamos por la 3</instruction3>
   </level1>
   <level2>
     <name>Nivel 2</name>
@@ -24,5 +28,9 @@
     <endGameButton>true</endGameButton>
     <description>Nivel 2 del juego k kreizi</description>
     <image>level2.png</image>
+    <showInstructions>false</showInstructions>
+    <instruction1></instruction1>
+    <instruction2></instruction2>
+    <instruction3></instruction3>
   </level2>
 </configuration>

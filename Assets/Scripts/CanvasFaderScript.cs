@@ -58,10 +58,12 @@ public class CanvasFaderScript : MonoBehaviour
             StartFading();
     }
 
-    // Use this for initialization
-    void Start()
+    public void ResetFade()
     {
-
+        if (fadeType == eFadeType.fade_in)
+            _alpha = 0;
+        else if (fadeType == eFadeType.fade_out)
+            _alpha = 1.0f;
     }
 
     public void StartFading()

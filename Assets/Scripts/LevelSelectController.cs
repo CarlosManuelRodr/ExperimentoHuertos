@@ -14,6 +14,7 @@ public enum LevelType
     CUSTOM
 }
 
+// LevelData contiene todos los parámetros que definen la configuración de un nivel.
 public struct LevelData
 {
     public string name;
@@ -23,6 +24,8 @@ public struct LevelData
     public uint speedA, speedB;
     public bool freeOrchard, enableLock;
     public bool commonCounter, endGameButton;
+    public bool showInstructions;
+    public string instruction1, instruction2, instruction3;
 }
 
 /// <summary>
@@ -74,7 +77,7 @@ public class LevelSelectController : MonoBehaviour
             }
             else if (dropdown.value == 1)
             {
-                // Descripción del tutorial.
+                // Descripción de la partida de prueba.
                 levelDescription.text = "<color=green>Instrucciones:<color=black>\n\nEn el nivel de prueba"
                                         + " usted podra probar el juego.";
                 levelImage.sprite = tutorialImage;
@@ -164,6 +167,11 @@ public class LevelSelectController : MonoBehaviour
 
                     levelData.commonCounter = Convert.ToBoolean(level["commonCounter"].InnerText);
                     levelData.endGameButton = Convert.ToBoolean(level["endGameButton"].InnerText);
+
+                    levelData.showInstructions = Convert.ToBoolean(level["showInstructions"].InnerText);
+                    levelData.instruction1 = level["instruction1"].InnerText;
+                    levelData.instruction2 = level["instruction2"].InnerText;
+                    levelData.instruction3 = level["instruction3"].InnerText;
                     output.Add(levelData);
                 }
             }

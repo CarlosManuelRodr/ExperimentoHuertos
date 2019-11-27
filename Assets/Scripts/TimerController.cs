@@ -28,8 +28,8 @@ public class TimerController : MonoBehaviour
 
     public void StopTimer()
     {
-        this.ResetTimer();
         running = false;
+        this.ResetTimer();
     }
 
     void Update()

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Video;
+using TMPro;
 
 enum GameType
 {
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     private VideoPlayer round1, round2, round3;
     private Jukebox jukebox;
     private TimerController timerController;
+    private TextMeshProUGUI instructionsText;
 
     private GameType gameType = GameType.None;
     private bool prepareStart;
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
     private bool param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton;
+    private bool param_showInstructions;
+    private string param_instruction1, param_instruction2, param_instruction3;
     private string path;
 
     void Start()
@@ -55,6 +58,7 @@ public class GameManager : MonoBehaviour
         round3 = round3Video.GetComponent<VideoPlayer>();
         timerController = timer.GetComponent<TimerController>();
         jukebox = GetComponent<Jukebox>();
+        instructionsText = instructionsPanel.transform.Find("Text").GetComponent<TextMeshProUGUI>();
 
         // Carga configuración de volumen de las preferencias de usuario.
         int musicVolume = PlayerPrefs.GetInt("Volume", -1);
@@ -116,15 +120,22 @@ public class GameManager : MonoBehaviour
         {
             if (gameType == GameType.Level)
             {
-                prepareStart = false;
-                instructionsPanel.SetActive(true);
+                // Si no ha de esperar al panel, activa los cursores y comienza cronómetro.
+                if (!param_showInstructions)
+                {
+                    experimentManager.ActivateCursors();
+                    inExperiment = true;
+                    if (max_rounds != 1)
+                        round1.Play();
+                    timerController.StartTimer();
+                }
             }
             else if (tutorial != null && tutorial.activeSelf)
             {
                 tutorialManager.ActivateCursors();
                 tutorialManager.InitializeTutorial();
-                prepareStart = false;
             }
+            prepareStart = false;
         }
 
         // Tecla ESC configurada para que los experimentadores interumpan el experimento.
@@ -157,10 +168,12 @@ public class GameManager : MonoBehaviour
         experimentManager.ActivateCursors();
     }
 
+    // MainMenu llama a StartExperiment o comienza automáticamente en configuración "debug".
     public void StartExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB, 
         bool freeOrchard, bool enableLock, bool commonCounter, bool endGameButton,
-        uint rounds = 3
+        uint rounds = 3, bool show_instructions = false, 
+        string instructions1 = "", string instructions2 = "", string instructions3 = ""
         )
     {
         currentRound = 1;    // Comienza en ronda 1 de 3.
@@ -185,6 +198,17 @@ public class GameManager : MonoBehaviour
         param_enableLock = enableLock;
         param_commonCounter = commonCounter;
         param_endGameButton = endGameButton;
+        param_showInstructions = show_instructions;
+        param_instruction1 = instructions1;
+        param_instruction2 = instructions2;
+        param_instruction3 = instructions3;
+
+        instructionsPanel.SetActive(show_instructions);
+        if (show_instructions)
+        {
+            string text = "<color=blue>Instrucciones:<color=black>\n\n";
+            instructionsText.SetText(text + param_instruction1);
+        }
 
         hud.SetActive(true);
         round1.Prepare();
@@ -206,15 +230,16 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
+        timerController.StopTimer();
         experimentManager.DeactivateCursors();
         parallax.MoveUp();
+
         if (gameType == GameType.Level)
         {
             experimentManager.StopExperiment();
             experiment.SetActive(false);
 
-            hudFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
-            hudFader.StartFading();
+            hudFader.ResetFade();
             hud.SetActive(false);
 
             inExperiment = false;
@@ -242,13 +267,37 @@ public class GameManager : MonoBehaviour
             currentRound++;
 
             experimentManager.StopExperiment();
-            experimentManager.DeactivateCursors();
             experimentManager.InitializeExperiment(
                 param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
                 param_freeOrchard, param_enableLock, param_commonCounter, param_endGameButton,
                 path, currentID, currentRound
                 );
-            instructionsPanel.SetActive(true);
+
+            // Si muestra instrucciones, espera a que el panel llame a AcceptInstructions(),
+            if (param_showInstructions)
+            {
+                string text = "<color=blue>Instrucciones:<color=black>\n\n";
+                if (currentRound == 2)
+                    instructionsText.SetText(text + param_instruction2);
+                if (currentRound == 3)
+                    instructionsText.SetText(text + param_instruction3);
+
+                instructionsPanel.SetActive(true);
+                experimentManager.DeactivateCursors();
+            }
+            else // en caso contrario muestra animación y inicia cronómetro.
+            {
+                if (currentRound == 2)
+                {
+                    round1.Stop();
+                    round2.Play();
+                }
+                if (currentRound == 3)
+                {
+                    round3.Play();
+                }
+                timerController.StartTimer();
+            }
         }
     }
 
