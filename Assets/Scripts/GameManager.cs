@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject round1Video, round2Video, round3Video;
     public GameObject errorMenu;
     public GameObject timer;
+    public GameObject instructionsPanel;
     public bool debug = false;
 
     private ExperimentManager experimentManager;
