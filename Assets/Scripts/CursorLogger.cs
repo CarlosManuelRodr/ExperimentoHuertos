@@ -34,7 +34,7 @@ public class CursorLogger : MonoBehaviour
         log["Selecting"] = selecting;
     }
 
-    public void Log(Vector2 position, bool selecting, Selectable access)
+    public void Log(Vector2 position, bool selecting, CanInteract fruitAccess)
     {
         log.AddRow();
         log["Date"] = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss.fff");
@@ -42,20 +42,20 @@ public class CursorLogger : MonoBehaviour
         log["Selecting"] = selecting;
 
         string accessStr = "";
-        switch (access)
+        switch (fruitAccess)
         {
-            case Selectable.PlayerA:
+            case CanInteract.PlayerA:
                 accessStr = "PlayerA";
                 break;
-            case Selectable.PlayerB:
+            case CanInteract.PlayerB:
                 accessStr = "PlayerB";
                 break;
-            case Selectable.Both:
+            case CanInteract.Both:
                 accessStr = "Both";
                 break;
         }
 
-        log["Access"] = accessStr;
+        log["FruitAccess"] = accessStr;
     }
 
     public void Save()

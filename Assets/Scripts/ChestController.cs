@@ -48,7 +48,7 @@ public class ChestController : MonoBehaviour
             FruitController fruit = other.GetComponent<FruitController>();
             if (fruit.isFalling)
             {
-                chestVisualsScript.SetCaptured(other.tag);
+                chestVisualsScript.SetCaptured();
                 Destroy(other.gameObject);
                 audioSource.Play();
                 score++;

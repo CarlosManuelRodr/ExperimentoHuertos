@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum Selectable
+public enum CanInteract
 {
     PlayerA,
     PlayerB,
@@ -25,7 +25,7 @@ public class ManyCursorController : MonoBehaviour
     public float cursorSpeed = 0.03f;
     public Sprite handOpen, handClosed;
     public AudioClip grab, release;
-    public Selectable selectable = Selectable.Both;
+    public CanInteract fruitsAccess = CanInteract.Both;
     public float cursorLogInterval = 0.5f;
 
     public bool isSelecting { get { return selecting; } }
@@ -53,11 +53,11 @@ public class ManyCursorController : MonoBehaviour
     private Rect playableArea;
 
     private float nextUpdate;
-    private Selectable initialSelectable;
+    private CanInteract initialSelectable;
 
     private void Awake()
     {
-        initialSelectable = selectable;
+        initialSelectable = fruitsAccess;
         playableArea = Rect.MinMaxRect(-7.6f, -4.3f, 7.6f, 4.3f);
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
@@ -98,12 +98,17 @@ public class ManyCursorController : MonoBehaviour
         playableArea = rect;
     }
 
-    public void SelectableSwitch()
+    public void SelectableFruitsSwitch()
     {
-        if (selectable == initialSelectable)
-            selectable = Selectable.Both;
+        if (fruitsAccess == initialSelectable)
+            fruitsAccess = CanInteract.Both;
         else
-            selectable = initialSelectable;
+            fruitsAccess = initialSelectable;
+    }
+
+    public void SelectableFruits(CanInteract canInteract)
+    {
+        fruitsAccess = canInteract;
     }
 
     void OnEnable()
@@ -117,7 +122,7 @@ public class ManyCursorController : MonoBehaviour
     {
         selecting = false;
         selected = null;
-        selectable = initialSelectable;
+        fruitsAccess = initialSelectable;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -137,7 +142,7 @@ public class ManyCursorController : MonoBehaviour
         if (Time.time >= nextUpdate)
         {
             nextUpdate = Time.time + cursorLogInterval;
-            cursorLogger.Log(cam.WorldToScreenPoint(mousePosition), isSelecting, selectable);
+            cursorLogger.Log(cam.WorldToScreenPoint(mousePosition), isSelecting, fruitsAccess);
         }
     }
 
@@ -198,7 +203,7 @@ public class ManyCursorController : MonoBehaviour
         if (other.tag == "Lock")
             return true;
 
-        if (selectable == Selectable.Both)
+        if (fruitsAccess == CanInteract.Both)
         {
             if (other.tag == "ItemA" || other.tag == "ItemB")
                 return true;
@@ -207,17 +212,17 @@ public class ManyCursorController : MonoBehaviour
         }
         else
         {
-            if (selectable == Selectable.PlayerA && other.tag == "ItemA")
+            if (fruitsAccess == CanInteract.PlayerA && other.tag == "ItemA")
                 return true;
-            if (selectable == Selectable.PlayerB && other.tag == "ItemB")
+            if (fruitsAccess == CanInteract.PlayerB && other.tag == "ItemB")
                 return true;
         }
         return false;
     }
 
-    public void SetSelectable(Selectable type)
+    public void SetSelectable(CanInteract type)
     {
-        selectable = type;
+        fruitsAccess = type;
     }
 
     void OnTriggerEnter2D(Collider2D other)

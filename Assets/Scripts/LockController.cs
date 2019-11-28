@@ -60,7 +60,7 @@ public class LockController : MonoBehaviour
             spriteRenderer.sprite = locked;
             lockstatus = LockStatus.Locked;
             text.text = "Parcela\nbloqueada";
-            enemyCursorController.SelectableSwitch();
+            enemyCursorController.SelectableFruitsSwitch();
             experimentLogger.Log(player + " bloquea huerto " + orchidOwner);
         }
         else if (lockstatus == LockStatus.Locked && caller == myCursor.tag)
@@ -68,7 +68,7 @@ public class LockController : MonoBehaviour
             spriteRenderer.sprite = unlocked;
             lockstatus = LockStatus.Unlocked;
             text.text = "Parcela\ndesbloqueada";
-            enemyCursorController.SelectableSwitch();
+            enemyCursorController.SelectableFruitsSwitch();
             experimentLogger.Log(player + " desbloquea huerto " + orchidOwner);
         }
     }

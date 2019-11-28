@@ -678,7 +678,7 @@ MonoBehaviour:
   handClosed: {fileID: 21300000, guid: a2947b8002e22bd4ab4d3288bbeec3b1, type: 3}
   grab: {fileID: 8300000, guid: fd26633a22fe2394e8c78b713439e3f5, type: 3}
   release: {fileID: 8300000, guid: d92ee88c0f6e25642ad6906d33e8fa08, type: 3}
-  selectable: 1
+  fruitsAccess: 2
   cursorLogInterval: 0.1
 --- !u!114 &1943442339157107071
 MonoBehaviour:
@@ -1016,7 +1016,7 @@ MonoBehaviour:
   handClosed: {fileID: 21300000, guid: 18a47abe24dc64c42913cfd780900a16, type: 3}
   grab: {fileID: 8300000, guid: fd26633a22fe2394e8c78b713439e3f5, type: 3}
   release: {fileID: 8300000, guid: d92ee88c0f6e25642ad6906d33e8fa08, type: 3}
-  selectable: 0
+  fruitsAccess: 2
   cursorLogInterval: 0.1
 --- !u!50 &1943442339328790133
 Rigidbody2D:
@@ -2521,6 +2521,11 @@ PrefabInstance:
     - target: {fileID: 2163502540776944047, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2163502540776944049, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: owner
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2163502542159585798, guid: fa2b8903ccf26534f89d5b8e702dca79,

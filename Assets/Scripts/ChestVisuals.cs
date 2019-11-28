@@ -7,77 +7,66 @@ public class ChestVisuals : MonoBehaviour
 {
     public Sprite chestClosed, chestOpen;
     public GameObject chestController;
+    public Player owner = Player.PlayerA;
+    public CanInteract chestAccess = CanInteract.Both;
 
     private AudioSource audioSource;
     private SpriteRenderer spriteRenderer;
     private ChestController chestControllerScript;
-
-    private bool fruitAInside, fruitBInside;
-    private bool chestIsOpen;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         chestControllerScript = chestController.GetComponent<ChestController>();
-
-        fruitAInside = false;
-        fruitBInside = false;
-        chestIsOpen = false;
     }
 
-    void Update()
+    public void SetCaptured()
     {
-        if (!chestIsOpen && (fruitAInside || fruitBInside))
-        {
-            spriteRenderer.sprite = chestOpen;
-            audioSource.Play();
-            chestIsOpen = true;
-        }
-        if (chestIsOpen && !fruitAInside && !fruitBInside)
-        {
-            spriteRenderer.sprite = chestClosed;
-            chestIsOpen = false;
-        }
+        spriteRenderer.sprite = chestClosed;
+        chestControllerScript.SetToCapture(false);
     }
 
-    public void SetCaptured(string tag)
+    void SetChestToCapture(string itemTag)
     {
-        if (tag == "ItemA")
-            fruitAInside = false;
-        if (tag == "ItemB")
-            fruitBInside = false;
+        spriteRenderer.sprite = chestOpen;
+        audioSource.Play();
+
+        if (itemTag == "ItemA")
+            chestControllerScript.SetToCapture(true);
+
+        if (itemTag == "ItemB")
+            chestControllerScript.SetToCapture(true);
+    }
+
+    void DisableCapture()
+    {
+        spriteRenderer.sprite = chestClosed;
+        chestControllerScript.SetToCapture(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "ItemA" && other.GetComponent<FruitController>().isSelected)
+        if (other.tag == "ItemA" || other.tag == "ItemB")
         {
-            fruitAInside = true;
-            chestControllerScript.SetToCapture(true);
-        }
+            FruitController fruit = other.GetComponent<FruitController>();
 
-        if (other.tag == "ItemB" && other.GetComponent<FruitController>().isSelected)
-        {
-            fruitBInside = true;
-            chestControllerScript.SetToCapture(true);
+            if (fruit.isSelected)
+            {
+                if (chestAccess == CanInteract.Both)
+                    SetChestToCapture(other.tag);
+                if (chestAccess == CanInteract.PlayerA && fruit.selector == Player.PlayerA)
+                    SetChestToCapture(other.tag);
+                if (chestAccess == CanInteract.PlayerB && fruit.selector == Player.PlayerB)
+                    SetChestToCapture(other.tag);
+            }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "ItemA" && other.GetComponent<FruitController>().isSelected)
-        {
-            fruitAInside = false;
-            if (!fruitBInside)
-                chestControllerScript.SetToCapture(false);
-        }
-
-        if (other.tag == "ItemB" && other.GetComponent<FruitController>().isSelected)
-        {
-            fruitBInside = false;
-            if (!fruitAInside)
-                chestControllerScript.SetToCapture(false);
-        }
+        FruitController fruit = other.GetComponent<FruitController>();
+        if ((other.tag == "ItemA" || other.tag == "ItemB") && fruit.isSelected)
+            this.DisableCapture();
     }
 }

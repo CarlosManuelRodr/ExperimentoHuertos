@@ -110,8 +110,16 @@ public class FruitController : MonoBehaviour
             // En caso de que entre en contacto con un cofre, activa el highlight verde.
             if (other.tag == "Chest")
             {
-                highlightRenderer.color = green;
-                inChest = true;
+                ChestVisuals chestVisuals = other.GetComponentInChildren<ChestVisuals>();
+                if (
+                    chestVisuals.chestAccess == CanInteract.Both ||
+                    (selector == Player.PlayerA && chestVisuals.chestAccess == CanInteract.PlayerA) ||
+                    (selector == Player.PlayerB && chestVisuals.chestAccess == CanInteract.PlayerB)
+                    )
+                {
+                    highlightRenderer.color = green;
+                    inChest = true;
+                }
             }
         }
     }

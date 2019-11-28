@@ -112,7 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orchidAccessSelector: {fileID: 5446962271989747628}
-  chestAccessSelector: {fileID: 5446962272900953664}
 --- !u!1 &5446962270945699080
 GameObject:
   m_ObjectHideFlags: 0
@@ -11669,6 +11668,7 @@ MonoBehaviour:
   speedA: {fileID: 5446962271596363346}
   speedB: {fileID: 5446962271021290660}
   orchadAccess: {fileID: 5446962271989747628}
+  chestAccess: {fileID: 5446962272900953664}
   enableLock: {fileID: 5446962270943185628}
   commonCounter: {fileID: 5446962271626366403}
   endGameButton: {fileID: 5446962273011528351}

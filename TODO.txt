@@ -15,7 +15,7 @@ Medio:
 ✔ Agregar contador de frutos cosechados (tomados del huerto).
 ✔ Agregar un cronómetro en la pantalla, que lleve registro por cada sesión.
 ✔ Registrar quién, cuándo y dónde se bloquea una parcela.
-• Terminar configuraciones de acceso.
+✔ Terminar configuraciones de acceso.
 
 Difíciles:
 ✔ En el demo o tutorial hay que agregar la posibilidad de que los participantes puedan tomar el fruto del compañero y colocarlo en el cesto propio y/o del compañero.

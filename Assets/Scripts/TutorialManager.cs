@@ -62,7 +62,7 @@ public class TutorialManager : MonoBehaviour
         // Tecla para pasar la fase de tutorial.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (tutorialPhase == 4)
+            if (tutorialPhase == 3)
             {
                 chestAController.SetScore(0);
                 chestBController.SetScore(0);

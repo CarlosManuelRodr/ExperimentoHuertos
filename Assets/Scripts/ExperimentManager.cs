@@ -13,8 +13,8 @@ public class ExperimentManager : MonoBehaviour
     public GameObject commonCounter;
     public GameObject commonCounterHUD;
 
-    public uint scoreA { get { return chestAScript.GetScore(); } }
-    public uint scoreB { get { return chestBScript.GetScore(); } }
+    public uint scoreA { get { return chestAController.GetScore(); } }
+    public uint scoreB { get { return chestBController.GetScore(); } }
     public uint harvestedA
     {
         get { return fruits_harvested_by_a; }
@@ -32,7 +32,8 @@ public class ExperimentManager : MonoBehaviour
     private GameManager gameManagerScript;
     private Vector2 playerACursorPos, playerBCursorPos;
     private BoardManager boardManagerA, boardManagerB;
-    private ChestController chestAScript, chestBScript;
+    private ChestController chestAController, chestBController;
+    private ChestVisuals chestAVisuals, chestBVisuals;
     private ManyCursorController cursorAScript, cursorBScript;
 
     private string path;
@@ -51,6 +52,11 @@ public class ExperimentManager : MonoBehaviour
         playerBLogger = playerBCursor.GetComponent<CursorLogger>();
         cursorAScript = playerACursor.GetComponent<ManyCursorController>();
         cursorBScript = playerBCursor.GetComponent<ManyCursorController>();
+
+        chestAVisuals = chestA.GetComponentInChildren<ChestVisuals>();
+        chestBVisuals = chestB.GetComponentInChildren<ChestVisuals>();
+        chestAController = chestA.GetComponentInChildren<ChestController>();
+        chestBController = chestB.GetComponentInChildren<ChestController>();
 
         playerACursorPos = playerACursor.transform.position;
         playerBCursorPos = playerBCursor.transform.position;
@@ -80,28 +86,62 @@ public class ExperimentManager : MonoBehaviour
 
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
-        bool freeOrchard, bool enableLock, bool useCommonCounter, bool endGameButton,
+        bool enableLock, bool useCommonCounter, bool endGameButton,
+        AccessType orchardAccess, AccessType chestAccess,
         string logPath, int experimentID, int roundNumber, bool save_log = true
         )
     {
         cursorAScript.speed = (int) speedA;
         cursorBScript.speed = (int) speedB;
 
-        if (freeOrchard)
+        // Configura el acceso a los huertos.
+        switch (orchardAccess)
         {
-            cursorAScript.selectable = Selectable.Both;
-            cursorBScript.selectable = Selectable.Both;
+            case AccessType.BOTH_FREE:
+                cursorAScript.fruitsAccess = CanInteract.Both;
+                cursorBScript.fruitsAccess = CanInteract.Both;
+                break;
+            case AccessType.MUTUAL_BLOCK:
+                cursorAScript.fruitsAccess = CanInteract.PlayerA;
+                cursorBScript.fruitsAccess = CanInteract.PlayerB;
+                break;
+            case AccessType.A_FREE:
+                cursorAScript.fruitsAccess = CanInteract.Both;
+                cursorBScript.fruitsAccess = CanInteract.PlayerB;
+                break;
+            case AccessType.B_FREE:
+                cursorAScript.fruitsAccess = CanInteract.PlayerA;
+                cursorBScript.fruitsAccess = CanInteract.Both;
+                break;
         }
-        else
+        if (enableLock)
         {
-            cursorAScript.selectable = Selectable.PlayerA;
-            cursorBScript.selectable = Selectable.PlayerB;
+            cursorAScript.fruitsAccess = CanInteract.PlayerA;
+            cursorBScript.fruitsAccess = CanInteract.PlayerB;
         }
 
-        lockA.SetActive(enableLock);
-        lockB.SetActive(enableLock);
-        endExperimentButton.SetActive(endGameButton);
+        // Configura el acceso a los cofres.
+        switch (chestAccess)
+        {
+            case AccessType.BOTH_FREE:
+                chestAVisuals.chestAccess = CanInteract.Both;
+                chestBVisuals.chestAccess = CanInteract.Both;
+                break;
+            case AccessType.MUTUAL_BLOCK:
+                chestAVisuals.chestAccess = CanInteract.PlayerA;
+                chestBVisuals.chestAccess = CanInteract.PlayerB;
+                break;
+            case AccessType.A_FREE:
+                chestAVisuals.chestAccess = CanInteract.PlayerA;
+                chestBVisuals.chestAccess = CanInteract.Both;
+                break;
+            case AccessType.B_FREE:
+                chestAVisuals.chestAccess = CanInteract.Both;
+                chestBVisuals.chestAccess = CanInteract.PlayerB;
+                break;
+        }
 
+        // Configura logger.
         m_save_log = save_log;
         if (save_log)
         {
@@ -122,11 +162,12 @@ public class ExperimentManager : MonoBehaviour
             boardManagerB.SetUpExperiment(10, 10, playerBFruits);
         }
 
-        chestAScript = chestA.GetComponentInChildren<ChestController>();
-        chestBScript = chestB.GetComponentInChildren<ChestController>();
+        lockA.SetActive(enableLock);
+        lockB.SetActive(enableLock);
+        endExperimentButton.SetActive(endGameButton);
 
-        chestAScript.SetToCapture(false);
-        chestBScript.SetToCapture(false);
+        chestAController.SetToCapture(false);
+        chestBController.SetToCapture(false);
 
         commonCounter.SetActive(useCommonCounter);
         commonCounterHUD.SetActive(useCommonCounter);
@@ -160,15 +201,15 @@ public class ExperimentManager : MonoBehaviour
         if (m_save_log)
         {
             logger.SetScore(
-                chestAScript.GetScore(),
-                chestBScript.GetScore()
+                chestAController.GetScore(),
+                chestBController.GetScore()
                 );
             logger.Save();
             this.SaveCursorLog();
         }
 
         running = false;
-        chestAScript.SetScore(0);
-        chestBScript.SetScore(0);
+        chestAController.SetScore(0);
+        chestBController.SetScore(0);
     }
 }

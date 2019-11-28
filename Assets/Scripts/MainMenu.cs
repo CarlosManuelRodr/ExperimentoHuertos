@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject gameManager;
     public GameObject startScreen, initGame, options, about;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
-    public GameObject orchadAccess, enableLock, commonCounter, endGameButton;
+    public GameObject orchadAccess, chestAccess, enableLock, commonCounter, endGameButton;
     public GameObject levelSelector;
 
     private AudioSource audioSource;
@@ -97,8 +97,9 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     level.fruitsA, level.fruitsB,
                     level.speedA, level.speedB,
-                    level.freeOrchard, level.enableLock, level.commonCounter,
-                    level.endGameButton, 3, level.showInstructions, 
+                    level.enableLock, level.commonCounter,
+                    level.endGameButton, level.orchardAccess, level.chestAccess,
+                    3, level.showInstructions, 
                     level.instruction1, level.instruction2, level.instruction3
                     );
                 this.EnableMenu(false);
@@ -111,9 +112,50 @@ public class MainMenu : MonoBehaviour
             // Recibe valores de configuración de elementos de interfaz gráfica.
             Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
             Toggle enableLockScript, commonCounterScript, endGameButtonScript;
-            TMP_Dropdown orchadAccessDropdown;
+            TMP_Dropdown orchadAccessDropdown, chestAccessDropdown;
 
             orchadAccessDropdown = orchadAccess.GetComponent<TMP_Dropdown>();
+            chestAccessDropdown = chestAccess.GetComponent<TMP_Dropdown>();
+
+            AccessType orchardAccessValue = AccessType.MUTUAL_BLOCK;
+            switch (orchadAccessDropdown.value)
+            {
+                case 0:
+                    orchardAccessValue = AccessType.MUTUAL_BLOCK;
+                    break;
+                case 1:
+                    orchardAccessValue = AccessType.BOTH_FREE;
+                    break;
+                case 2:
+                    orchardAccessValue = AccessType.A_FREE;
+                    break;
+                case 3:
+                    orchardAccessValue = AccessType.B_FREE;
+                    break;
+                default:
+                    orchardAccessValue = AccessType.MUTUAL_BLOCK;
+                    break;
+            }
+            AccessType chestAccessValue = AccessType.BOTH_FREE;
+            switch (chestAccessDropdown.value)
+            {
+                case 0:
+                    chestAccessValue = AccessType.BOTH_FREE;
+                    break;
+                case 1:
+                    chestAccessValue = AccessType.MUTUAL_BLOCK;
+                    break;
+                case 2:
+                    chestAccessValue = AccessType.A_FREE;
+                    break;
+                case 3:
+                    chestAccessValue = AccessType.B_FREE;
+                    break;
+                default:
+                    chestAccessValue = AccessType.BOTH_FREE;
+                    break;
+            }
+
             fruitSliderAScript = fruitSliderA.GetComponentInChildren<Slider>();
             fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
             speedAScript = speedA.GetComponentInChildren<Slider>();
@@ -130,8 +172,9 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
                     (uint)speedAScript.value, (uint)speedBScript.value,
-                    freeOrchardValue, enableLockScript.isOn, commonCounterScript.isOn,
-                    endGameButtonScript.isOn, 3, false
+                    enableLockScript.isOn, commonCounterScript.isOn,
+                    endGameButtonScript.isOn, orchardAccessValue, chestAccessValue,
+                    3, false
                     );
                 this.EnableMenu(false);
             }
@@ -160,7 +203,8 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     20, 20,
                     30, 30,
-                    true, false, true, true, 1, false
+                    true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE, 
+                    1, false
                     );
                 this.EnableMenu(false);
             }

@@ -14,6 +14,14 @@ public enum LevelType
     CUSTOM
 }
 
+public enum AccessType
+{
+    BOTH_FREE,
+    MUTUAL_BLOCK,
+    A_FREE,
+    B_FREE
+}
+
 // LevelData contiene todos los parámetros que definen la configuración de un nivel.
 public struct LevelData
 {
@@ -26,6 +34,7 @@ public struct LevelData
     public bool commonCounter, endGameButton;
     public bool showInstructions;
     public string instruction1, instruction2, instruction3;
+    public AccessType orchardAccess, chestAccess;
 }
 
 /// <summary>
@@ -79,7 +88,7 @@ public class LevelSelectController : MonoBehaviour
             {
                 // Descripción de la partida de prueba.
                 levelDescription.text = "<color=green>Instrucciones:<color=black>\n\nEn el nivel de prueba"
-                                        + " usted podra probar el juego.";
+                                        + " usted podra simular una partida.";
                 levelImage.sprite = tutorialImage;
             }
             else
@@ -133,6 +142,23 @@ public class LevelSelectController : MonoBehaviour
         return output;
     }
 
+    private AccessType GetAccessType(string value)
+    {
+        switch (value)
+        {
+            case "both_free":
+                return AccessType.BOTH_FREE;
+            case "mutual_block":
+                return AccessType.MUTUAL_BLOCK;
+            case "a_free":
+                return AccessType.A_FREE;
+            case "b_free":
+                return AccessType.B_FREE;
+            default:
+                return AccessType.MUTUAL_BLOCK;
+        }
+    }
+
     // Carga la configuración de niveles desde archivo "levels.xml".
     List<LevelData> GetLevelData()
     {
@@ -167,6 +193,9 @@ public class LevelSelectController : MonoBehaviour
 
                     levelData.commonCounter = Convert.ToBoolean(level["commonCounter"].InnerText);
                     levelData.endGameButton = Convert.ToBoolean(level["endGameButton"].InnerText);
+
+                    levelData.orchardAccess = GetAccessType(level["orchardAccess"].InnerText);
+                    levelData.chestAccess = GetAccessType(level["chestAccess"].InnerText);
 
                     levelData.showInstructions = Convert.ToBoolean(level["showInstructions"].InnerText);
                     levelData.instruction1 = level["instruction1"].InnerText;
