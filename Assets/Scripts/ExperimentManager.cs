@@ -204,6 +204,7 @@ public class ExperimentManager : MonoBehaviour
                 chestAController.GetScore(),
                 chestBController.GetScore()
                 );
+            logger.SetCollected(harvestedA, harvestedB);
             logger.Save();
             this.SaveCursorLog();
         }

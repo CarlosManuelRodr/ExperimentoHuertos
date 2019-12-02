@@ -208,7 +208,7 @@ public class MainMenu : MonoBehaviour
                 canvasFader.StartFading();
                 gameManagerScript.StartExperiment(
                     20, 20,
-                    0, 0,
+                    20, 20,
                     30, 30,
                     true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE, 
                     1, false

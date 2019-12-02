@@ -53,6 +53,7 @@ public class ManyCursorController : MonoBehaviour
     private Rect playableArea;
 
     private float nextUpdate;
+    private float initialSpeed;
     private CanInteract initialSelectable;
 
     private void Awake()
@@ -76,6 +77,7 @@ public class ManyCursorController : MonoBehaviour
 
         cursorLogger.SetCursorID(transform.tag);
         nextUpdate = cursorLogInterval;
+        initialSpeed = cursorSpeed;
     }
 
     void SetUpCursor()
@@ -181,6 +183,7 @@ public class ManyCursorController : MonoBehaviour
                         shovel.Select(player);
                         audioSource.PlayOneShot(grab);
                         selecting = true;
+                        cursorSpeed = 0.005f;
 
                         if (experiment != null)
                         {
@@ -221,7 +224,10 @@ public class ManyCursorController : MonoBehaviour
                 {
                     ShovelController shovel = selected.GetComponent<ShovelController>();
                     if (shovel.selector == player)
+                    {
                         shovel.Deselect();
+                        cursorSpeed = initialSpeed;
+                    }
 
                     if (experiment != null)
                     {

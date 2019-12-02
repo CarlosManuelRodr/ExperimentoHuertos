@@ -14,6 +14,7 @@ public class ExperimentLogger : MonoBehaviour
     private int experimentID;
     private uint playerAFruits, playerBFruits;
     private uint playerAScore, playerBScore;
+    private uint playerACollected, playerBCollected;
     private int round = 1;
     private List<string> eventLog = new List<string>();
 
@@ -46,6 +47,12 @@ public class ExperimentLogger : MonoBehaviour
         playerBScore = bScore;
     }
 
+    public void SetCollected(uint aCollected, uint bCollected)
+    {
+        playerACollected = aCollected;
+        playerBCollected = bCollected;
+    }
+
     public void SetRound(int nround)
     {
         round = nround;
@@ -67,8 +74,10 @@ public class ExperimentLogger : MonoBehaviour
             {
                 sw.WriteLine("Frutas huerto A: " + playerAFruits.ToString());
                 sw.WriteLine("Frutas huerto B: " + playerBFruits.ToString());
-                sw.WriteLine("Puntuacion jugador A: " + playerAScore.ToString());
-                sw.WriteLine("Puntuacion jugador B: " + playerBScore.ToString());
+                sw.WriteLine("Cesto jugador A: " + playerAScore.ToString());
+                sw.WriteLine("Cesto jugador B: " + playerBScore.ToString());
+                sw.WriteLine("Recolectados por jugador A: " + playerACollected.ToString());
+                sw.WriteLine("Recolectados por jugador B: " + playerBCollected.ToString());
             }
         }
 

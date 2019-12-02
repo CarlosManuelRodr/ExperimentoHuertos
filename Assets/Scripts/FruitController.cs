@@ -15,6 +15,7 @@ public class FruitController : MonoBehaviour
     public Player selector { get { return whoSelected; } }
     public float fruitLogInterval = 0.2f;
     public Sprite idleSprite, buriedSprite;
+    public AudioClip hitAudio, unearthAudio;
     public bool log = true;
 
     private SpriteRenderer fruitRenderer, highlightRenderer = null;
@@ -22,6 +23,8 @@ public class FruitController : MonoBehaviour
     private FruitLogger fruitLogger;
     private Camera cam;
     private Animator animator;
+    private ParticleSystem particles;
+    private AudioSource audioSource;
     private Player whoSelected;
     private Color red, yellow, green;
     private Vector3 startPos;
@@ -30,6 +33,7 @@ public class FruitController : MonoBehaviour
     private bool selected;
     private bool falling;
     private float nextUpdate;
+    private int resistance;
 
     void Awake()
     {
@@ -39,6 +43,8 @@ public class FruitController : MonoBehaviour
         fruitLogger = GetComponent<FruitLogger>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        particles = GetComponentInChildren<ParticleSystem>();
+        audioSource = GetComponent<AudioSource>();
         cam = Camera.main;
 
         // Colores del highlight. Usa colores predefinidos en caso de que
@@ -55,7 +61,9 @@ public class FruitController : MonoBehaviour
         returnToStart = false;
         selected = false;
         falling = false;
+        resistance = Random.Range(3, 10);
         nextUpdate = fruitLogInterval;
+        audioSource.clip = hitAudio;
         if (buried)
             this.SetBuried(true);
     }
@@ -118,7 +126,26 @@ public class FruitController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!buried)
+        if (buried)
+        {
+            if (other.tag == "Shovel")
+            {
+                ShovelController shovel = other.GetComponent<ShovelController>();
+                if (shovel.isSelected)
+                {
+                    particles.Emit(50);
+                    resistance--;
+                    if (resistance == 0)
+                    {
+                        this.SetBuried(false);
+                        audioSource.clip = unearthAudio;
+                    }
+
+                    audioSource.Play();
+                }
+            }
+        }
+        else
         {
             // Activa el highlight en caso de que el cursor entre en contacto con el fruto.
             if (other.tag == "CursorA" || other.tag == "CursorB")

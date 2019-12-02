@@ -2060,7 +2060,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 30
+  m_Value: 20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2353,7 +2353,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 30
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8966411ef14670d42a3de2c401c50772, type: 2}
   m_sharedMaterial: {fileID: 7772147594031063236, guid: 8966411ef14670d42a3de2c401c50772,
@@ -7055,7 +7055,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 30
+  m_Value: 20
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -18138,7 +18138,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 30
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8966411ef14670d42a3de2c401c50772, type: 2}
   m_sharedMaterial: {fileID: 7772147594031063236, guid: 8966411ef14670d42a3de2c401c50772,

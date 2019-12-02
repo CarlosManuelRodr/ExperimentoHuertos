@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
         // Usado en escena de depuración "Experiment".
         if (debug)
         {
-            this.StartExperiment(4, 3, 50, 50, 25, 25, true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE);
+            this.StartExperiment(10, 10, 50, 50, 25, 25, true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE);
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
                 this.EndExperiment();
         }
+
     }
 
     public void AcceptInstructions()
