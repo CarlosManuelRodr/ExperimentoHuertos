@@ -85,7 +85,7 @@ public class ExperimentManager : MonoBehaviour
     }
 
     public void InitializeExperiment(
-        uint playerAFruits, uint playerBFruits, uint speedA, uint speedB,
+        uint playerAFruits, uint playerBFruits, uint buriedA, uint buriedB, uint speedA, uint speedB,
         bool enableLock, bool useCommonCounter, bool endGameButton,
         AccessType orchardAccess, AccessType chestAccess,
         string logPath, int experimentID, int roundNumber, bool save_log = true
@@ -153,13 +153,13 @@ public class ExperimentManager : MonoBehaviour
             playerALogger.SetPath(logger.GetExperimentPath());
             playerBLogger.SetPath(logger.GetExperimentPath());
 
-            boardManagerA.SetUpExperiment(10, 10, playerAFruits, logger.GetExperimentPath());
-            boardManagerB.SetUpExperiment(10, 10, playerBFruits, logger.GetExperimentPath());
+            boardManagerA.SetUpExperiment(10, 10, playerAFruits, buriedA, logger.GetExperimentPath());
+            boardManagerB.SetUpExperiment(10, 10, playerBFruits, buriedB, logger.GetExperimentPath());
         }
         else
         {
-            boardManagerA.SetUpExperiment(10, 10, playerAFruits);
-            boardManagerB.SetUpExperiment(10, 10, playerBFruits);
+            boardManagerA.SetUpExperiment(10, 10, playerAFruits, buriedA);
+            boardManagerB.SetUpExperiment(10, 10, playerBFruits, buriedB);
         }
 
         lockA.SetActive(enableLock);

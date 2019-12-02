@@ -156,18 +156,37 @@ public class ManyCursorController : MonoBehaviour
                 {
                     selected.GetComponent<LockController>().LockSwitch(this.tag);
                 }
-                else
+                else if (selected.tag == "ItemA" || selected.tag == "ItemB")
                 {
                     FruitController fruit = selected.GetComponent<FruitController>();
-                    audioSource.PlayOneShot(grab);
-                    fruit.Select(player);
-                    selecting = true;
-
-                    if (experiment != null)
+                    if (!fruit.isBuried) // Si el fruto está enterrado no debe interactuar con el cursor.
                     {
-                        string selector = (player == Player.PlayerA) ? "A" : "B";
-                        string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
-                        experimentLogger.Log(selector + " toma fruto de " + fruitOwner);
+                        audioSource.PlayOneShot(grab);
+                        fruit.Select(player);
+                        selecting = true;
+
+                        if (experiment != null)
+                        {
+                            string selector = (player == Player.PlayerA) ? "A" : "B";
+                            string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                            experimentLogger.Log(selector + " toma fruto de " + fruitOwner);
+                        }
+                    }
+                }
+                else if (selected.tag == "Shovel")
+                {
+                    ShovelController shovel = selected.GetComponent<ShovelController>();
+                    if (!shovel.isSelected)
+                    {
+                        shovel.Select(player);
+                        audioSource.PlayOneShot(grab);
+                        selecting = true;
+
+                        if (experiment != null)
+                        {
+                            string selector = (player == Player.PlayerA) ? "A" : "B";
+                            experimentLogger.Log(selector + " toma la pala");
+                        }
                     }
                 }
             }
@@ -180,16 +199,35 @@ public class ManyCursorController : MonoBehaviour
     {
         if (buttonId == 0)
         {
-            if (selected != null && selected.tag != "Lock")
+            if (selected != null)
             {
-                audioSource.PlayOneShot(release);
-                selected.GetComponent<FruitController>().Deselect();
-
-                if (experiment != null)
+                if (selected.tag == "ItemA" || selected.tag == "ItemB")
                 {
-                    string selector = (player == Player.PlayerA) ? "A" : "B";
-                    string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
-                    experimentLogger.Log(selector + " suelta fruto de " + fruitOwner);
+                    audioSource.PlayOneShot(release);
+
+                    FruitController fruit = selected.GetComponent<FruitController>();
+                    if (!fruit.isBuried)
+                    {
+                        fruit.Deselect();
+                        if (experiment != null)
+                        {
+                            string selector = (player == Player.PlayerA) ? "A" : "B";
+                            string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                            experimentLogger.Log(selector + " suelta fruto de " + fruitOwner);
+                        }
+                    }
+                }
+                else if (selected.tag == "Shovel")
+                {
+                    ShovelController shovel = selected.GetComponent<ShovelController>();
+                    if (shovel.selector == player)
+                        shovel.Deselect();
+
+                    if (experiment != null)
+                    {
+                        string selector = (player == Player.PlayerA) ? "A" : "B";
+                        experimentLogger.Log(selector + " suelta la pala");
+                    }
                 }
             }
 
@@ -201,6 +239,9 @@ public class ManyCursorController : MonoBehaviour
     bool IsSelectable(Collider2D other)
     {
         if (other.tag == "Lock")
+            return true;
+
+        if (other.tag == "Shovel")
             return true;
 
         if (fruitsAccess == CanInteract.Both)
@@ -235,7 +276,7 @@ public class ManyCursorController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!isSelecting)
+        if (!isSelecting && IsSelectable(other))
             selected = null;
     }
 }

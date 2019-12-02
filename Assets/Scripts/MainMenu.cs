@@ -10,6 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject gameManager;
     public GameObject startScreen, initGame, options, about;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
+    public GameObject percentBuriedA, percentBuriedB;
     public GameObject orchadAccess, chestAccess, enableLock, commonCounter, endGameButton;
     public GameObject levelSelector;
 
@@ -96,10 +97,11 @@ public class MainMenu : MonoBehaviour
                 canvasFader.StartFading();
                 gameManagerScript.StartExperiment(
                     level.fruitsA, level.fruitsB,
+                    level.buriedA, level.buriedB,
                     level.speedA, level.speedB,
                     level.enableLock, level.commonCounter,
                     level.endGameButton, level.orchardAccess, level.chestAccess,
-                    3, level.showInstructions, 
+                    3, level.showInstructions,
                     level.instruction1, level.instruction2, level.instruction3
                     );
                 this.EnableMenu(false);
@@ -111,6 +113,7 @@ public class MainMenu : MonoBehaviour
         {
             // Recibe valores de configuración de elementos de interfaz gráfica.
             Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
+            Slider buriedASliderScript, buriedBSliderScript;
             Toggle enableLockScript, commonCounterScript, endGameButtonScript;
             TMP_Dropdown orchadAccessDropdown, chestAccessDropdown;
 
@@ -163,6 +166,8 @@ public class MainMenu : MonoBehaviour
             enableLockScript = enableLock.GetComponent<Toggle>();
             commonCounterScript = commonCounter.GetComponent<Toggle>();
             endGameButtonScript = endGameButton.GetComponent<Toggle>();
+            buriedASliderScript = percentBuriedA.GetComponent<Slider>();
+            buriedBSliderScript = percentBuriedB.GetComponent<Slider>();
 
             bool freeOrchardValue = (orchadAccessDropdown.value == 0) ? false : true;
             if (gameManager != null)
@@ -171,6 +176,7 @@ public class MainMenu : MonoBehaviour
                 canvasFader.StartFading();
                 gameManagerScript.StartExperiment(
                     (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
+                    (uint)buriedASliderScript.value, (uint)buriedBSliderScript.value,
                     (uint)speedAScript.value, (uint)speedBScript.value,
                     enableLockScript.isOn, commonCounterScript.isOn,
                     endGameButtonScript.isOn, orchardAccessValue, chestAccessValue,
@@ -202,6 +208,7 @@ public class MainMenu : MonoBehaviour
                 canvasFader.StartFading();
                 gameManagerScript.StartExperiment(
                     20, 20,
+                    0, 0,
                     30, 30,
                     true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE, 
                     1, false

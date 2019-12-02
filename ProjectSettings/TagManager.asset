@@ -15,6 +15,7 @@ TagManager:
   - MenuArrow
   - CommonChest
   - Lock
+  - Shovel
   layers:
   - Default
   - TransparentFX

@@ -7,16 +7,21 @@ public class FruitController : MonoBehaviour
 {
     public GameObject highlight;
     public float returnSpeed = 1.0f;
+    public bool buried = false;
     public bool isSelected { get { return selected; } }
     public bool isFalling { get { return falling; } }
     public bool isHighlighted { get { return highlight.activeSelf; } }
+    public bool isBuried { get { return buried;  } }
     public Player selector { get { return whoSelected; } }
     public float fruitLogInterval = 0.2f;
+    public Sprite idleSprite, buriedSprite;
+    public bool log = true;
 
     private SpriteRenderer fruitRenderer, highlightRenderer = null;
     private Rigidbody2D rigidbody2d;
     private FruitLogger fruitLogger;
     private Camera cam;
+    private Animator animator;
     private Player whoSelected;
     private Color red, yellow, green;
     private Vector3 startPos;
@@ -33,6 +38,7 @@ public class FruitController : MonoBehaviour
         fruitRenderer = GetComponent<SpriteRenderer>();
         fruitLogger = GetComponent<FruitLogger>();
         rigidbody2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
         cam = Camera.main;
 
         // Colores del highlight. Usa colores predefinidos en caso de que
@@ -50,6 +56,23 @@ public class FruitController : MonoBehaviour
         selected = false;
         falling = false;
         nextUpdate = fruitLogInterval;
+        if (buried)
+            this.SetBuried(true);
+    }
+
+    public void SetBuried(bool buried_a)
+    {
+        buried = buried_a;
+        if (buried)
+        {
+            animator.enabled = false;
+            fruitRenderer.sprite = buriedSprite;
+        }
+        else
+        {
+            fruitRenderer.sprite = idleSprite;
+            animator.enabled = true;
+        }
     }
 
     private void OnDisable()
@@ -61,43 +84,41 @@ public class FruitController : MonoBehaviour
 
     void Update()
     {
-        if (returnToStart)
+        if (!buried)
         {
-            // Mueve fruto hasta que regrese a la posición inicial.
-            float step = returnSpeed * Time.deltaTime;
-            Vector2 newPosition = Vector2.MoveTowards(transform.position, startPos, step);
-            rigidbody2d.MovePosition(newPosition);
-
-
-            if (transform.position == startPos)
+            if (returnToStart)
             {
-                returnToStart = false;
+                // Mueve fruto hasta que regrese a la posición inicial.
+                float step = returnSpeed * Time.deltaTime;
+                Vector2 newPosition = Vector2.MoveTowards(transform.position, startPos, step);
+                rigidbody2d.MovePosition(newPosition);
+
+                if (transform.position == startPos)
+                    returnToStart = false;
             }
-        }
-        else
-        {
-            // Asigna posición inicial en caso de que no haya sido asignada anteriormente.
-            if (!selected && startPos != transform.position)
+            else
             {
-                startPos = transform.position;
+                // Asigna posición inicial en caso de que no haya sido asignada anteriormente.
+                if (!selected && startPos != transform.position)
+                    startPos = transform.position;
             }
-        }
 
-        // Guarda posición del fruto en el log.
-        if (Time.time >= nextUpdate)
-        {
-            nextUpdate = Time.time + fruitLogInterval;
-            if (startPos != transform.position && fruitLogger != null)
+            // Guarda posición del fruto en el log.
+            if (Time.time >= nextUpdate)
             {
-                string selector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
-                fruitLogger.Log(cam.WorldToScreenPoint(transform.position), selector);
+                nextUpdate = Time.time + fruitLogInterval;
+                if (log && startPos != transform.position && fruitLogger != null)
+                {
+                    string selector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
+                    fruitLogger.Log(cam.WorldToScreenPoint(transform.position), selector);
+                }
             }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (highlightRenderer != null)
+        if (!buried)
         {
             // Activa el highlight en caso de que el cursor entre en contacto con el fruto.
             if (other.tag == "CursorA" || other.tag == "CursorB")
@@ -115,7 +136,7 @@ public class FruitController : MonoBehaviour
                     chestVisuals.chestAccess == CanInteract.Both ||
                     (selector == Player.PlayerA && chestVisuals.chestAccess == CanInteract.PlayerA) ||
                     (selector == Player.PlayerB && chestVisuals.chestAccess == CanInteract.PlayerB)
-                    )
+                   )
                 {
                     highlightRenderer.color = green;
                     inChest = true;
@@ -126,12 +147,10 @@ public class FruitController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (highlightRenderer != null)
+        if (!buried)
         {
-            if (other.tag == "CursorA" || other.tag == "CursorB" || other.tag == "AICursor")
-            {
+            if (other.tag == "CursorA" || other.tag == "CursorB")
                 highlight.SetActive(false);
-            }
 
             if (other.tag == "Chest")
             {
@@ -147,31 +166,37 @@ public class FruitController : MonoBehaviour
 
     public void Select(Player who)
     {
-        whoSelected = who;
-        highlightRenderer.color = yellow;
-        highlightRenderer.sortingOrder += 2;
-        fruitRenderer.sortingOrder += 2;
-        selected = true;
+        if (!buried)
+        {
+            whoSelected = who;
+            highlightRenderer.color = yellow;
+            highlightRenderer.sortingOrder += 2;
+            fruitRenderer.sortingOrder += 2;
+            selected = true;
+        }
     }
 
     public void Deselect()
     {
-        highlightRenderer.color = red;
-        highlightRenderer.sortingOrder -= 2;
-        fruitRenderer.sortingOrder -= 2;
-        selected = false;
-
-        if (transform.position != startPos)
+        if (!buried)
         {
-            // Si se deselecciona dentro de cofre, cae como cuerpo rígido. En caso contrario
-            // regresa a la posición inicial.
-            if (inChest)
+            highlightRenderer.color = red;
+            highlightRenderer.sortingOrder -= 2;
+            fruitRenderer.sortingOrder -= 2;
+            selected = false;
+
+            if (transform.position != startPos)
             {
-                rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
-                falling = true;
+                // Si se deselecciona dentro de cofre, cae como cuerpo rígido. En caso contrario
+                // regresa a la posición inicial.
+                if (inChest)
+                {
+                    rigidbody2d.bodyType = RigidbodyType2D.Dynamic;
+                    falling = true;
+                }
+                else
+                    returnToStart = true;
             }
-            else
-                returnToStart = true;
         }
     }
 }

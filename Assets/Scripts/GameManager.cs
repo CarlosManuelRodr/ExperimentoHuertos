@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     private uint max_rounds;
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
+    private uint param_buriedA, param_buriedB;
     private bool param_enableLock, param_commonCounter, param_endGameButton;
     private bool param_showInstructions;
     private AccessType param_orchardAccess, param_chestAccess;
@@ -84,7 +85,7 @@ public class GameManager : MonoBehaviour
         // Usado en escena de depuración "Experiment".
         if (debug)
         {
-            this.StartExperiment(4, 3, 25, 25, true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE);
+            this.StartExperiment(4, 3, 50, 50, 25, 25, true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE);
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
@@ -173,7 +174,7 @@ public class GameManager : MonoBehaviour
 
     // MainMenu llama a StartExperiment o comienza automáticamente en configuración "debug".
     public void StartExperiment(
-        uint playerAFruits, uint playerBFruits, uint speedA, uint speedB, 
+        uint playerAFruits, uint playerBFruits, uint buriedA, uint buriedB, uint speedA, uint speedB, 
         bool enableLock, bool commonCounter, bool endGameButton,
         AccessType orchardAccess, AccessType chestAccess,
         uint rounds = 3, bool show_instructions = false, 
@@ -189,7 +190,7 @@ public class GameManager : MonoBehaviour
         parallax.MoveDown();
         experiment.SetActive(true);
         experimentManager.InitializeExperiment(
-            playerAFruits, playerBFruits, speedA, speedB,
+            playerAFruits, playerBFruits, buriedA, buriedB, speedA, speedB,
             enableLock, commonCounter, endGameButton,
             orchardAccess, chestAccess,
             path, currentID, currentRound
@@ -197,6 +198,8 @@ public class GameManager : MonoBehaviour
 
         param_playerAFruits = playerAFruits;
         param_playerBFruits = playerBFruits;
+        param_buriedA = buriedA;
+        param_buriedB = buriedB;
         param_speedA = speedA;
         param_speedB = speedB;
         param_enableLock = enableLock;
@@ -274,7 +277,8 @@ public class GameManager : MonoBehaviour
 
             experimentManager.StopExperiment();
             experimentManager.InitializeExperiment(
-                param_playerAFruits, param_playerBFruits, param_speedA, param_speedB,
+                param_playerAFruits, param_playerBFruits,
+                param_buriedA, param_buriedB, param_speedA, param_speedB,
                 param_enableLock, param_commonCounter, param_endGameButton,
                 param_orchardAccess, param_chestAccess,
                 path, currentID, currentRound

@@ -30,6 +30,7 @@ public struct LevelData
     public Sprite image;
     public uint fruitsA, fruitsB;
     public uint speedA, speedB;
+    public uint buriedA, buriedB;
     public bool freeOrchard, enableLock;
     public bool commonCounter, endGameButton;
     public bool showInstructions;
@@ -182,6 +183,8 @@ public class LevelSelectController : MonoBehaviour
                     levelData.image = IMG2Sprite.LoadNewSprite("Levels/" + level["image"].InnerText);
                     levelData.fruitsA = Convert.ToUInt32(level["fruitsA"].InnerText);
                     levelData.fruitsB = Convert.ToUInt32(level["fruitsB"].InnerText);
+                    levelData.buriedA = Convert.ToUInt32(level["buriedA"].InnerText);
+                    levelData.buriedB = Convert.ToUInt32(level["buriedB"].InnerText);
                     levelData.speedA = Convert.ToUInt32(level["speedA"].InnerText);
                     levelData.speedB = Convert.ToUInt32(level["speedB"].InnerText);
                     levelData.freeOrchard = Convert.ToBoolean(level["freeOrchard"].InnerText);

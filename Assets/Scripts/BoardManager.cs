@@ -11,6 +11,7 @@ public class BoardManager : MonoBehaviour
     public GameObject fruitPrefab;
 
     private uint fruitNumber;
+    private uint buriedPercentage;
     private uint columns; // Por defecto son 10x10
     private uint rows;
     private List<Vector2> gridPositions = new List<Vector2>();
@@ -52,8 +53,9 @@ public class BoardManager : MonoBehaviour
         return randomPosition;
     }
 
-    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits)
+    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits, uint buriedPercent)
     {
+        buriedPercentage = buriedPercent;
         rows = nrows;
         columns = ncolumns;
         fruitNumber = nfruits;
@@ -61,11 +63,12 @@ public class BoardManager : MonoBehaviour
 
         InitialiseList();
         DestroyChildren();
-        RandomBoardSetup();
+        BoardSetup();
     }
 
-    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits, string logpath)
+    public void SetUpExperiment(uint nrows, uint ncolumns, uint nfruits, uint buriedPercent, string logpath)
     {
+        buriedPercentage = buriedPercent;
         rows = nrows;
         columns = ncolumns;
         fruitNumber = nfruits;
@@ -74,11 +77,16 @@ public class BoardManager : MonoBehaviour
 
         InitialiseList();
         DestroyChildren();
-        RandomBoardSetup();
+        BoardSetup();
     }
 
-    void RandomBoardSetup()
+    void BoardSetup()
     {
+        FruitController fruitController;
+        FruitLogger fruitLogger;
+
+        int buriedNumber = Mathf.FloorToInt((buriedPercentage / 100.0f) * fruitNumber);
+
         // Coloca los frutos en posiciones aleatorias dentro del grid.
         for (int i = 0; i < fruitNumber; i++)
         {
@@ -89,39 +97,20 @@ public class BoardManager : MonoBehaviour
                             scale * randomPosition + this.transform.position, 
                             Quaternion.identity
                             ) as GameObject;
+
+            if (i < buriedNumber)
+            {
+                fruitController = instance.GetComponent<FruitController>();
+                fruitController.SetBuried(true);
+            }
+
             if (save_log)
             {
-                instance.GetComponent<FruitLogger>().SetFruitID(owner, i + 1);
-                instance.GetComponent<FruitLogger>().SetPath(m_logpath);
+                fruitLogger = instance.GetComponent<FruitLogger>();
+                fruitLogger.SetFruitID(owner, i + 1);
+                fruitLogger.SetPath(m_logpath);
             }
             instance.transform.SetParent(this.transform);
-        }
-    }
-
-    void SquareBoardSetup()
-    {
-        uint fruitsInstanciated = 0;
-
-        for (uint y = rows; y > 0; y--)
-        {
-            for (uint x = 0; x < columns; x++)
-            {
-                if (fruitsInstanciated < fruitNumber)
-                {
-                    GameObject instance =
-                        Instantiate(fruitPrefab, new Vector3(scale * x, scale * y, 0f) + this.transform.position, Quaternion.identity) as GameObject;
-
-                    if (save_log)
-                    {
-                        instance.GetComponent<FruitLogger>().SetPath(m_logpath);
-                        instance.GetComponent<FruitLogger>().SetFruitID(owner, (int)fruitsInstanciated);
-                    }
-                    instance.transform.SetParent(this.transform);
-                    fruitsInstanciated++;
-                }
-                else
-                    break;
-            }
         }
     }
 

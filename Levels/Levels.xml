@@ -2,7 +2,9 @@
   <level1>
     <name>Nivel 1</name>
     <fruitsA>50</fruitsA> <!-- Los frutos pueden tener valores del 1 al 100 -->
+    <buriedA>0</buriedA> <!-- Porcentaje de frutos enterrados del 1 al 100 -->
     <fruitsB>50</fruitsB>
+    <buriedB>0</buriedB>
     <speedA>30</speedA> <!-- La velocidad toma valores del 1 al 100 -->
     <speedB>30</speedB>
     <freeOrchard>true</freeOrchard> <!-- Opción para hacer que ambos huertos sean libres -->
@@ -22,6 +24,8 @@
     <name>Nivel 2</name>
     <fruitsA>1</fruitsA>
     <fruitsB>1</fruitsB>
+    <buriedA>50</buriedA>
+    <buriedB>50</buriedB>
     <speedA>30</speedA>
     <speedB>30</speedB>
     <freeOrchard>false</freeOrchard>

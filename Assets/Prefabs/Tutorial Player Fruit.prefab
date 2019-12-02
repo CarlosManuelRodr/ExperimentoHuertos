@@ -223,6 +223,8 @@ MonoBehaviour:
   highlight: {fileID: 8790694575461973615}
   returnSpeed: 12
   fruitLogInterval: 0.1
+  idleSprite: {fileID: 21300000, guid: bdce2a9cb3d0242958c2593a3b8d8742, type: 3}
+  buriedSprite: {fileID: 21300000, guid: ce8f1a4e54d9b17458c943d145e509d0, type: 3}
 --- !u!50 &8963626492184885542
 Rigidbody2D:
   serializedVersion: 4
