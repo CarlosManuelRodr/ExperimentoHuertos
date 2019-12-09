@@ -22,10 +22,10 @@
   </level1>
   <level2>
     <name>Nivel 2</name>
-    <fruitsA>1</fruitsA>
-    <fruitsB>1</fruitsB>
-    <buriedA>50</buriedA>
-    <buriedB>50</buriedB>
+    <fruitsA>2</fruitsA>
+    <fruitsB>2</fruitsB>
+    <buriedA>0</buriedA>
+    <buriedB>0</buriedB>
     <speedA>30</speedA>
     <speedB>30</speedB>
     <freeOrchard>false</freeOrchard>
@@ -36,9 +36,9 @@
     <image>level2.png</image>
     <orchardAccess>mutual_block</orchardAccess>
     <chestAccess>both_free</chestAccess>
-    <showInstructions>false</showInstructions>
-    <instruction1></instruction1>
-    <instruction2></instruction2>
-    <instruction3></instruction3>
+    <showInstructions>true</showInstructions>
+    <instruction1>Hay mushos frutos</instruction1>
+    <instruction2>aslkujdhlkasuhrdflkjh</instruction2>
+    <instruction3>Esto es un ejemplo de un texto un poco mas largo, pero alc si lo aguanto</instruction3>
   </level2>
 </configuration>

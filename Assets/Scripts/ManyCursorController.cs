@@ -113,6 +113,12 @@ public class ManyCursorController : MonoBehaviour
         fruitsAccess = canInteract;
     }
 
+    public void Setup(Vector2 position)
+    {
+        this.transform.position = position;
+        initialSpeed = cursorSpeed;
+    }
+
     void OnEnable()
     {
         this.SetUpCursor();

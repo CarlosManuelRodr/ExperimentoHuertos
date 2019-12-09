@@ -159,14 +159,20 @@ public class FruitController : MonoBehaviour
             if (other.tag == "Chest")
             {
                 ChestVisuals chestVisuals = other.GetComponentInChildren<ChestVisuals>();
-                if (
-                    chestVisuals.chestAccess == CanInteract.Both ||
-                    (selector == Player.PlayerA && chestVisuals.chestAccess == CanInteract.PlayerA) ||
-                    (selector == Player.PlayerB && chestVisuals.chestAccess == CanInteract.PlayerB)
-                   )
+                chestVisuals.numberOfOccupants++;
+
+                if (chestVisuals.numberOfOccupants == 1 && isSelected)
                 {
-                    highlightRenderer.color = green;
-                    inChest = true;
+                    if (
+                        chestVisuals.chestAccess == CanInteract.Both ||
+                        (selector == Player.PlayerA && chestVisuals.chestAccess == CanInteract.PlayerA) ||
+                        (selector == Player.PlayerB && chestVisuals.chestAccess == CanInteract.PlayerB)
+                       )
+                    {
+                        chestVisuals.EnterFruit(this);
+                        highlightRenderer.color = green;
+                        inChest = true;
+                    }
                 }
             }
         }
@@ -181,12 +187,22 @@ public class FruitController : MonoBehaviour
 
             if (other.tag == "Chest")
             {
-                inChest = false;
+                ChestVisuals chestVisuals = other.GetComponentInChildren<ChestVisuals>();
+                chestVisuals.numberOfOccupants--;
 
-                if (returnToStart)
-                    highlightRenderer.color = red;
-                else
-                    highlightRenderer.color = yellow;
+                if (inChest)
+                {
+                    if (!falling)
+                    {
+                        chestVisuals.ExitFruit();
+                        inChest = false;
+                    }
+
+                    if (returnToStart)
+                        highlightRenderer.color = red;
+                    else
+                        highlightRenderer.color = yellow;
+                }
             }
         }
     }

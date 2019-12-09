@@ -1119,7 +1119,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 0.6
-  m_Text: Terminar experimento
+  m_Text: "Terminar \njuego"
 --- !u!1 &5398922793161701191
 GameObject:
   m_ObjectHideFlags: 0

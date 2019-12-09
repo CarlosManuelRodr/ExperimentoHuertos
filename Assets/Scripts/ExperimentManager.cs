@@ -12,6 +12,7 @@ public class ExperimentManager : MonoBehaviour
     public GameObject lockA, lockB, endExperimentButton;
     public GameObject commonCounter;
     public GameObject commonCounterHUD;
+    public GameObject shovel, shovelSupport;
 
     public uint scoreA { get { return chestAController.GetScore(); } }
     public uint scoreB { get { return chestBController.GetScore(); } }
@@ -93,6 +94,17 @@ public class ExperimentManager : MonoBehaviour
     {
         cursorAScript.speed = (int) speedA;
         cursorBScript.speed = (int) speedB;
+
+        if (buriedA == 0 && buriedB == 0)
+        {
+            shovel.SetActive(false);
+            shovelSupport.SetActive(false);
+        }
+        else
+        {
+            shovel.SetActive(true);
+            shovelSupport.SetActive(true);
+        }
 
         // Configura el acceso a los huertos.
         switch (orchardAccess)
@@ -180,8 +192,8 @@ public class ExperimentManager : MonoBehaviour
 
     public void ActivateCursors()
     {
-        playerACursor.transform.position = playerACursorPos;
-        playerBCursor.transform.position = playerBCursorPos;
+        cursorAScript.Setup(playerACursorPos);
+        cursorBScript.Setup(playerBCursorPos);
 
         playerACursor.SetActive(true);
         playerBCursor.SetActive(true);

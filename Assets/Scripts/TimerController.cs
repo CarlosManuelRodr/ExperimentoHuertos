@@ -8,7 +8,7 @@ public class TimerController : MonoBehaviour
     private int lastSecond = 0;
     private bool running = false;
 
-    void Start()
+    void Awake()
     {
         timerText = GetComponent<TextMeshProUGUI>();
     }
