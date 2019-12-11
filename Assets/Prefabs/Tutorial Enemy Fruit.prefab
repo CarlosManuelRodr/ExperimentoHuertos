@@ -4841,7 +4841,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8838145080450965377}
   - component: {fileID: 8838145080450965382}
-  - component: {fileID: 8838145080450965383}
   - component: {fileID: 8873085258039157258}
   - component: {fileID: 8873085258039157254}
   - component: {fileID: 5610255401175850252}
@@ -4917,25 +4916,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &8838145080450965383
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8838145080450965380}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7900972a55d5a3844be16f6e324f946a, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!61 &8873085258039157258
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5001,6 +4981,8 @@ MonoBehaviour:
   fruitLogInterval: 0.1
   idleSprite: {fileID: 21300000, guid: b5ca1db0ff5a5f24c91fa2691b5ae0b5, type: 3}
   buriedSprite: {fileID: 21300000, guid: 9112ccd3930339f4c99a6e2e978ef53f, type: 3}
+  hitAudio: {fileID: 0}
+  unearthAudio: {fileID: 0}
   log: 1
 --- !u!82 &5824904500476181042
 AudioSource:

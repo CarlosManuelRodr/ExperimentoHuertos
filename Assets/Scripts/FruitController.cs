@@ -22,7 +22,6 @@ public class FruitController : MonoBehaviour
     private Rigidbody2D rigidbody2d;
     private FruitLogger fruitLogger;
     private Camera cam;
-    private Animator animator;
     private ParticleSystem particles;
     private AudioSource audioSource;
     private Player whoSelected;
@@ -42,7 +41,6 @@ public class FruitController : MonoBehaviour
         fruitRenderer = GetComponent<SpriteRenderer>();
         fruitLogger = GetComponent<FruitLogger>();
         rigidbody2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         particles = GetComponentInChildren<ParticleSystem>();
         audioSource = GetComponent<AudioSource>();
         cam = Camera.main;
@@ -72,15 +70,9 @@ public class FruitController : MonoBehaviour
     {
         buried = buried_a;
         if (buried)
-        {
-            animator.enabled = false;
             fruitRenderer.sprite = buriedSprite;
-        }
         else
-        {
             fruitRenderer.sprite = idleSprite;
-            animator.enabled = true;
-        }
     }
 
     private void OnDisable()
