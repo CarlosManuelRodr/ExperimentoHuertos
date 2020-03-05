@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
     public GameObject startScreen, initGame, options, about;
     public GameObject fruitSliderA, fruitSliderB, speedA, speedB;
     public GameObject percentBuriedA, percentBuriedB;
-    public GameObject orchadAccess, chestAccess, enableLock, commonCounter, endGameButton;
+    public GameObject lockAccess, shovelAccess, chestAccess, commonCounter, endGameButton;
     public GameObject levelSelector;
 
     private AudioSource audioSource;
@@ -99,10 +99,9 @@ public class MainMenu : MonoBehaviour
                     level.fruitsA, level.fruitsB,
                     level.buriedA, level.buriedB,
                     level.speedA, level.speedB,
-                    level.enableLock, level.commonCounter,
-                    level.endGameButton, level.orchardAccess, level.chestAccess,
-                    3, level.showInstructions,
-                    level.instruction1, level.instruction2, level.instruction3
+                    level.commonCounter, level.endGameButton,
+                    level.lockAccess, level.shovelAccess, level.chestAccess,
+                    3, level.showInstructions, level.instruction1, level.instruction2, level.instruction3
                     );
                 this.EnableMenu(false);
             }
@@ -114,48 +113,68 @@ public class MainMenu : MonoBehaviour
             // Recibe valores de configuración de elementos de interfaz gráfica.
             Slider fruitSliderAScript, fruitSliderBScript, speedAScript, speedBScript;
             Slider buriedASliderScript, buriedBSliderScript;
-            Toggle enableLockScript, commonCounterScript, endGameButtonScript;
-            TMP_Dropdown orchadAccessDropdown, chestAccessDropdown;
+            Toggle commonCounterScript, endGameButtonScript;
+            TMP_Dropdown lockAccessDropdown, shovelAccessDropdown, chestAccessDropdown;
 
-            orchadAccessDropdown = orchadAccess.GetComponent<TMP_Dropdown>();
+            lockAccessDropdown = lockAccess.GetComponent<TMP_Dropdown>();
+            shovelAccessDropdown = shovelAccess.GetComponent<TMP_Dropdown>();
             chestAccessDropdown = chestAccess.GetComponent<TMP_Dropdown>();
 
-            AccessType orchardAccessValue = AccessType.MUTUAL_BLOCK;
-            switch (orchadAccessDropdown.value)
+            ObjectAccessType lockAccessValue = ObjectAccessType.NONE;
+            switch (lockAccessDropdown.value)
             {
                 case 0:
-                    orchardAccessValue = AccessType.MUTUAL_BLOCK;
+                    lockAccessValue = ObjectAccessType.BOTH;
                     break;
                 case 1:
-                    orchardAccessValue = AccessType.BOTH_FREE;
+                    lockAccessValue = ObjectAccessType.NONE;
                     break;
                 case 2:
-                    orchardAccessValue = AccessType.A_FREE;
+                    lockAccessValue = ObjectAccessType.ONLY_A;
                     break;
                 case 3:
-                    orchardAccessValue = AccessType.B_FREE;
+                    lockAccessValue = ObjectAccessType.ONLY_B;
                     break;
                 default:
-                    orchardAccessValue = AccessType.MUTUAL_BLOCK;
+                    lockAccessValue = ObjectAccessType.BOTH;
                     break;
             }
-            AccessType chestAccessValue = AccessType.BOTH_FREE;
+            ObjectAccessType shovelAccessValue = ObjectAccessType.NONE;
+            switch (shovelAccessDropdown.value)
+            {
+                case 0:
+                    shovelAccessValue = ObjectAccessType.BOTH;
+                    break;
+                case 1:
+                    shovelAccessValue = ObjectAccessType.NONE;
+                    break;
+                case 2:
+                    shovelAccessValue = ObjectAccessType.ONLY_A;
+                    break;
+                case 3:
+                    shovelAccessValue = ObjectAccessType.ONLY_B;
+                    break;
+                default:
+                    shovelAccessValue = ObjectAccessType.BOTH;
+                    break;
+            }
+            ChestAccessType chestAccessValue = ChestAccessType.BOTH_FREE;
             switch (chestAccessDropdown.value)
             {
                 case 0:
-                    chestAccessValue = AccessType.BOTH_FREE;
+                    chestAccessValue = ChestAccessType.BOTH_FREE;
                     break;
                 case 1:
-                    chestAccessValue = AccessType.MUTUAL_BLOCK;
+                    chestAccessValue = ChestAccessType.MUTUAL_BLOCK;
                     break;
                 case 2:
-                    chestAccessValue = AccessType.A_FREE;
+                    chestAccessValue = ChestAccessType.A_FREE;
                     break;
                 case 3:
-                    chestAccessValue = AccessType.B_FREE;
+                    chestAccessValue = ChestAccessType.B_FREE;
                     break;
                 default:
-                    chestAccessValue = AccessType.BOTH_FREE;
+                    chestAccessValue = ChestAccessType.BOTH_FREE;
                     break;
             }
 
@@ -163,13 +182,11 @@ public class MainMenu : MonoBehaviour
             fruitSliderBScript = fruitSliderB.GetComponentInChildren<Slider>();
             speedAScript = speedA.GetComponentInChildren<Slider>();
             speedBScript = speedB.GetComponentInChildren<Slider>();
-            enableLockScript = enableLock.GetComponent<Toggle>();
             commonCounterScript = commonCounter.GetComponent<Toggle>();
             endGameButtonScript = endGameButton.GetComponent<Toggle>();
             buriedASliderScript = percentBuriedA.GetComponent<Slider>();
             buriedBSliderScript = percentBuriedB.GetComponent<Slider>();
 
-            bool freeOrchardValue = (orchadAccessDropdown.value == 0) ? false : true;
             if (gameManager != null)
             {
                 canvasFader.SetFadeType(CanvasFaderScript.eFadeType.fade_out);
@@ -178,8 +195,8 @@ public class MainMenu : MonoBehaviour
                     (uint)fruitSliderAScript.value, (uint)fruitSliderBScript.value,
                     (uint)buriedASliderScript.value, (uint)buriedBSliderScript.value,
                     (uint)speedAScript.value, (uint)speedBScript.value,
-                    enableLockScript.isOn, commonCounterScript.isOn,
-                    endGameButtonScript.isOn, orchardAccessValue, chestAccessValue,
+                    commonCounterScript.isOn, endGameButtonScript.isOn,
+                    lockAccessValue, shovelAccessValue, chestAccessValue,
                     3, false
                     );
                 this.EnableMenu(false);
@@ -210,7 +227,8 @@ public class MainMenu : MonoBehaviour
                     20, 20,
                     20, 20,
                     30, 30,
-                    true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE, 
+                    true, true,
+                    ObjectAccessType.BOTH, ObjectAccessType.BOTH, ChestAccessType.BOTH_FREE, 
                     1, false
                     );
                 this.EnableMenu(false);

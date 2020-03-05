@@ -7,14 +7,13 @@
     <buriedB>0</buriedB>
     <speedA>30</speedA> <!-- La velocidad toma valores del 1 al 100 -->
     <speedB>30</speedB>
-    <freeOrchard>true</freeOrchard> <!-- Opción para hacer que ambos huertos sean libres -->
-    <enableLock>false</enableLock> <!-- Mostrar candado de acceso -->
     <commonCounter>true</commonCounter> <!-- Mostrar contador común -->
     <endGameButton>true</endGameButton> <!-- Mostrar botón para finalizar juego -->
     <description>El objetivo es llevar los frutos a sus respectivos canastos.</description> <!-- Descripción del nivel -->
     <image>level1.png</image> <!-- Imagen de previsualización para el nivel -->
-    <orchardAccess>mutual_block</orchardAccess> <!-- Posibles valores son: mutual_block, both_free, a_free, b_free -->
-    <chestAccess>both_free</chestAccess> <!-- Posibles valores son: mutual_block, both_free, a_free, b_free -->
+    <lock>both</lock> <!-- Posibles valores son: both, none, only_a, only_b -->
+    <chestAccess>both</chestAccess> <!-- Posibles valores son: both, none, only_a, only_b -->
+    <shovelAccess>both</shovelAccess> <!-- Posibles valores son: both, none, only_a, only_b -->
     <showInstructions>true</showInstructions> <!-- Mostrar panel de instrucciones -->
     <instruction1>Esta es la instruccion 1</instruction1>
     <instruction2>Mira, ahora tambien explico en la sesion 2</instruction2>
@@ -28,14 +27,13 @@
     <buriedB>0</buriedB>
     <speedA>30</speedA>
     <speedB>30</speedB>
-    <freeOrchard>false</freeOrchard>
-    <enableLock>true</enableLock>
     <commonCounter>false</commonCounter>
     <endGameButton>true</endGameButton>
     <description>Nivel 2 del juego k kreizi</description>
     <image>level2.png</image>
-    <orchardAccess>mutual_block</orchardAccess>
-    <chestAccess>both_free</chestAccess>
+    <chestAccess>both</chestAccess>
+    <lock>both</lock>
+    <shovelAccess>both</shovelAccess>
     <showInstructions>true</showInstructions>
     <instruction1>Hay mushos frutos</instruction1>
     <instruction2>aslkujdhlkasuhrdflkjh</instruction2>

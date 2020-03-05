@@ -14,12 +14,20 @@ public enum LevelType
     CUSTOM
 }
 
-public enum AccessType
+public enum ChestAccessType
 {
     BOTH_FREE,
     MUTUAL_BLOCK,
     A_FREE,
     B_FREE
+}
+
+public enum ObjectAccessType
+{
+    BOTH,
+    NONE,
+    ONLY_A,
+    ONLY_B
 }
 
 // LevelData contiene todos los parámetros que definen la configuración de un nivel.
@@ -35,7 +43,8 @@ public struct LevelData
     public bool commonCounter, endGameButton;
     public bool showInstructions;
     public string instruction1, instruction2, instruction3;
-    public AccessType orchardAccess, chestAccess;
+    public ObjectAccessType lockAccess, shovelAccess;
+    public ChestAccessType chestAccess;
 }
 
 /// <summary>
@@ -143,20 +152,37 @@ public class LevelSelectController : MonoBehaviour
         return output;
     }
 
-    private AccessType GetAccessType(string value)
+    private ChestAccessType GetChestAccessType(string value)
     {
         switch (value)
         {
             case "both_free":
-                return AccessType.BOTH_FREE;
+                return ChestAccessType.BOTH_FREE;
             case "mutual_block":
-                return AccessType.MUTUAL_BLOCK;
+                return ChestAccessType.MUTUAL_BLOCK;
             case "a_free":
-                return AccessType.A_FREE;
+                return ChestAccessType.A_FREE;
             case "b_free":
-                return AccessType.B_FREE;
+                return ChestAccessType.B_FREE;
             default:
-                return AccessType.MUTUAL_BLOCK;
+                return ChestAccessType.BOTH_FREE;
+        }
+    }
+
+    private ObjectAccessType GetObjectAccessType(string value)
+    {
+        switch (value)
+        {
+            case "both":
+                return ObjectAccessType.BOTH;
+            case "none":
+                return ObjectAccessType.NONE;
+            case "only_a":
+                return ObjectAccessType.ONLY_A;
+            case "only_b":
+                return ObjectAccessType.ONLY_B;
+            default:
+                return ObjectAccessType.BOTH;
         }
     }
 
@@ -197,8 +223,9 @@ public class LevelSelectController : MonoBehaviour
                     levelData.commonCounter = Convert.ToBoolean(level["commonCounter"].InnerText);
                     levelData.endGameButton = Convert.ToBoolean(level["endGameButton"].InnerText);
 
-                    levelData.orchardAccess = GetAccessType(level["orchardAccess"].InnerText);
-                    levelData.chestAccess = GetAccessType(level["chestAccess"].InnerText);
+                    levelData.lockAccess = GetObjectAccessType(level["lockAccess"].InnerText);
+                    levelData.shovelAccess = GetObjectAccessType(level["shovelAccess"].InnerText);
+                    levelData.chestAccess = GetChestAccessType(level["chestAccess"].InnerText);
 
                     levelData.showInstructions = Convert.ToBoolean(level["showInstructions"].InnerText);
                     levelData.instruction1 = level["instruction1"].InnerText;

@@ -44,9 +44,10 @@ public class GameManager : MonoBehaviour
 
     private uint param_playerAFruits, param_playerBFruits, param_speedA, param_speedB;
     private uint param_buriedA, param_buriedB;
-    private bool param_enableLock, param_commonCounter, param_endGameButton;
+    private bool param_commonCounter, param_endGameButton;
     private bool param_showInstructions;
-    private AccessType param_orchardAccess, param_chestAccess;
+    private ObjectAccessType param_lockAccess, param_shovelAccess;
+    private ChestAccessType param_chestAccess;
     private string param_instruction1, param_instruction2, param_instruction3;
     private string path;
 
@@ -85,7 +86,10 @@ public class GameManager : MonoBehaviour
         // Usado en escena de depuración "Experiment".
         if (debug)
         {
-            this.StartExperiment(10, 10, 50, 50, 25, 25, true, true, true, AccessType.MUTUAL_BLOCK, AccessType.BOTH_FREE);
+            this.StartExperiment(
+                10, 10, 50, 50, 25, 25, true, true,
+                ObjectAccessType.BOTH, ObjectAccessType.BOTH, ChestAccessType.BOTH_FREE
+                );
             experimentManager.ActivateCursors();
             currentRound = 1;
             round1.Play();
@@ -176,8 +180,8 @@ public class GameManager : MonoBehaviour
     // MainMenu llama a StartExperiment o comienza automáticamente en configuración "debug".
     public void StartExperiment(
         uint playerAFruits, uint playerBFruits, uint buriedA, uint buriedB, uint speedA, uint speedB, 
-        bool enableLock, bool commonCounter, bool endGameButton,
-        AccessType orchardAccess, AccessType chestAccess,
+        bool commonCounter, bool endGameButton,
+        ObjectAccessType lockAccess, ObjectAccessType shovelAccess, ChestAccessType chestAccess,
         uint rounds = 3, bool show_instructions = false, 
         string instructions1 = "", string instructions2 = "", string instructions3 = ""
         )
@@ -192,8 +196,8 @@ public class GameManager : MonoBehaviour
         experiment.SetActive(true);
         experimentManager.InitializeExperiment(
             playerAFruits, playerBFruits, buriedA, buriedB, speedA, speedB,
-            enableLock, commonCounter, endGameButton,
-            orchardAccess, chestAccess,
+            commonCounter, endGameButton,
+            lockAccess, shovelAccess, chestAccess,
             path, currentID, currentRound
             );
 
@@ -203,10 +207,10 @@ public class GameManager : MonoBehaviour
         param_buriedB = buriedB;
         param_speedA = speedA;
         param_speedB = speedB;
-        param_enableLock = enableLock;
         param_commonCounter = commonCounter;
         param_endGameButton = endGameButton;
-        param_orchardAccess = orchardAccess;
+        param_lockAccess = lockAccess;
+        param_shovelAccess = shovelAccess;
         param_chestAccess = chestAccess;
         param_showInstructions = show_instructions;
         param_instruction1 = instructions1;
@@ -280,8 +284,8 @@ public class GameManager : MonoBehaviour
             experimentManager.InitializeExperiment(
                 param_playerAFruits, param_playerBFruits,
                 param_buriedA, param_buriedB, param_speedA, param_speedB,
-                param_enableLock, param_commonCounter, param_endGameButton,
-                param_orchardAccess, param_chestAccess,
+                param_commonCounter, param_endGameButton,
+                param_lockAccess, param_shovelAccess, param_chestAccess,
                 path, currentID, currentRound
                 );
 

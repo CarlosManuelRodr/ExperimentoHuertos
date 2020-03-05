@@ -87,8 +87,8 @@ public class ExperimentManager : MonoBehaviour
 
     public void InitializeExperiment(
         uint playerAFruits, uint playerBFruits, uint buriedA, uint buriedB, uint speedA, uint speedB,
-        bool enableLock, bool useCommonCounter, bool endGameButton,
-        AccessType orchardAccess, AccessType chestAccess,
+        bool useCommonCounter, bool endGameButton,
+        ObjectAccessType lockAccess, ObjectAccessType shovelAccess, ChestAccessType chestAccess,
         string logPath, int experimentID, int roundNumber, bool save_log = true
         )
     {
@@ -107,47 +107,25 @@ public class ExperimentManager : MonoBehaviour
         }
 
         // Configura el acceso a los huertos.
-        switch (orchardAccess)
-        {
-            case AccessType.BOTH_FREE:
-                cursorAScript.fruitsAccess = CanInteract.Both;
-                cursorBScript.fruitsAccess = CanInteract.Both;
-                break;
-            case AccessType.MUTUAL_BLOCK:
-                cursorAScript.fruitsAccess = CanInteract.PlayerA;
-                cursorBScript.fruitsAccess = CanInteract.PlayerB;
-                break;
-            case AccessType.A_FREE:
-                cursorAScript.fruitsAccess = CanInteract.Both;
-                cursorBScript.fruitsAccess = CanInteract.PlayerB;
-                break;
-            case AccessType.B_FREE:
-                cursorAScript.fruitsAccess = CanInteract.PlayerA;
-                cursorBScript.fruitsAccess = CanInteract.Both;
-                break;
-        }
-        if (enableLock)
-        {
-            cursorAScript.fruitsAccess = CanInteract.PlayerA;
-            cursorBScript.fruitsAccess = CanInteract.PlayerB;
-        }
+        cursorAScript.fruitsAccess = CanInteract.PlayerA;
+        cursorBScript.fruitsAccess = CanInteract.PlayerB;
 
         // Configura el acceso a los cofres.
         switch (chestAccess)
         {
-            case AccessType.BOTH_FREE:
+            case ChestAccessType.BOTH_FREE:
                 chestAVisuals.chestAccess = CanInteract.Both;
                 chestBVisuals.chestAccess = CanInteract.Both;
                 break;
-            case AccessType.MUTUAL_BLOCK:
+            case ChestAccessType.MUTUAL_BLOCK:
                 chestAVisuals.chestAccess = CanInteract.PlayerA;
                 chestBVisuals.chestAccess = CanInteract.PlayerB;
                 break;
-            case AccessType.A_FREE:
+            case ChestAccessType.A_FREE:
                 chestAVisuals.chestAccess = CanInteract.PlayerA;
                 chestBVisuals.chestAccess = CanInteract.Both;
                 break;
-            case AccessType.B_FREE:
+            case ChestAccessType.B_FREE:
                 chestAVisuals.chestAccess = CanInteract.Both;
                 chestBVisuals.chestAccess = CanInteract.PlayerB;
                 break;
@@ -173,6 +151,8 @@ public class ExperimentManager : MonoBehaviour
             boardManagerA.SetUpExperiment(10, 10, playerAFruits, buriedA);
             boardManagerB.SetUpExperiment(10, 10, playerBFruits, buriedB);
         }
+
+        
 
         lockA.SetActive(enableLock);
         lockB.SetActive(enableLock);
