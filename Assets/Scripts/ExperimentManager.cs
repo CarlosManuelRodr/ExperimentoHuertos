@@ -12,7 +12,8 @@ public class ExperimentManager : MonoBehaviour
     public GameObject lockA, lockB, endExperimentButton;
     public GameObject commonCounter;
     public GameObject commonCounterHUD;
-    public GameObject shovel, shovelSupport;
+    public GameObject shovelA;
+    public GameObject shovelB;
 
     public uint scoreA { get { return chestAController.GetScore(); } }
     public uint scoreB { get { return chestBController.GetScore(); } }
@@ -36,6 +37,8 @@ public class ExperimentManager : MonoBehaviour
     private ChestController chestAController, chestBController;
     private ChestVisuals chestAVisuals, chestBVisuals;
     private ManyCursorController cursorAScript, cursorBScript;
+    private LockController lockAController, lockBController;
+    private ShovelController shovelAController, shovelBController;
 
     private string path;
     private ExperimentLogger logger;
@@ -58,6 +61,10 @@ public class ExperimentManager : MonoBehaviour
         chestBVisuals = chestB.GetComponentInChildren<ChestVisuals>();
         chestAController = chestA.GetComponentInChildren<ChestController>();
         chestBController = chestB.GetComponentInChildren<ChestController>();
+        lockAController = lockA.GetComponent<LockController>();
+        lockBController = lockB.GetComponent<LockController>();
+        shovelAController = shovelA.GetComponent<ShovelController>();
+        shovelBController = shovelB.GetComponent<ShovelController>();
 
         playerACursorPos = playerACursor.transform.position;
         playerBCursorPos = playerBCursor.transform.position;
@@ -95,20 +102,51 @@ public class ExperimentManager : MonoBehaviour
         cursorAScript.speed = (int) speedA;
         cursorBScript.speed = (int) speedB;
 
-        if (buriedA == 0 && buriedB == 0)
-        {
-            shovel.SetActive(false);
-            shovelSupport.SetActive(false);
-        }
-        else
-        {
-            shovel.SetActive(true);
-            shovelSupport.SetActive(true);
-        }
-
         // Configura el acceso a los huertos.
         cursorAScript.fruitsAccess = CanInteract.PlayerA;
         cursorBScript.fruitsAccess = CanInteract.PlayerB;
+
+        // Configura acceso a candado.
+        switch (lockAccess)
+        {
+            case ObjectAccessType.BOTH:
+                lockAController.MakeActive();
+                lockBController.MakeActive();
+                break;
+            case ObjectAccessType.NONE:
+                lockAController.MakeInactive();
+                lockBController.MakeInactive();
+                break;
+            case ObjectAccessType.ONLY_A:
+                lockAController.MakeActive();
+                lockBController.MakeInactive();
+                break;
+            case ObjectAccessType.ONLY_B:
+                lockAController.MakeInactive();
+                lockBController.MakeActive();
+                break;
+        }
+
+        // Configura acceso a pala.
+        switch (shovelAccess)
+        {
+            case ObjectAccessType.BOTH:
+                shovelAController.MakeActive();
+                shovelBController.MakeActive();
+                break;
+            case ObjectAccessType.NONE:
+                shovelAController.MakeInactive();
+                shovelBController.MakeInactive();
+                break;
+            case ObjectAccessType.ONLY_A:
+                shovelAController.MakeActive();
+                shovelBController.MakeInactive();
+                break;
+            case ObjectAccessType.ONLY_B:
+                shovelAController.MakeInactive();
+                shovelBController.MakeActive();
+                break;
+        }
 
         // Configura el acceso a los cofres.
         switch (chestAccess)
@@ -152,10 +190,6 @@ public class ExperimentManager : MonoBehaviour
             boardManagerB.SetUpExperiment(10, 10, playerBFruits, buriedB);
         }
 
-        
-
-        lockA.SetActive(enableLock);
-        lockB.SetActive(enableLock);
         endExperimentButton.SetActive(endGameButton);
 
         chestAController.SetToCapture(false);

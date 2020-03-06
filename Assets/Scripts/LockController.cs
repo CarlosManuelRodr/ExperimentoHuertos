@@ -16,6 +16,8 @@ public class LockController : MonoBehaviour
     public Sprite locked, unlocked;
     public Player owner = Player.PlayerA;
     public GameObject experiment;
+    public Material greyscaleMaterial;
+    public Material defaultMaterial;
 
     private ExperimentLogger experimentLogger;
     private ManyCursorController enemyCursorController;
@@ -23,6 +25,7 @@ public class LockController : MonoBehaviour
     private ButtonStatus status = ButtonStatus.Small;
     private LockStatus lockstatus = LockStatus.Locked;
     private Text text;
+    private bool active = true;
 
     void Awake()
     {
@@ -50,49 +53,80 @@ public class LockController : MonoBehaviour
         }
     }
 
+    public void MakeInactive()
+    {
+        active = false;
+        spriteRenderer.sprite = locked;
+        lockstatus = LockStatus.Locked;
+        text.text = "Parcela\nbloqueada";
+
+        if (status == ButtonStatus.Large)
+        {
+            this.transform.localScale /= 1.1f;
+            status = ButtonStatus.Small;
+        }
+
+        spriteRenderer.material = greyscaleMaterial;
+    }
+
+    public void MakeActive()
+    {
+        active = true;
+        spriteRenderer.material = defaultMaterial;
+    }
+
     public void LockSwitch(string caller)
     {
-        string player = (caller == "CursorA") ? "A" : "B";
-        string orchidOwner = (owner == Player.PlayerA) ? "A" : "B";
+        if (active)
+        {
+            string player = (caller == "CursorA") ? "A" : "B";
+            string orchidOwner = (owner == Player.PlayerA) ? "A" : "B";
 
-        if (lockstatus == LockStatus.Unlocked && caller == myCursor.tag)
-        {
-            spriteRenderer.sprite = locked;
-            lockstatus = LockStatus.Locked;
-            text.text = "Parcela\nbloqueada";
-            enemyCursorController.SelectableFruitsSwitch();
-            experimentLogger.Log(player + " bloquea huerto " + orchidOwner);
-        }
-        else if (lockstatus == LockStatus.Locked && caller == myCursor.tag)
-        {
-            spriteRenderer.sprite = unlocked;
-            lockstatus = LockStatus.Unlocked;
-            text.text = "Parcela\ndesbloqueada";
-            enemyCursorController.SelectableFruitsSwitch();
-            experimentLogger.Log(player + " desbloquea huerto " + orchidOwner);
+            if (lockstatus == LockStatus.Unlocked && caller == myCursor.tag)
+            {
+                spriteRenderer.sprite = locked;
+                lockstatus = LockStatus.Locked;
+                text.text = "Parcela\nbloqueada";
+                enemyCursorController.SelectableFruitsSwitch();
+                experimentLogger.Log(player + " bloquea huerto " + orchidOwner);
+            }
+            else if (lockstatus == LockStatus.Locked && caller == myCursor.tag)
+            {
+                spriteRenderer.sprite = unlocked;
+                lockstatus = LockStatus.Unlocked;
+                text.text = "Parcela\ndesbloqueada";
+                enemyCursorController.SelectableFruitsSwitch();
+                experimentLogger.Log(player + " desbloquea huerto " + orchidOwner);
+            }
         }
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == myCursor.tag)
+        if (active)
         {
-            if (status == ButtonStatus.Small)
+            if (other.gameObject.tag == myCursor.tag)
             {
-                this.transform.localScale *= 1.1f;
-                status = ButtonStatus.Large;
+                if (status == ButtonStatus.Small)
+                {
+                    this.transform.localScale *= 1.1f;
+                    status = ButtonStatus.Large;
+                }
             }
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == myCursor.tag)
+        if (active)
         {
-            if (status == ButtonStatus.Large)
+            if (other.gameObject.tag == myCursor.tag)
             {
-                this.transform.localScale /= 1.1f;
-                status = ButtonStatus.Small;
+                if (status == ButtonStatus.Large)
+                {
+                    this.transform.localScale /= 1.1f;
+                    status = ButtonStatus.Small;
+                }
             }
         }
     }

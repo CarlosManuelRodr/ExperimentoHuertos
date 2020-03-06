@@ -2,8 +2,10 @@
 
 public class ShovelController : MonoBehaviour
 {
-    public GameObject highlight;
     public float returnSpeed = 1.0f;
+    public Material greyscaleMaterial;
+    public Material defaultMaterial;
+
     public bool isSelected { get { return selected; } }
     public Player selector { get { return whoSelected; } }
 
@@ -13,10 +15,10 @@ public class ShovelController : MonoBehaviour
     private Player whoSelected;
     private bool returnToStart;
     private bool selected;
+    private bool active = true;
 
     private void Awake()
     {
-        highlight.SetActive(false);
         rigidbody2d = GetComponent<Rigidbody2D>();
         shovelRenderer = GetComponent<SpriteRenderer>();
 
@@ -45,37 +47,35 @@ public class ShovelController : MonoBehaviour
         }
     }
 
+    public void MakeInactive()
+    {
+        active = false;
+        shovelRenderer.material = greyscaleMaterial;
+    }
+
+    public void MakeActive()
+    {
+        active = true;
+        shovelRenderer.material = defaultMaterial;
+    }
+
     public void Select(Player who)
     {
-        whoSelected = who;
-        selected = true;
-        highlight.SetActive(false);
-        shovelRenderer.sortingOrder += 1;
+        if (active)
+        {
+            whoSelected = who;
+            selected = true;
+            shovelRenderer.sortingOrder += 1;
+        }
     }
 
     public void Deselect()
     {
-        selected = false;
-        returnToStart = true;
-        highlight.SetActive(true);
-        shovelRenderer.sortingOrder -= 1;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!isSelected)
+        if (active)
         {
-            // Activa el highlight en caso de que el cursor entre en contacto con la pala.
-            if (other.tag == "CursorA" || other.tag == "CursorB")
-            {
-                highlight.SetActive(true);
-            }
+            selected = false;
+            returnToStart = true;
+            shovelRenderer.sortingOrder -= 1;
         }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.tag == "CursorA" || other.tag == "CursorB")
-            highlight.SetActive(false);
     }
 }
