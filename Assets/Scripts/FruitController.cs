@@ -120,22 +120,7 @@ public class FruitController : MonoBehaviour
     {
         if (buried)
         {
-            if (other.tag == "Shovel")
-            {
-                ShovelController shovel = other.GetComponent<ShovelController>();
-                if (shovel.isSelected)
-                {
-                    particles.Emit(50);
-                    resistance--;
-                    if (resistance == 0)
-                    {
-                        this.SetBuried(false);
-                        audioSource.clip = unearthAudio;
-                    }
-
-                    audioSource.Play();
-                }
-            }
+            
         }
         else
         {

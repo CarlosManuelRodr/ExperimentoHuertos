@@ -13,6 +13,12 @@ public enum Player
     PlayerB
 }
 
+public enum CursorMode
+{
+    HandMode,
+    ShovelMode
+}
+
 /// <summary>
 /// Gestor de cursores. Utiliza la biblioteca ManyMouse para gestionar el input de múltiples cursores.
 /// </summary>
@@ -181,23 +187,6 @@ public class ManyCursorController : MonoBehaviour
                         }
                     }
                 }
-                else if (selected.tag == "Shovel")
-                {
-                    ShovelController shovel = selected.GetComponent<ShovelController>();
-                    if (!shovel.isSelected)
-                    {
-                        shovel.Select(player);
-                        audioSource.PlayOneShot(grab);
-                        selecting = true;
-                        cursorSpeed = 0.005f;
-
-                        if (experiment != null)
-                        {
-                            string selector = (player == Player.PlayerA) ? "A" : "B";
-                            experimentLogger.Log(selector + " toma la pala");
-                        }
-                    }
-                }
             }
 
             spriteRenderer.sprite = handClosed;
@@ -226,21 +215,6 @@ public class ManyCursorController : MonoBehaviour
                         }
                     }
                 }
-                else if (selected.tag == "Shovel")
-                {
-                    ShovelController shovel = selected.GetComponent<ShovelController>();
-                    if (shovel.selector == player)
-                    {
-                        shovel.Deselect();
-                        cursorSpeed = initialSpeed;
-                    }
-
-                    if (experiment != null)
-                    {
-                        string selector = (player == Player.PlayerA) ? "A" : "B";
-                        experimentLogger.Log(selector + " suelta la pala");
-                    }
-                }
             }
 
             selecting = false;
@@ -251,9 +225,6 @@ public class ManyCursorController : MonoBehaviour
     bool IsSelectable(Collider2D other)
     {
         if (other.tag == "Lock")
-            return true;
-
-        if (other.tag == "Shovel")
             return true;
 
         if (fruitsAccess == CanInteract.Both)

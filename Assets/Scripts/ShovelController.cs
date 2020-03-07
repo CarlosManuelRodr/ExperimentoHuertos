@@ -4,19 +4,15 @@ public class ShovelController : MonoBehaviour
 {
     public Material greyscaleMaterial;
     public Material defaultMaterial;
-
-    public bool isSelected { get { return selected; } }
-    public Player selector { get { return whoSelected; } }
+    public GameObject myCursor;
 
     private SpriteRenderer shovelRenderer;
-    private Player whoSelected;
-    private bool selected;
+    private ButtonStatus status = ButtonStatus.Small;
     private bool active = true;
 
     private void Awake()
     {
         shovelRenderer = GetComponent<SpriteRenderer>();
-        selected = false;
     }
 
     public void MakeInactive()
@@ -31,22 +27,33 @@ public class ShovelController : MonoBehaviour
         shovelRenderer.material = defaultMaterial;
     }
 
-    public void Select(Player who)
+        void OnTriggerEnter2D(Collider2D other)
     {
         if (active)
         {
-            whoSelected = who;
-            selected = true;
-            shovelRenderer.sortingOrder += 1;
+            if (other.gameObject.tag == myCursor.tag)
+            {
+                if (status == ButtonStatus.Small)
+                {
+                    this.transform.localScale *= 1.1f;
+                    status = ButtonStatus.Large;
+                }
+            }
         }
     }
 
-    public void Deselect()
+    void OnTriggerExit2D(Collider2D other)
     {
         if (active)
         {
-            selected = false;
-            shovelRenderer.sortingOrder -= 1;
+            if (other.gameObject.tag == myCursor.tag)
+            {
+                if (status == ButtonStatus.Large)
+                {
+                    this.transform.localScale /= 1.1f;
+                    status = ButtonStatus.Small;
+                }
+            }
         }
     }
 }
