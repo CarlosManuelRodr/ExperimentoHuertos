@@ -1,7 +1,7 @@
 Huertos TODO:
 =============
 
-- Debe haber una pala para cada usuario. Estas se configuran antes de cada experimento.
-- El candado puede estar activo o inactivo, y también se configura antes de cada experimento.
+✓ Debe haber una pala para cada usuario. Estas se configuran antes de cada experimento.
+✓ El candado puede estar activo o inactivo, y también se configura antes de cada experimento.
 - Sin tener la pala se pueden desenterrar los frutos con 5 clicks.
 - La pala debe un botón que permanezca una vez que se ha activado y desentierra los frutos y los toma con un solo click.

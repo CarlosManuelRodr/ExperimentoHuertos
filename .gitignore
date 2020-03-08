@@ -4,5 +4,6 @@ Packages/
 Temp/
 obj/
 Bin/
+.idea/
 .vs/
 *.csproj

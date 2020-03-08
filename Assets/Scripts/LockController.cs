@@ -79,10 +79,10 @@ public class LockController : MonoBehaviour
     {
         if (active)
         {
-            string player = (caller == "CursorA") ? "A" : "B";
+            string player = caller == "CursorA" ? "A" : "B";
             string orchidOwner = (owner == Player.PlayerA) ? "A" : "B";
 
-            if (lockstatus == LockStatus.Unlocked && caller == myCursor.tag)
+            if (lockstatus == LockStatus.Unlocked && myCursor.CompareTag(caller))
             {
                 spriteRenderer.sprite = locked;
                 lockstatus = LockStatus.Locked;
@@ -90,7 +90,7 @@ public class LockController : MonoBehaviour
                 enemyCursorController.SelectableFruitsSwitch();
                 experimentLogger.Log(player + " bloquea huerto " + orchidOwner);
             }
-            else if (lockstatus == LockStatus.Locked && caller == myCursor.tag)
+            else if (lockstatus == LockStatus.Locked && myCursor.CompareTag(caller))
             {
                 spriteRenderer.sprite = unlocked;
                 lockstatus = LockStatus.Unlocked;
@@ -105,7 +105,7 @@ public class LockController : MonoBehaviour
     {
         if (active)
         {
-            if (other.gameObject.tag == myCursor.tag)
+            if (other.gameObject.CompareTag(myCursor.tag))
             {
                 if (status == ButtonStatus.Small)
                 {
@@ -120,7 +120,7 @@ public class LockController : MonoBehaviour
     {
         if (active)
         {
-            if (other.gameObject.tag == myCursor.tag)
+            if (other.gameObject.CompareTag(myCursor.tag))
             {
                 if (status == ButtonStatus.Large)
                 {

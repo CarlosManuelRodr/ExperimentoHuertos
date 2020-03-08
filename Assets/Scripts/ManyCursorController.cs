@@ -33,17 +33,25 @@ public class ManyCursorController : MonoBehaviour
     public AudioClip grab, release;
     public CanInteract fruitsAccess = CanInteract.Both;
     public float cursorLogInterval = 0.5f;
+    public Sprite handIcon, shovelIcon;
 
-    public bool isSelecting { get { return selecting; } }
+    public bool isSelecting
+    {
+        get {
+            return selecting;
+        }
+    }
     public int speed
     {
-        get { return (int)(100.0f * cursorSpeed / 0.1f); }
+        get {
+            return (int)(100.0f * cursorSpeed / 0.1f);
+        }
         set {
                 if (value >= 0 && value <= 100)
                 {
                     cursorSpeed = 0.1f * value / 100.0f;
                 }
-            }
+        }
     }
 
     private bool selecting;
@@ -143,7 +151,7 @@ public class ManyCursorController : MonoBehaviour
         if (playableArea.Contains(mousePosition))
         {
             this.transform.position = mousePosition;
-            if (isSelecting && selected != null)
+            if (isSelecting)
                 selected.transform.position = mousePosition;
         }
 
@@ -154,17 +162,17 @@ public class ManyCursorController : MonoBehaviour
         }
     }
 
-    public void CloseHand(ManyMouse mouse, int buttonId)
+    void CloseHand(ManyMouse mouseId, int buttonId)
     {
         if (this.isActiveAndEnabled &&  buttonId == 0)
         {
             if (selected != null)
             {
-                if (selected.tag == "Lock")
+                if (selected.CompareTag("Lock"))
                 {
                     selected.GetComponent<LockController>().LockSwitch(this.tag);
                 }
-                else if (selected.tag == "ItemA" || selected.tag == "ItemB")
+                else if (selected.CompareTag("ItemA") || selected.CompareTag("ItemB"))
                 {
                     FruitController fruit = selected.GetComponent<FruitController>();
                     if (!fruit.isBuried) // Si el fruto está enterrado no debe interactuar con el cursor.
@@ -176,7 +184,7 @@ public class ManyCursorController : MonoBehaviour
                         if (experiment != null)
                         {
                             string selector = (player == Player.PlayerA) ? "A" : "B";
-                            string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                            string fruitOwner = selected.CompareTag("ItemA") ? "A" : "B";
                             experimentLogger.Log(selector + " toma fruto de " + fruitOwner);
                         }
                     }
@@ -187,13 +195,13 @@ public class ManyCursorController : MonoBehaviour
         }
     }
 
-    public void OpenHand(ManyMouse mouse, int buttonId)
+    void OpenHand(ManyMouse mouseId, int buttonId)
     {
         if (buttonId == 0)
         {
             if (selected != null)
             {
-                if (selected.tag == "ItemA" || selected.tag == "ItemB")
+                if (selected.CompareTag("ItemA") || selected.CompareTag("ItemB"))
                 {
                     audioSource.PlayOneShot(release);
 
@@ -204,7 +212,7 @@ public class ManyCursorController : MonoBehaviour
                         if (experiment != null)
                         {
                             string selector = (player == Player.PlayerA) ? "A" : "B";
-                            string fruitOwner = (selected.tag == "ItemA") ? "A" : "B";
+                            string fruitOwner = selected.CompareTag("ItemA") ? "A" : "B";
                             experimentLogger.Log(selector + " suelta fruto de " + fruitOwner);
                         }
                     }
@@ -218,21 +226,21 @@ public class ManyCursorController : MonoBehaviour
 
     bool IsSelectable(Collider2D other)
     {
-        if (other.tag == "Lock")
+        if (other.CompareTag("Lock"))
             return true;
 
         if (fruitsAccess == CanInteract.Both)
         {
-            if (other.tag == "ItemA" || other.tag == "ItemB")
+            if (other.CompareTag("ItemA") || other.CompareTag("ItemB"))
                 return true;
             else
                 return false;
         }
         else
         {
-            if (fruitsAccess == CanInteract.PlayerA && other.tag == "ItemA")
+            if (fruitsAccess == CanInteract.PlayerA && other.CompareTag("ItemA"))
                 return true;
-            if (fruitsAccess == CanInteract.PlayerB && other.tag == "ItemB")
+            if (fruitsAccess == CanInteract.PlayerB && other.CompareTag("ItemB"))
                 return true;
         }
         return false;

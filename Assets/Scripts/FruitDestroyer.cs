@@ -7,7 +7,7 @@ public class FruitDestroyer : MonoBehaviour
 {
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "ItemA" || other.tag == "ItemB")
+        if (other.CompareTag("ItemA") || other.CompareTag("ItemB"))
         {
             Debug.LogWarning("FruitDestroyer: This shouldn't have happened. WTF?");
             Destroy(other.gameObject);

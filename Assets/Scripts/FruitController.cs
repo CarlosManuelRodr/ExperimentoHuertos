@@ -66,13 +66,10 @@ public class FruitController : MonoBehaviour
             this.SetBuried(true);
     }
 
-    public void SetBuried(bool buried_a)
+    public void SetBuried(bool buried_arg)
     {
-        buried = buried_a;
-        if (buried)
-            fruitRenderer.sprite = buriedSprite;
-        else
-            fruitRenderer.sprite = idleSprite;
+        buried = buried_arg;
+        fruitRenderer.sprite = buried ? buriedSprite : idleSprite;
     }
 
     private void OnDisable()
@@ -111,8 +108,8 @@ public class FruitController : MonoBehaviour
                     nextUpdate = Time.time + fruitLogInterval;
                     if (startPos != transform.position && fruitLogger != null)
                     {
-                        string selector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
-                        fruitLogger.Log(cam.WorldToScreenPoint(transform.position), selector);
+                        string whoIsSelector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
+                        fruitLogger.Log(cam.WorldToScreenPoint(transform.position), whoIsSelector);
                     }
                 }
             }
@@ -128,7 +125,7 @@ public class FruitController : MonoBehaviour
         else
         {
             // Activa el highlight en caso de que el cursor entre en contacto con el fruto.
-            if (other.tag == "CursorA" || other.tag == "CursorB")
+            if (other.CompareTag("CursorA") || other.CompareTag("CursorB"))
             {
                 ManyCursorController cursor = other.gameObject.GetComponent<ManyCursorController>();
                 if (!cursor.isSelecting)
@@ -136,7 +133,7 @@ public class FruitController : MonoBehaviour
             }
 
             // En caso de que entre en contacto con un cofre, activa el highlight verde.
-            if (other.tag == "Chest")
+            if (other.CompareTag("Chest"))
             {
                 ChestVisuals chestVisuals = other.GetComponentInChildren<ChestVisuals>();
                 chestVisuals.numberOfOccupants++;
@@ -162,10 +159,10 @@ public class FruitController : MonoBehaviour
     {
         if (!buried)
         {
-            if (other.tag == "CursorA" || other.tag == "CursorB")
+            if (other.CompareTag("CursorA") || other.CompareTag("CursorB"))
                 highlight.SetActive(false);
 
-            if (other.tag == "Chest")
+            if (other.CompareTag("Chest"))
             {
                 ChestVisuals chestVisuals = other.GetComponentInChildren<ChestVisuals>();
                 chestVisuals.numberOfOccupants--;

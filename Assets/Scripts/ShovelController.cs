@@ -2,6 +2,7 @@
 
 public class ShovelController : MonoBehaviour
 {
+    public Sprite shovelIcon, handIcon;
     public Material greyscaleMaterial;
     public Material defaultMaterial;
     public GameObject myCursor;
@@ -31,7 +32,7 @@ public class ShovelController : MonoBehaviour
     {
         if (active)
         {
-            if (other.gameObject.tag == myCursor.tag)
+            if (other.gameObject.CompareTag(myCursor.tag))
             {
                 if (status == ButtonStatus.Small)
                 {
@@ -46,7 +47,7 @@ public class ShovelController : MonoBehaviour
     {
         if (active)
         {
-            if (other.gameObject.tag == myCursor.tag)
+            if (other.gameObject.CompareTag(myCursor.tag))
             {
                 if (status == ButtonStatus.Large)
                 {

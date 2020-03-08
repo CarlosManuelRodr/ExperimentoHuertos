@@ -84,7 +84,7 @@ public class ExperimentManager : MonoBehaviour
         }
     }
 
-    public void SaveCursorLog()
+    void SaveCursorLog()
     {
         playerALogger.Save();
         playerBLogger.Save();

@@ -21,15 +21,12 @@ public class BoardManager : MonoBehaviour
 
     private void Awake()
     {
-        if (fruitPrefab.name == "Player Fruit")
-            owner = "PlayerA";
-        else
-            owner = "PlayerB";
+        owner = fruitPrefab.name == "Player Fruit" ? "PlayerA" : "PlayerB";
     }
 
     public int CountFruits()
     {
-        return this.transform.childCount;
+        return transform.childCount;
     }
 
     void InitialiseList()
