@@ -114,14 +114,9 @@ public class ManyCursorController : MonoBehaviour
             fruitsAccess = initialSelectable;
     }
 
-    public void SelectableFruits(CanInteract canInteract)
-    {
-        fruitsAccess = canInteract;
-    }
-
     public void Setup(Vector2 position)
     {
-        this.transform.position = position;
+        this.transform.localPosition = position;
         initialSpeed = cursorSpeed;
     }
 
@@ -136,7 +131,6 @@ public class ManyCursorController : MonoBehaviour
     {
         selecting = false;
         selected = null;
-        fruitsAccess = initialSelectable;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -162,7 +156,7 @@ public class ManyCursorController : MonoBehaviour
 
     public void CloseHand(ManyMouse mouse, int buttonId)
     {
-        if (buttonId == 0)
+        if (this.isActiveAndEnabled &&  buttonId == 0)
         {
             if (selected != null)
             {
@@ -242,11 +236,6 @@ public class ManyCursorController : MonoBehaviour
                 return true;
         }
         return false;
-    }
-
-    public void SetSelectable(CanInteract type)
-    {
-        fruitsAccess = type;
     }
 
     void OnTriggerEnter2D(Collider2D other)

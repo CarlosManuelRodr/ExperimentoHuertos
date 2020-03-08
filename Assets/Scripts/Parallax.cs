@@ -25,7 +25,7 @@ public class Parallax : MonoBehaviour
         rbFront = front.GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         float step = speed * Time.deltaTime;
 

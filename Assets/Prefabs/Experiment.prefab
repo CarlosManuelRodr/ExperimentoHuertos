@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6973740330474074971}
   - component: {fileID: 6219580399396545379}
   - component: {fileID: 8900965512552551161}
+  - component: {fileID: 2061966278821587275}
+  - component: {fileID: 7356376159571562376}
   m_Layer: 0
   m_Name: Shovel B
   m_TagString: Shovel
@@ -98,6 +100,53 @@ MonoBehaviour:
   greyscaleMaterial: {fileID: 2100000, guid: 3b9bf06473f89494aa89dd576391c388, type: 2}
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   myCursor: {fileID: 1943442339157107064}
+--- !u!50 &2061966278821587275
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54313549612773739}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &7356376159571562376
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54313549612773739}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.48, y: 0.48}
+    newSize: {x: 0.52, y: 0.52}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.48, y: 0.48}
+  m_EdgeRadius: 0
 --- !u!1 &359778465632063333
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +204,8 @@ GameObject:
   - component: {fileID: 6622775413322156109}
   - component: {fileID: 2191545308101996158}
   - component: {fileID: 7044906457020363247}
+  - component: {fileID: 439281856017674601}
+  - component: {fileID: 5779086577889396390}
   m_Layer: 0
   m_Name: Shovel A
   m_TagString: Shovel
@@ -242,6 +293,53 @@ MonoBehaviour:
   greyscaleMaterial: {fileID: 2100000, guid: 3b9bf06473f89494aa89dd576391c388, type: 2}
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   myCursor: {fileID: 1943442339328790129}
+--- !u!50 &439281856017674601
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529317063177498038}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!61 &5779086577889396390
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529317063177498038}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.48, y: 0.48}
+    newSize: {x: 0.52, y: 0.52}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.48, y: 0.48}
+  m_EdgeRadius: 0
 --- !u!1 &1729006885576309662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2279,6 +2377,11 @@ PrefabInstance:
       propertyPath: cursorSpeed
       value: 0.0115
       objectReference: {fileID: 0}
+    - target: {fileID: 1333233368362740952, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
+        type: 3}
+      propertyPath: fruitsAccess
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1333233368362740953, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
         type: 3}
       propertyPath: m_Name
@@ -2346,15 +2449,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a0631ab408769f4ebf8970cd8f17bf2, type: 3}
---- !u!4 &1943442339157107070 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1333233368362740959, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
-    type: 3}
-  m_PrefabInstance: {fileID: 610490834501799329}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1943442339157107064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1333233368362740953, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
+    type: 3}
+  m_PrefabInstance: {fileID: 610490834501799329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1943442339157107070 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1333233368362740959, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
     type: 3}
   m_PrefabInstance: {fileID: 610490834501799329}
   m_PrefabAsset: {fileID: 0}
@@ -2482,15 +2585,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
---- !u!4 &359778465199660977 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2163502540863139390, guid: fa2b8903ccf26534f89d5b8e702dca79,
-    type: 3}
-  m_PrefabInstance: {fileID: 1943442338215031183}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &359778465199660978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2163502540863139389, guid: fa2b8903ccf26534f89d5b8e702dca79,
+    type: 3}
+  m_PrefabInstance: {fileID: 1943442338215031183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &359778465199660977 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2163502540863139390, guid: fa2b8903ccf26534f89d5b8e702dca79,
     type: 3}
   m_PrefabInstance: {fileID: 1943442338215031183}
   m_PrefabAsset: {fileID: 0}
@@ -2641,6 +2744,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cursorSpeed
       value: 0.0095
+      objectReference: {fileID: 0}
+    - target: {fileID: 482563697667992626, guid: 73fb3cb4337e1a94699ef4eaaf7db6c7,
+        type: 3}
+      propertyPath: fruitsAccess
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 482563697667992631, guid: 73fb3cb4337e1a94699ef4eaaf7db6c7,
         type: 3}

@@ -27,7 +27,7 @@ public class ShovelController : MonoBehaviour
         shovelRenderer.material = defaultMaterial;
     }
 
-        void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (active)
         {

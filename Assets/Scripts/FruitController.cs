@@ -82,7 +82,7 @@ public class FruitController : MonoBehaviour
             fruitLogger.Save();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!buried)
         {
@@ -104,13 +104,16 @@ public class FruitController : MonoBehaviour
             }
 
             // Guarda posición del fruto en el log.
-            if (Time.time >= nextUpdate)
+            if (log)
             {
-                nextUpdate = Time.time + fruitLogInterval;
-                if (log && startPos != transform.position && fruitLogger != null)
+                if (Time.time >= nextUpdate)
                 {
-                    string selector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
-                    fruitLogger.Log(cam.WorldToScreenPoint(transform.position), selector);
+                    nextUpdate = Time.time + fruitLogInterval;
+                    if (startPos != transform.position && fruitLogger != null)
+                    {
+                        string selector = (whoSelected == Player.PlayerA) ? "PlayerA" : "PlayerB";
+                        fruitLogger.Log(cam.WorldToScreenPoint(transform.position), selector);
+                    }
                 }
             }
         }

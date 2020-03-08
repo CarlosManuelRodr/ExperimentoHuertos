@@ -6453,7 +6453,7 @@ MonoBehaviour:
   back: {fileID: 806219516}
   middle: {fileID: 1622964304}
   front: {fileID: 5164132}
-  speed: 12
+  speed: 4
 --- !u!114 &653236401
 MonoBehaviour:
   m_ObjectHideFlags: 0
