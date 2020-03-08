@@ -6453,7 +6453,7 @@ MonoBehaviour:
   back: {fileID: 806219516}
   middle: {fileID: 1622964304}
   front: {fileID: 5164132}
-  speed: 4
+  speed: 12
 --- !u!114 &653236401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13720,6 +13720,11 @@ PrefabInstance:
       propertyPath: experiment
       value: 
       objectReference: {fileID: 1972032411}
+    - target: {fileID: 9024954375001743749, guid: feac1ff1d75abb540a523ef7ff3ebb0b,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: feac1ff1d75abb540a523ef7ff3ebb0b, type: 3}
 --- !u!1 &5398922792810368825 stripped
