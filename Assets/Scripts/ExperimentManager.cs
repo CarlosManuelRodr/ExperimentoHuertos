@@ -66,8 +66,8 @@ public class ExperimentManager : MonoBehaviour
         shovelAController = shovelA.GetComponent<ShovelController>();
         shovelBController = shovelB.GetComponent<ShovelController>();
 
-        playerACursorPos = playerACursor.transform.position;
-        playerBCursorPos = playerBCursor.transform.position;
+        playerACursorPos = new Vector2(-2.290669f, -5.53f);
+        playerBCursorPos = new Vector2(-0.02999986f, -5.53f);
 
         running = false;
     }

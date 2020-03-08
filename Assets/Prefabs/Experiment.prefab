@@ -2284,6 +2284,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerBCursor
       objectReference: {fileID: 0}
+    - target: {fileID: 1333233368362740953, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1333233368362740959, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2621,6 +2626,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerACursor
+      objectReference: {fileID: 0}
+    - target: {fileID: 482563697667992625, guid: 73fb3cb4337e1a94699ef4eaaf7db6c7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 482563697667992626, guid: 73fb3cb4337e1a94699ef4eaaf7db6c7,
         type: 3}

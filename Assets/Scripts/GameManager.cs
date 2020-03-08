@@ -222,6 +222,7 @@ public class GameManager : MonoBehaviour
         {
             string text = "<color=blue>Instrucciones:<color=black>\n\n";
             instructionsText.SetText(text + param_instruction1);
+            experimentManager.DeactivateCursors();
         }
 
         hud.SetActive(true);
