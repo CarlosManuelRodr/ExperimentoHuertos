@@ -11,7 +11,7 @@
     <endGameButton>true</endGameButton> <!-- Mostrar botón para finalizar juego -->
     <description>El objetivo es llevar los frutos a sus respectivos canastos.</description> <!-- Descripción del nivel -->
     <image>level1.png</image> <!-- Imagen de previsualización para el nivel -->
-    <lock>both</lock> <!-- Posibles valores son: both, none, only_a, only_b -->
+    <lockAccess>both</lockAccess> <!-- Posibles valores son: both, none, only_a, only_b -->
     <chestAccess>both</chestAccess> <!-- Posibles valores son: both, none, only_a, only_b -->
     <shovelAccess>both</shovelAccess> <!-- Posibles valores son: both, none, only_a, only_b -->
     <showInstructions>true</showInstructions> <!-- Mostrar panel de instrucciones -->
@@ -32,7 +32,7 @@
     <description>Nivel 2 del juego k kreizi</description>
     <image>level2.png</image>
     <chestAccess>both</chestAccess>
-    <lock>both</lock>
+    <lockAccess>both</lockAccess>
     <shovelAccess>both</shovelAccess>
     <showInstructions>true</showInstructions>
     <instruction1>Hay mushos frutos</instruction1>

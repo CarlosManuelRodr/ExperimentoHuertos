@@ -39,7 +39,6 @@ public struct LevelData
     public uint fruitsA, fruitsB;
     public uint speedA, speedB;
     public uint buriedA, buriedB;
-    public bool freeOrchard, enableLock;
     public bool commonCounter, endGameButton;
     public bool showInstructions;
     public string instruction1, instruction2, instruction3;
@@ -213,12 +212,6 @@ public class LevelSelectController : MonoBehaviour
                     levelData.buriedB = Convert.ToUInt32(level["buriedB"].InnerText);
                     levelData.speedA = Convert.ToUInt32(level["speedA"].InnerText);
                     levelData.speedB = Convert.ToUInt32(level["speedB"].InnerText);
-                    levelData.freeOrchard = Convert.ToBoolean(level["freeOrchard"].InnerText);
-
-                    if (levelData.freeOrchard)
-                        levelData.enableLock = false;
-                    else
-                        levelData.enableLock = Convert.ToBoolean(level["enableLock"].InnerText);
 
                     levelData.commonCounter = Convert.ToBoolean(level["commonCounter"].InnerText);
                     levelData.endGameButton = Convert.ToBoolean(level["endGameButton"].InnerText);
