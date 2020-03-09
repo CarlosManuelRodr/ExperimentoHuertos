@@ -15,6 +15,8 @@ TagManager:
   - MenuArrow
   - CommonChest
   - Lock
+  - ShovelA
+  - ShovelB
   - Shovel
   layers:
   - Default

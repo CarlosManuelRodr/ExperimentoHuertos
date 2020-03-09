@@ -13,6 +13,13 @@ public class FruitController : MonoBehaviour
     public bool isHighlighted { get { return highlight.activeSelf; } }
     public bool isBuried { get { return buried;  } }
     public Player selector { get { return whoSelected; } }
+
+    public SpriteRenderer spriteRenderer
+    {
+        get { return fruitRenderer; }
+        set { fruitRenderer = value; }
+    }
+    
     public float fruitLogInterval = 0.2f;
     public Sprite idleSprite, buriedSprite;
     public AudioClip hitAudio, unearthAudio;
@@ -32,7 +39,7 @@ public class FruitController : MonoBehaviour
     private bool selected;
     private bool falling;
     private float nextUpdate;
-    private int resistance;
+    private int resistance = 5;
 
     void Awake()
     {
@@ -59,7 +66,6 @@ public class FruitController : MonoBehaviour
         returnToStart = false;
         selected = false;
         falling = false;
-        resistance = Random.Range(3, 10);
         nextUpdate = fruitLogInterval;
         audioSource.clip = hitAudio;
         if (buried)
@@ -77,6 +83,19 @@ public class FruitController : MonoBehaviour
         // Guarda el log cuando el fruto es destruido.
         if (fruitLogger != null)
             fruitLogger.Save();
+    }
+
+    public void Dig(int strength)
+    {
+        particles.Emit(50);
+        resistance -= strength;
+        if (resistance <= 0)
+        {
+            this.SetBuried(false);
+            audioSource.PlayOneShot(unearthAudio);
+        }
+        else
+            audioSource.Play();
     }
 
     void FixedUpdate()
@@ -118,11 +137,7 @@ public class FruitController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (buried)
-        {
-            
-        }
-        else
+        if (!buried)
         {
             // Activa el highlight en caso de que el cursor entre en contacto con el fruto.
             if (other.CompareTag("CursorA") || other.CompareTag("CursorB"))

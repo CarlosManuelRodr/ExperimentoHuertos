@@ -232,11 +232,17 @@ public class ExperimentManager : MonoBehaviour
                 );
             logger.SetCollected(harvestedA, harvestedB);
             logger.Save();
-            this.SaveCursorLog();
+            SaveCursorLog();
         }
 
         running = false;
         chestAController.SetScore(0);
         chestBController.SetScore(0);
+        cursorAScript.ChangeMode(CursorMode.HandMode);
+        cursorBScript.ChangeMode(CursorMode.HandMode);
+        shovelAController.ChangeMode(CursorMode.HandMode);
+        shovelBController.ChangeMode(CursorMode.HandMode);
+        lockAController.SetLockMode(LockStatus.Locked);
+        lockBController.SetLockMode(LockStatus.Locked);
     }
 }

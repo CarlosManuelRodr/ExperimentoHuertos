@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-enum LockStatus
+public enum LockStatus
 {
     Locked,
     Unlocked
@@ -73,6 +73,22 @@ public class LockController : MonoBehaviour
     {
         active = true;
         spriteRenderer.material = defaultMaterial;
+    }
+
+    public void SetLockMode(LockStatus set)
+    {
+        if (set == LockStatus.Locked)
+        {
+            spriteRenderer.sprite = locked;
+            lockstatus = LockStatus.Locked;
+            text.text = "Parcela\nbloqueada";
+        }
+        else if (set == LockStatus.Unlocked)
+        {
+            spriteRenderer.sprite = unlocked;
+            lockstatus = LockStatus.Unlocked;
+            text.text = "Parcela\ndesbloqueada";
+        }
     }
 
     public void LockSwitch(string caller)

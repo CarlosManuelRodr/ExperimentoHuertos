@@ -30,7 +30,7 @@ public class ManyCursorController : MonoBehaviour
     [Range(0.0f, 0.1f)]
     public float cursorSpeed = 0.03f;
     public Sprite handOpen, handClosed;
-    public AudioClip grab, release;
+    public AudioClip grab, release, changeModeSound;
     public CanInteract fruitsAccess = CanInteract.Both;
     public float cursorLogInterval = 0.5f;
     public Sprite handIcon, shovelIcon;
@@ -60,6 +60,7 @@ public class ManyCursorController : MonoBehaviour
     private CursorLogger cursorLogger;
     private SpriteRenderer spriteRenderer;
     private Camera cam;
+    private BoxCollider2D boxCollider2D;
 
     private GameObject selected;
     private AudioSource audioSource;
@@ -67,8 +68,8 @@ public class ManyCursorController : MonoBehaviour
     private Rect playableArea;
 
     private float nextUpdate;
-    private float initialSpeed;
     private CanInteract initialSelectable;
+    private CursorMode cursorMode = CursorMode.HandMode;
 
     private void Awake()
     {
@@ -77,6 +78,7 @@ public class ManyCursorController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         cursorLogger = GetComponent<CursorLogger>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     void Start()
@@ -91,7 +93,17 @@ public class ManyCursorController : MonoBehaviour
 
         cursorLogger.SetCursorID(transform.tag);
         nextUpdate = cursorLogInterval;
-        initialSpeed = cursorSpeed;
+    }
+
+    public void ChangeMode(CursorMode mode)
+    {
+        if (this.isActiveAndEnabled)
+            audioSource.PlayOneShot(changeModeSound);
+        cursorMode = mode;
+        spriteRenderer.sprite = (mode == CursorMode.HandMode) ? handIcon : shovelIcon;
+        boxCollider2D.offset = (mode == CursorMode.HandMode)
+            ? new Vector2(0.005844295f, -0.00748992f)
+            : new Vector2(-0.09f, -0.16f);
     }
 
     void SetUpCursor()
@@ -124,13 +136,12 @@ public class ManyCursorController : MonoBehaviour
 
     public void Setup(Vector2 position)
     {
-        this.transform.localPosition = position;
-        initialSpeed = cursorSpeed;
+        transform.localPosition = position;
     }
 
     void OnEnable()
     {
-        this.SetUpCursor();
+        SetUpCursor();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -141,6 +152,7 @@ public class ManyCursorController : MonoBehaviour
         selected = null;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        ChangeMode(CursorMode.HandMode);
     }
 
     void Update()
@@ -152,7 +164,12 @@ public class ManyCursorController : MonoBehaviour
         {
             this.transform.position = mousePosition;
             if (isSelecting)
-                selected.transform.position = mousePosition;
+            {
+                Vector2 shovelOffset = new Vector2(-0.13f, -0.31f);
+                Vector2 mousePos2d = mousePosition;
+                selected.transform.position =
+                    cursorMode == CursorMode.HandMode ? mousePos2d : mousePos2d + shovelOffset;
+            }
         }
 
         if (Time.time >= nextUpdate)
@@ -164,22 +181,30 @@ public class ManyCursorController : MonoBehaviour
 
     void CloseHand(ManyMouse mouseId, int buttonId)
     {
-        if (this.isActiveAndEnabled &&  buttonId == 0)
+        if (isActiveAndEnabled &&  buttonId == 0)
         {
             if (selected != null)
             {
                 if (selected.CompareTag("Lock"))
                 {
-                    selected.GetComponent<LockController>().LockSwitch(this.tag);
+                    selected.GetComponent<LockController>().LockSwitch(tag);
                 }
                 else if (selected.CompareTag("ItemA") || selected.CompareTag("ItemB"))
                 {
                     FruitController fruit = selected.GetComponent<FruitController>();
-                    if (!fruit.isBuried) // Si el fruto está enterrado no debe interactuar con el cursor.
+                    if (fruit.isBuried) // Si el fruto está enterrado no debe interactuar con el cursor.
+                    {
+                        int digStrength = (cursorMode == CursorMode.ShovelMode) ? 5 : 1;
+                        fruit.Dig(digStrength);
+                    }
+                    else
                     {
                         audioSource.PlayOneShot(grab);
                         fruit.Select(player);
                         selecting = true;
+
+                        if (cursorMode == CursorMode.ShovelMode)
+                            fruit.spriteRenderer.sortingOrder += 4;
 
                         if (experiment != null)
                         {
@@ -189,9 +214,28 @@ public class ManyCursorController : MonoBehaviour
                         }
                     }
                 }
+                else if (selected.CompareTag("ShovelA") || selected.CompareTag("ShovelB"))
+                {
+                    CursorMode newMode =
+                        cursorMode == CursorMode.HandMode ? CursorMode.ShovelMode : CursorMode.HandMode;
+                    ShovelController shovelController = selected.GetComponent<ShovelController>();
+                    if (shovelController.isActive)
+                    {
+                        ChangeMode(newMode);
+                        shovelController.ChangeMode(newMode);
+                        
+                        if (experiment != null)
+                        {
+                            string selector = (player == Player.PlayerA) ? "A" : "B";
+                            string toolName = (cursorMode == CursorMode.HandMode) ? "Mano" : "Pala";
+                            experimentLogger.Log(selector + " cambia herramienta a " + toolName);
+                        }
+                    }
+                }
             }
 
-            spriteRenderer.sprite = handClosed;
+            if (cursorMode == CursorMode.HandMode)
+                spriteRenderer.sprite = handClosed;
         }
     }
 
@@ -209,6 +253,9 @@ public class ManyCursorController : MonoBehaviour
                     if (!fruit.isBuried)
                     {
                         fruit.Deselect();
+                        if (cursorMode == CursorMode.ShovelMode && fruit.spriteRenderer.sortingOrder == 3)
+                            fruit.spriteRenderer.sortingOrder -= 4;
+                        
                         if (experiment != null)
                         {
                             string selector = (player == Player.PlayerA) ? "A" : "B";
@@ -220,7 +267,9 @@ public class ManyCursorController : MonoBehaviour
             }
 
             selecting = false;
-            spriteRenderer.sprite = handOpen;
+            
+            if (cursorMode == CursorMode.HandMode)
+                spriteRenderer.sprite = handOpen;
         }
     }
 
@@ -229,12 +278,15 @@ public class ManyCursorController : MonoBehaviour
         if (other.CompareTag("Lock"))
             return true;
 
+        if (player == Player.PlayerA && other.CompareTag("ShovelA"))
+            return true;
+        if (player == Player.PlayerB && other.CompareTag("ShovelB"))
+            return true;
+
         if (fruitsAccess == CanInteract.Both)
         {
             if (other.CompareTag("ItemA") || other.CompareTag("ItemB"))
                 return true;
-            else
-                return false;
         }
         else
         {

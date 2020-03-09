@@ -45,10 +45,10 @@ public class CursorLogger : MonoBehaviour
         switch (fruitAccess)
         {
             case CanInteract.PlayerA:
-                accessStr = "PlayerA";
+                accessStr = "FruitsA";
                 break;
             case CanInteract.PlayerB:
-                accessStr = "PlayerB";
+                accessStr = "FruitsB";
                 break;
             case CanInteract.Both:
                 accessStr = "Both";

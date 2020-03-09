@@ -7,6 +7,11 @@ public class ShovelController : MonoBehaviour
     public Material defaultMaterial;
     public GameObject myCursor;
 
+    public bool isActive
+    {
+        get { return active; }
+    }
+
     private SpriteRenderer shovelRenderer;
     private ButtonStatus status = ButtonStatus.Small;
     private bool active = true;
@@ -26,6 +31,11 @@ public class ShovelController : MonoBehaviour
     {
         active = true;
         shovelRenderer.material = defaultMaterial;
+    }
+
+    public void ChangeMode(CursorMode mode)
+    {
+        shovelRenderer.sprite = (mode == CursorMode.HandMode) ? shovelIcon : handIcon;
     }
 
     void OnTriggerEnter2D(Collider2D other)
