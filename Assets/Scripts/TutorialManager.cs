@@ -90,8 +90,8 @@ public class TutorialManager : MonoBehaviour
         playerACursor.SetActive(true);
         playerBCursor.SetActive(true);
 
-        playerACursorController.SetPlayableArea(Rect.MinMaxRect(-7.6f, -4.3f, -1.51f, 4.3f));
-        playerBCursorController.SetPlayableArea(Rect.MinMaxRect(0.34f, -3.85f, 7.6f, 4.3f));
+        playerACursorController.SetPlayableArea(Rect.MinMaxRect(-7.6f, -4.3f, -0.5f, 4.3f));
+        playerBCursorController.SetPlayableArea(Rect.MinMaxRect(0.0f, -3.85f, 7.6f, 4.3f));
     }
 
     public void DeactivateCursors()

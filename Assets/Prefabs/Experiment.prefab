@@ -405,6 +405,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.27843142, g: 0.8960289, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -498,6 +499,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.9056604, g: 0.84747964, b: 0.28622285, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -593,6 +595,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -884,6 +887,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.9056604, g: 0.84747964, b: 0.28622285, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1628,6 +1632,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1799,6 +1804,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2051,6 +2057,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.2783019, b: 0.4527695, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2470,15 +2477,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a0631ab408769f4ebf8970cd8f17bf2, type: 3}
---- !u!4 &1943442339157107070 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1333233368362740959, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
-    type: 3}
-  m_PrefabInstance: {fileID: 610490834501799329}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1943442339157107064 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1333233368362740953, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
+    type: 3}
+  m_PrefabInstance: {fileID: 610490834501799329}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1943442339157107070 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1333233368362740959, guid: 9a0631ab408769f4ebf8970cd8f17bf2,
     type: 3}
   m_PrefabInstance: {fileID: 610490834501799329}
   m_PrefabAsset: {fileID: 0}
@@ -2492,13 +2499,19 @@ PrefabInstance:
     - target: {fileID: 2163502540776944047, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2163502540776944047, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.90588236
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502540776944047, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -9137483278885997644, guid: 17e8cc13aba204b41aba98716b9987cc,
+        type: 3}
     - target: {fileID: 2163502540776944049, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: owner
@@ -2509,6 +2522,18 @@ PrefabInstance:
       propertyPath: chestAccess
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502540776944049, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: chestClosed
+      value: 
+      objectReference: {fileID: -9137483278885997644, guid: 17e8cc13aba204b41aba98716b9987cc,
+        type: 3}
+    - target: {fileID: 2163502540776944049, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: chestOpen
+      value: 
+      objectReference: {fileID: -668185269313898837, guid: 17e8cc13aba204b41aba98716b9987cc,
+        type: 3}
     - target: {fileID: 2163502540863139389, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Name
@@ -2597,24 +2622,30 @@ PrefabInstance:
     - target: {fileID: 2163502542159585798, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2163502542159585798, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.90351677
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502542159585798, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 795cde6ee61537f45a73611a8dc4a204,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
---- !u!4 &359778465199660977 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2163502540863139390, guid: fa2b8903ccf26534f89d5b8e702dca79,
-    type: 3}
-  m_PrefabInstance: {fileID: 1943442338215031183}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &359778465199660978 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2163502540863139389, guid: fa2b8903ccf26534f89d5b8e702dca79,
+    type: 3}
+  m_PrefabInstance: {fileID: 1943442338215031183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &359778465199660977 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2163502540863139390, guid: fa2b8903ccf26534f89d5b8e702dca79,
     type: 3}
   m_PrefabInstance: {fileID: 1943442338215031183}
   m_PrefabAsset: {fileID: 0}
@@ -2635,6 +2666,24 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.5921569
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502540776944047, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -6025179411585838453, guid: 8a8714140bca3be4e83ef549741d41e4,
+        type: 3}
+    - target: {fileID: 2163502540776944049, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: chestClosed
+      value: 
+      objectReference: {fileID: -6025179411585838453, guid: 8a8714140bca3be4e83ef549741d41e4,
+        type: 3}
+    - target: {fileID: 2163502540776944049, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: chestOpen
+      value: 
+      objectReference: {fileID: 4278363791150839422, guid: 8a8714140bca3be4e83ef549741d41e4,
+        type: 3}
     - target: {fileID: 2163502540863139389, guid: fa2b8903ccf26534f89d5b8e702dca79,
         type: 3}
       propertyPath: m_Name
@@ -2725,6 +2774,12 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.5896226
       objectReference: {fileID: 0}
+    - target: {fileID: 2163502542159585798, guid: fa2b8903ccf26534f89d5b8e702dca79,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 027bc4b936ec1e54386aab1472375eda,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa2b8903ccf26534f89d5b8e702dca79, type: 3}
 --- !u!4 &359778464809937248 stripped

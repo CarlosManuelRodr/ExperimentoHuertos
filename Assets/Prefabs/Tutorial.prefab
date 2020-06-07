@@ -113,6 +113,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -124,6 +125,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -136,7 +138,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: -6834524911116659543, guid: 548fa7974603f9f4e8969957627570a0,
+  m_Sprite: {fileID: -6025179411585838453, guid: 8a8714140bca3be4e83ef549741d41e4,
     type: 3}
   m_Color: {r: 0.8867924, g: 0.36391956, b: 0.36391956, a: 1}
   m_FlipX: 0
@@ -160,11 +162,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f2af85849f27e44935fd52aa03a3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestClosed: {fileID: -6834524911116659543, guid: 548fa7974603f9f4e8969957627570a0,
+  chestClosed: {fileID: -6025179411585838453, guid: 8a8714140bca3be4e83ef549741d41e4,
     type: 3}
-  chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
+  chestOpen: {fileID: 4278363791150839422, guid: 8a8714140bca3be4e83ef549741d41e4,
     type: 3}
   chestController: {fileID: 6755349558667068135}
+  owner: 0
+  chestAccess: 2
 --- !u!61 &6755349557263804313
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -400,6 +404,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -411,6 +416,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -423,8 +429,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fbfbb08961b003c448d318c4e3cf808a, type: 3}
-  m_Color: {r: 0.11764706, g: 0.44705883, b: 0.99215686, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 795cde6ee61537f45a73611a8dc4a204, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -621,6 +627,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -632,6 +639,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -644,9 +652,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -3
-  m_Sprite: {fileID: -6834524911116659543, guid: 548fa7974603f9f4e8969957627570a0,
+  m_Sprite: {fileID: -9137483278885997644, guid: 17e8cc13aba204b41aba98716b9987cc,
     type: 3}
-  m_Color: {r: 0.11681201, g: 0.44468495, b: 0.990566, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -668,11 +676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f2af85849f27e44935fd52aa03a3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chestClosed: {fileID: -6834524911116659543, guid: 548fa7974603f9f4e8969957627570a0,
+  chestClosed: {fileID: -9137483278885997644, guid: 17e8cc13aba204b41aba98716b9987cc,
     type: 3}
-  chestOpen: {fileID: 5045073161074915229, guid: 548fa7974603f9f4e8969957627570a0,
+  chestOpen: {fileID: -668185269313898837, guid: 17e8cc13aba204b41aba98716b9987cc,
     type: 3}
   chestController: {fileID: 6755349557513212560}
+  owner: 0
+  chestAccess: 2
 --- !u!61 &6755349558218807440
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -877,6 +887,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -888,6 +899,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -928,7 +940,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.168, y: 0.168}
+    oldSize: {x: 0.192, y: 0.192}
     newSize: {x: 0.21, y: 0.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1052,8 +1064,11 @@ MonoBehaviour:
   handClosed: {fileID: 21300000, guid: 18a47abe24dc64c42913cfd780900a16, type: 3}
   grab: {fileID: 8300000, guid: fd26633a22fe2394e8c78b713439e3f5, type: 3}
   release: {fileID: 8300000, guid: d92ee88c0f6e25642ad6906d33e8fa08, type: 3}
-  selectable: 0
+  changeModeSound: {fileID: 0}
+  fruitsAccess: 2
   cursorLogInterval: 0.1
+  handIcon: {fileID: 21300000, guid: a62f871d850cbbd4084c34d39fcd8524, type: 3}
+  shovelIcon: {fileID: 21300000, guid: d59c4acece4cc2bde9183d38a6cff093, type: 3}
 --- !u!50 &6755349558334756098
 Rigidbody2D:
   serializedVersion: 4
@@ -1135,6 +1150,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1146,6 +1162,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1158,7 +1175,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fbfbb08961b003c448d318c4e3cf808a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 027bc4b936ec1e54386aab1472375eda, type: 3}
   m_Color: {r: 0.8901961, g: 0.3647059, b: 0.3647059, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1358,6 +1375,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1369,6 +1387,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1430,7 +1449,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.168, y: 0.168}
+    oldSize: {x: 0.192, y: 0.192}
     newSize: {x: 0.21, y: 0.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -1554,8 +1573,11 @@ MonoBehaviour:
   handClosed: {fileID: 21300000, guid: a2947b8002e22bd4ab4d3288bbeec3b1, type: 3}
   grab: {fileID: 8300000, guid: fd26633a22fe2394e8c78b713439e3f5, type: 3}
   release: {fileID: 8300000, guid: d92ee88c0f6e25642ad6906d33e8fa08, type: 3}
-  selectable: 1
+  changeModeSound: {fileID: 0}
+  fruitsAccess: 2
   cursorLogInterval: 0.1
+  handIcon: {fileID: 21300000, guid: 2afb823cb8d957e4b92ff6ab7c5ff001, type: 3}
+  shovelIcon: {fileID: 21300000, guid: 7343b23fa158d9e46a02f515b8a65f71, type: 3}
 --- !u!114 &6755349558769303770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1619,8 +1641,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  checkA: {fileID: 0}
-  checkB: {fileID: 0}
   tutorial1: {fileID: 6755349558773664330}
   tutorial2: {fileID: 6755349557304167932}
   tutorial3: {fileID: 6755349557228032135}

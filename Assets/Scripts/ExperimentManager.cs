@@ -102,28 +102,32 @@ public class ExperimentManager : MonoBehaviour
         cursorAScript.speed = (int) speedA;
         cursorBScript.speed = (int) speedB;
 
-        // Configura el acceso a los huertos.
-        cursorAScript.fruitsAccess = CanInteract.PlayerA;
-        cursorBScript.fruitsAccess = CanInteract.PlayerB;
-
-        // Configura acceso a candado.
+        // Configura acceso a candado y a los huertos.
         switch (lockAccess)
         {
             case ObjectAccessType.BOTH:
                 lockAController.MakeActive();
                 lockBController.MakeActive();
+                cursorAScript.fruitsAccess = CanInteract.PlayerA;
+                cursorBScript.fruitsAccess = CanInteract.PlayerB;
                 break;
             case ObjectAccessType.NONE:
                 lockAController.MakeInactive();
                 lockBController.MakeInactive();
+                cursorAScript.fruitsAccess = CanInteract.Both;
+                cursorBScript.fruitsAccess = CanInteract.Both;
                 break;
             case ObjectAccessType.ONLY_A:
                 lockAController.MakeActive();
                 lockBController.MakeInactive();
+                cursorAScript.fruitsAccess = CanInteract.Both;
+                cursorBScript.fruitsAccess = CanInteract.PlayerB;
                 break;
             case ObjectAccessType.ONLY_B:
                 lockAController.MakeInactive();
                 lockBController.MakeActive();
+                cursorAScript.fruitsAccess = CanInteract.PlayerA;
+                cursorBScript.fruitsAccess = CanInteract.Both;
                 break;
         }
 
