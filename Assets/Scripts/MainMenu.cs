@@ -226,7 +226,7 @@ public class MainMenu : MonoBehaviour
                 gameManagerScript.StartExperiment(
                     20, 20,
                     20, 20,
-                    30, 30,
+                    20, 20,
                     true, true,
                     ObjectAccessType.BOTH, ObjectAccessType.BOTH, ChestAccessType.BOTH_FREE, 
                     1, false
